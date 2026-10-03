@@ -15,6 +15,7 @@ type AppState = {
   household: HouseholdSize | null;
   income: IncomeBracket | null;
   medication: Medication | null;
+  searchQuery: string;
   setLanguage: (lang: Language) => void;
   go: (screen: ScreenId) => void;
   back: () => void;
@@ -22,6 +23,7 @@ type AppState = {
   setHousehold: (value: HouseholdSize) => void;
   setIncome: (value: IncomeBracket) => void;
   setMedication: (med: Medication) => void;
+  setSearchQuery: (q: string) => void;
   reset: () => void;
 };
 
@@ -35,6 +37,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [household, setHousehold] = useState<HouseholdSize | null>(null);
   const [income, setIncome] = useState<IncomeBracket | null>(null);
   const [medication, setMedication] = useState<Medication | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const value = useMemo<AppState>(
     () => ({
@@ -44,9 +47,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       household,
       income,
       medication,
+      searchQuery,
       setLanguage,
       go: (next) => {
-        setHistory((h) => [...h, screen]);
+        setHistory((h) => (screen === next ? h : [...h, screen]));
         setScreen(next);
       },
       back: () => {
@@ -61,6 +65,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setHousehold,
       setIncome,
       setMedication,
+      setSearchQuery,
       reset: () => {
         setScreen('language');
         setHistory([]);
@@ -68,9 +73,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setHousehold(null);
         setIncome(null);
         setMedication(null);
+        setSearchQuery('');
       },
     }),
-    [language, screen, insurance, household, income, medication]
+    [language, screen, insurance, household, income, medication, searchQuery]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

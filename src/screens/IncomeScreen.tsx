@@ -1,4 +1,5 @@
-import { ChoiceButton, Lead, Screen, Title } from '../components/ui';
+import { StyleSheet, View } from 'react-native';
+import { AppChrome, Question, WhiteCard, WhitePill } from '../components/AppChrome';
 import { useApp } from '../context';
 import { incomeOptions } from '../data/income';
 import { t } from '../i18n';
@@ -7,8 +8,7 @@ import type { IncomeBracket } from '../types';
 export function IncomeScreen() {
   const { language, household, go, setIncome } = useApp();
   const c = t(language);
-  const size = household ?? 1;
-  const ranges = incomeOptions[size];
+  const ranges = incomeOptions[household ?? 1];
 
   const pick = (bracket: IncomeBracket) => {
     setIncome(bracket);
@@ -16,26 +16,19 @@ export function IncomeScreen() {
   };
 
   return (
-    <Screen>
-      <Title>{c.incomeQ}</Title>
-      <Lead>{c.incomeHint}</Lead>
-      <ChoiceButton
-        label={`${c.optionA}`}
-        sub={ranges.A}
-        onPress={() => pick('A')}
-      />
-      <ChoiceButton
-        label={c.optionB}
-        sub={ranges.B}
-        variant="light"
-        onPress={() => pick('B')}
-      />
-      <ChoiceButton
-        label={c.optionC}
-        sub={ranges.C}
-        variant="gold"
-        onPress={() => pick('C')}
-      />
-    </Screen>
+    <AppChrome>
+      <WhiteCard>
+        <Question>{c.incomeQ}</Question>
+      </WhiteCard>
+      <View style={styles.row}>
+        <WhitePill grow label={ranges.A} onPress={() => pick('A')} />
+        <WhitePill grow label={ranges.B} onPress={() => pick('B')} />
+      </View>
+      <WhitePill center label={ranges.C} onPress={() => pick('C')} />
+    </AppChrome>
   );
 }
+
+const styles = StyleSheet.create({
+  row: { flexDirection: 'row', gap: 10 },
+});
