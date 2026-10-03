@@ -1,0 +1,138 @@
+import type { Language } from './types';
+
+const en = {
+  appName: 'CalRx Assist',
+  getStarted: 'GET STARTED?',
+  getStartedEs: '¿EMPEZAMOS?',
+  chooseLanguage: 'Choose your preferred display language.',
+  english: 'English',
+  spanish: 'Español',
+  insuranceQ: 'Do you currently have health insurance?',
+  yes: 'YES',
+  no: 'NO',
+  insuredTitle: 'Check your coverage first',
+  insuredLead:
+    'If you already have insurance, confirm your plan details before paying cash at the pharmacy. Cash discount prices can still be lower than a copay.',
+  insuredStep1: 'Confirm your plan is active and note your deductible and copay.',
+  insuredStep2: 'Look up your medication on your plan’s formulary (covered drug list).',
+  insuredStep3: 'Compare those costs with local cash prices and assistance programs.',
+  continueCompare: 'Continue to Medication Price Comparison',
+  householdQ: 'How many family members are in your household?',
+  person1: '1 person',
+  person2: '2 people',
+  person3: '3 people',
+  person4: '4 people',
+  person5: '5+ people',
+  incomeQ: 'What is your household’s estimated yearly income?',
+  incomeHint: 'Choose the range that matches your household size. This is a screening estimate, not an official eligibility decision.',
+  optionA: 'Option A',
+  optionB: 'Option B',
+  optionC: 'Option C',
+  mediCalTitle: 'You may qualify for Medi-Cal',
+  mediCalBody:
+    'Based on household size and income, you may be eligible for Medi-Cal, California’s Medicaid program. Medi-Cal can cover doctor visits, hospital care, and many prescriptions at little or no cost.',
+  enrollCovered: 'Enroll with Covered California',
+  enrollBenefits: 'Apply on BenefitsCal',
+  coverCaliTitle: 'You may qualify for Covered California savings',
+  coverCaliBody:
+    'Your income appears to fall in the range for marketplace subsidies. Covered California can lower monthly premiums and, in many cases, reduce deductibles and copays.',
+  overTitle: 'Standard coverage options',
+  overBody:
+    'Based on this estimate, you are likely over the Medi-Cal and subsidy income limits. You can still buy a Covered California plan at the unsubsidized rate, and you can use cash pharmacy prices and assistance programs for prescriptions.',
+  enrollMarket: 'Shop Covered California plans',
+  disclaimer:
+    'This app screens for likely programs. Only Covered California, BenefitsCal, or DHCS can confirm eligibility.',
+  searchTitle: 'Find your medication',
+  searchPlaceholder: 'Search by brand or generic name',
+  searchEmpty: 'Start typing or pick a common prescription below.',
+  noMatches: 'No medications match that search. Try the generic name.',
+  commonRx: 'Common prescriptions',
+  pharmaciesTab: 'Local Pharmacy Prices',
+  papsTab: 'PAPs & Free Medicine',
+  cashPrice: 'Cash / discount price',
+  miles: 'mi',
+  apply: 'Open program',
+  manufacturerPAP: 'Manufacturer PAP',
+  nonprofit: 'Nonprofit / free medicine',
+  back: 'Back',
+  changeLanguage: 'Language',
+  resultsFor: 'Prices and programs for',
+  insuredBanner: 'Comparing cash prices — still check your insurance copay.',
+  papHint:
+    'Patient assistance programs (PAPs) and nonprofits can provide free or low-cost medicine if you qualify. Many require a prescription and proof of income.',
+  noPrograms: 'No listed programs for this medication.',
+  restart: 'Start over',
+  couponNote: 'Show the pharmacy this cash price or a discount card at pickup.',
+};
+
+const es: typeof en = {
+  appName: 'CalRx Assist',
+  getStarted: 'GET STARTED?',
+  getStartedEs: '¿EMPEZAMOS?',
+  chooseLanguage: 'Elige el idioma de la aplicación.',
+  english: 'English',
+  spanish: 'Español',
+  insuranceQ: '¿Tienes actualmente un seguro médico?',
+  yes: 'SÍ',
+  no: 'NO',
+  insuredTitle: 'Revisa tu cobertura primero',
+  insuredLead:
+    'Si ya tienes seguro, confirma los detalles de tu plan antes de pagar en efectivo en la farmacia. El precio de descuento en efectivo a veces es más bajo que el copago.',
+  insuredStep1: 'Confirma que tu plan está activo y anota tu deducible y copago.',
+  insuredStep2: 'Busca tu medicamento en el formulario (lista de medicamentos cubiertos) de tu plan.',
+  insuredStep3: 'Compara esos costos con los precios locales en efectivo y los programas de ayuda.',
+  continueCompare: 'Continuar a comparar precios de medicamentos',
+  householdQ: '¿Cuántos miembros de la familia viven en tu hogar?',
+  person1: '1 persona',
+  person2: '2 personas',
+  person3: '3 personas',
+  person4: '4 personas',
+  person5: '5+ personas',
+  incomeQ: '¿Cuál es el ingreso anual estimado de tu hogar?',
+  incomeHint:
+    'Elige el rango que corresponda al tamaño de tu hogar. Esto es una estimación, no una decisión oficial de elegibilidad.',
+  optionA: 'Opción A',
+  optionB: 'Opción B',
+  optionC: 'Opción C',
+  mediCalTitle: 'Es posible que califiques para Medi-Cal',
+  mediCalBody:
+    'Según el tamaño del hogar y los ingresos, podrías ser elegible para Medi-Cal, el programa Medicaid de California. Medi-Cal puede cubrir visitas médicas, hospitales y muchos medicamentos a poco o ningún costo.',
+  enrollCovered: 'Inscríbete en Covered California',
+  enrollBenefits: 'Solicita en BenefitsCal',
+  coverCaliTitle: 'Es posible que califiques para ahorros de Covered California',
+  coverCaliBody:
+    'Tus ingresos parecen estar en el rango de subsidios del mercado. Covered California puede bajar la prima mensual y, en muchos casos, reducir deducibles y copagos.',
+  overTitle: 'Opciones de cobertura estándar',
+  overBody:
+    'Según esta estimación, es probable que superes los límites de Medi-Cal y de subsidios. Aún puedes comprar un plan de Covered California al precio sin subsidio, y usar precios en efectivo y programas de asistencia para recetas.',
+  enrollMarket: 'Ver planes de Covered California',
+  disclaimer:
+    'Esta app solo orienta. Solo Covered California, BenefitsCal o DHCS pueden confirmar la elegibilidad.',
+  searchTitle: 'Busca tu medicamento',
+  searchPlaceholder: 'Busca por marca o nombre genérico',
+  searchEmpty: 'Empieza a escribir o elige una receta frecuente.',
+  noMatches: 'No hay coincidencias. Prueba el nombre genérico.',
+  commonRx: 'Recetas frecuentes',
+  pharmaciesTab: 'Precios de farmacias locales',
+  papsTab: 'PAPs y medicina gratis',
+  cashPrice: 'Precio en efectivo / descuento',
+  miles: 'mi',
+  apply: 'Abrir programa',
+  manufacturerPAP: 'PAP del fabricante',
+  nonprofit: 'Organización sin fines de lucro',
+  back: 'Atrás',
+  changeLanguage: 'Idioma',
+  resultsFor: 'Precios y programas para',
+  insuredBanner: 'Comparando precios en efectivo — revisa también tu copago.',
+  papHint:
+    'Los programas de asistencia al paciente (PAP) y las organizaciones sin fines de lucro pueden ofrecer medicina gratis o de bajo costo si calificas. Muchos piden receta y prueba de ingresos.',
+  noPrograms: 'No hay programas listados para este medicamento.',
+  restart: 'Empezar de nuevo',
+  couponNote: 'Muestra este precio en efectivo o una tarjeta de descuento al recoger.',
+};
+
+export const copy = { en, es };
+
+export function t(lang: Language) {
+  return copy[lang];
+}
