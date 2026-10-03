@@ -147,7 +147,9 @@ export function WhitePill({
         pressed && styles.pressed,
       ]}
     >
-      <Text style={[styles.pillLabel, display && styles.pillDisplay]}>{label}</Text>
+      <Text style={[styles.pillLabel, display && styles.pillDisplay, grow && styles.pillLabelTight]}>
+        {label}
+      </Text>
     </Pressable>
   );
 }
@@ -289,9 +291,11 @@ const styles = StyleSheet.create({
   pillLabel: {
     fontFamily: fonts.body,
     fontSize: 16,
+    lineHeight: 20,
     color: ink,
     textAlign: 'center',
   },
+  pillLabelTight: { fontSize: 13, lineHeight: 17 },
   pillDisplay: {
     fontFamily: fonts.display,
     fontSize: 13,
@@ -301,7 +305,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: periwinkle,
     borderRadius: 24,
-    minHeight: 150,
+    minHeight: 168,
     alignItems: 'center',
     justifyContent: 'center',
     ...shadow,
