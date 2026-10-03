@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useFonts, Fredoka_700Bold } from '@expo-google-fonts/fredoka';
+import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { AppProvider, useApp } from './src/context';
 import { PhoneShell } from './src/components/ui';
 import { LanguageScreen } from './src/screens/LanguageScreen';
@@ -36,6 +37,12 @@ function Router() {
 }
 
 export default function App() {
+  const [fontsLoaded] = useFonts({ Fredoka_700Bold });
+
+  if (!fontsLoaded) {
+    return <View style={{ flex: 1, backgroundColor: '#A9E4F8' }} />;
+  }
+
   return (
     <AppProvider>
       <PhoneShell>

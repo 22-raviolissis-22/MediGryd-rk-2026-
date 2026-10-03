@@ -29,6 +29,9 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
       "name": "CalRx Assist"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
