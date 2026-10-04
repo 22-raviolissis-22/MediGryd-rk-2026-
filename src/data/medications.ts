@@ -3,7 +3,9 @@ import { L } from '../i18n';
 import { areaPharmacies } from './pharmacies';
 
 /** Retrieval date for NADAC and Cost Plus snapshots used below. */
+/** Human-readable Cost Plus snapshot day (mail-order quotes, not auto-updated). */
 export const PRICE_RETRIEVED_ON = 'October 3, 2026';
+export const COST_PLUS_AS_OF = '2026-10-03';
 export const NADAC_AS_OF = '2026-09-30';
 export const NADAC_EFFECTIVE = '2026-09-23';
 

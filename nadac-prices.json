@@ -1,0 +1,142 @@
+{
+  "version": "2026-09-30",
+  "generatedOn": "2026-10-04",
+  "source": "CMS NADAC weekly file via data.medicaid.gov",
+  "datasetId": "fbb83258-11c7-47f5-8b18-5f8e79f7e704",
+  "asOfDate": "2026-09-30",
+  "effectiveDate": "2026-09-23",
+  "drugs": [
+    {
+      "id": "atorvastatin",
+      "drug": "atorvastatin",
+      "ndcDescription": "ATORVASTATIN 20 MG TABLET",
+      "strength": "20 mg",
+      "quantity": 30,
+      "nadacPerUnit": 0.02792,
+      "nadacPrice": 0.84,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "metformin",
+      "drug": "metformin",
+      "ndcDescription": "METFORMIN HCL 500 MG TABLET",
+      "strength": "500 mg",
+      "quantity": 60,
+      "nadacPerUnit": 0.01451,
+      "nadacPrice": 0.87,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "lisinopril",
+      "drug": "lisinopril",
+      "ndcDescription": "LISINOPRIL 10 MG TABLET",
+      "strength": "10 mg",
+      "quantity": 30,
+      "nadacPerUnit": 0.01815,
+      "nadacPrice": 0.54,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "omeprazole",
+      "drug": "omeprazole",
+      "ndcDescription": "OMEPRAZOLE DR 20 MG CAPSULE",
+      "strength": "20 mg",
+      "quantity": 30,
+      "nadacPerUnit": 0.02945,
+      "nadacPrice": 0.88,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "albuterol",
+      "drug": "albuterol",
+      "ndcDescription": "ALBUTEROL HFA 90 MCG INHALER",
+      "strength": "90 mcg",
+      "quantity": 18,
+      "nadacPerUnit": 1.82548,
+      "nadacPrice": 32.86,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "insulin-glargine",
+      "drug": "insulin glargine",
+      "ndcDescription": "LANTUS 100 UNIT/ML VIAL",
+      "strength": "100 unit/mL",
+      "quantity": 10,
+      "nadacPerUnit": 6.15227,
+      "nadacPrice": 61.52,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "ozempic",
+      "drug": "semaglutide",
+      "ndcDescription": "OZEMPIC 1 MG/DOSE (4 MG/3 ML) PEN",
+      "strength": "1 mg/dose",
+      "quantity": 3,
+      "nadacPerUnit": 331.90037,
+      "nadacPrice": 995.7,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "eliquis",
+      "drug": "apixaban",
+      "ndcDescription": "ELIQUIS 5 MG TABLET",
+      "strength": "5 mg",
+      "quantity": 60,
+      "nadacPerUnit": 5.52114,
+      "nadacPrice": 331.27,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "humira",
+      "drug": "adalimumab",
+      "ndcDescription": "HUMIRA(CF) PEN 40 MG/0.4 ML",
+      "strength": "40 mg/0.4 mL",
+      "quantity": 2,
+      "nadacPerUnit": 3367.41479,
+      "nadacPrice": 6734.83,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "sertraline",
+      "drug": "sertraline",
+      "ndcDescription": "SERTRALINE HCL 50 MG TABLET",
+      "strength": "50 mg",
+      "quantity": 30,
+      "nadacPerUnit": 0.03479,
+      "nadacPrice": 1.04,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "amoxicillin",
+      "drug": "amoxicillin",
+      "ndcDescription": "AMOXICILLIN 500 MG CAPSULE",
+      "strength": "500 mg",
+      "quantity": 30,
+      "nadacPerUnit": 0.0788,
+      "nadacPrice": 2.36,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    },
+    {
+      "id": "advair",
+      "drug": "fluticasone / salmeterol",
+      "ndcDescription": "WIXELA 250-50 INHUB",
+      "strength": "250/50",
+      "quantity": 60,
+      "nadacPerUnit": 1.24514,
+      "nadacPrice": 74.71,
+      "asOfDate": "2026-09-30",
+      "effectiveDate": "2026-09-23"
+    }
+  ]
+}

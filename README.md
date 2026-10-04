@@ -27,6 +27,31 @@ npx expo start --web --port 43123
 
 On web the UI is framed as a vertical iPhone (390×844).
 
+## Refresh NADAC prices
+
+CMS publishes a new NADAC weekly file. This repo does **not** fetch the full table inside the phone app. Instead a small Node script downloads that week, keeps only the 12 drugs in the app, and writes a trimmed JSON feed.
+
+```bash
+npm run update-prices
+```
+
+That writes:
+
+- `nadac-prices.json` at the repo root (host this file)
+- `src/data/nadac-snapshot.json` (bundled fallback shipped with the app)
+
+Commit both files. Then publish `nadac-prices.json` at a **stable public HTTPS URL** (GitHub raw or a gist). Point the app at it in `src/prices/nadacFeed.ts` (`NADAC_FEED_URL`) or with `EXPO_PUBLIC_NADAC_FEED_URL` at build time.
+
+Example after the file is on GitHub:
+
+`https://raw.githubusercontent.com/<user>/<repo>/main/nadac-prices.json`
+
+The default constant uses `reva-kaushik/calrx-assist`. Until that URL exists, launch still works: the app tries the URL, and on 404 / timeout / offline it **silently** uses the bundled snapshot (and any newer copy already cached in AsyncStorage).
+
+On launch, if the device is online, the app fetches the hosted JSON, compares `asOfDate` to the bundled snapshot, and if newer it updates displayed NADAC prices and caches the file on-device.
+
+Cost Plus Drugs quotes stay the October 3, 2026 snapshot and are labeled as such on the results screen.
+
 ## Data sources
 
 **Retrieval date: October 3, 2026.** Benchmarks in the app are snapshots from that pull. In-store cash prices vary and must be confirmed at the pharmacy. NADAC and Cost Plus figures are **not** per-pharmacy prices.
@@ -36,7 +61,7 @@ On web the UI is framed as a vertical iPhone (390×844).
 - **Source:** [NADAC 2026 weekly file on data.medicaid.gov](https://data.medicaid.gov/dataset/fbb83258-11c7-47f5-8b18-5f8e79f7e704) (public U.S. government data).
 - **API:** `POST https://data.medicaid.gov/api/1/datastore/query/fbb83258-11c7-47f5-8b18-5f8e79f7e704/0`
 - **What we used:** Current `nadac_per_unit` for each listed product, filtered to `as_of_date = 2026-09-30` (latest week in the file on retrieval day). Effective date on those rows was `2026-09-23`.
-- **How it is shown:** Per-unit NADAC × typical package size. On results this sits **below** buy-now options and is labeled **Fair-price reference (what pharmacies pay wholesalers — not a price you can buy at)**. NADAC is never treated as a checkout price.
+- **How it is shown:** Per-unit NADAC × typical package size. On results this sits **below** buy-now options and is labeled **Fair-price reference (what pharmacies pay wholesalers — not a price you can buy at)**. NADAC is never treated as a checkout price. The results screen shows **Prices updated as of \<NADAC as-of date\>**. When a newer hosted feed is available, that date and the NADAC dollar amounts update; Cost Plus does not.
 
 ### Mark Cuban Cost Plus Drugs
 

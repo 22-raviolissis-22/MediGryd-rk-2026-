@@ -9,14 +9,18 @@ import {
 } from '../components/AppChrome';
 import { openUrl } from '../components/ui';
 import { useApp } from '../context';
-import { loc, pharmacyHours, t } from '../i18n';
+import { fill, formatIsoDate, loc, pharmacyHours, t } from '../i18n';
+import { COST_PLUS_AS_OF } from '../data/medications';
+import { nadacPriceFor } from '../prices/nadacFeed';
 import { ink, periwinkle, typeface } from '../theme';
 
 export function ResultsScreen() {
-  const { language, medication, insurance } = useApp();
+  const { language, medication, insurance, nadacFeed } = useApp();
   const c = t(language);
   const [tab, setTab] = useState<'rx' | 'pap'>('rx');
   const med = medication;
+  const nadacAsOfLabel = fill(c.pricesUpdatedAsOf, { date: formatIsoDate(nadacFeed.asOfDate, language) });
+  const costPlusAsOfLabel = fill(c.costPlusAsOf, { date: formatIsoDate(COST_PLUS_AS_OF, language) });
 
   if (!med) {
     return (
@@ -75,7 +79,7 @@ export function ResultsScreen() {
         <>
           <WhiteCard>
             <BodyText>{c.priceDisclaimer}</BodyText>
-            <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{c.retrievedOn}</Text>
+            <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
           </WhiteCard>
 
           <DisplayTitle>{c.lowestToday}</DisplayTitle>
@@ -93,6 +97,9 @@ export function ResultsScreen() {
                     {loc(b.package, language)}
                   </Text>
                   <Text style={[styles.note, typeface(language, 'body')]}>{c.costPlusHint}</Text>
+                  <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>
+                    {costPlusAsOfLabel}
+                  </Text>
                   <Text style={[styles.note, typeface(language, 'body')]}>
                     {loc(b.note, language)}
                   </Text>
@@ -115,20 +122,25 @@ export function ResultsScreen() {
           <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
           {med.benchmarks
             .filter((b) => b.source === 'nadac')
-            .map((b) => (
+            .map((b) => {
+              const live = nadacPriceFor(nadacFeed, med.id);
+              const price = live ?? b.price;
+              return (
               <WhiteCard key="nadac-ref">
                 <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.nadacNotBuyable}</Text>
                 <Text style={[styles.price, typeface(language, 'display')]}>
-                  {b.price == null ? c.notListed : `$${b.price.toFixed(2)}`}
+                  {price == null ? c.notListed : `$${price.toFixed(2)}`}
                 </Text>
                 <Text style={[styles.meta, typeface(language, 'body')]}>
                   {loc(b.package, language)}
                 </Text>
+                <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
                 <Text style={[styles.note, typeface(language, 'body')]}>
                   {loc(b.note, language)}
                 </Text>
               </WhiteCard>
-            ))}
+              );
+            })}
 
           <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
           <BodyText>{c.nearbyHint}</BodyText>

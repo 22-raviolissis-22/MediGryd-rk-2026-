@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type {
   HouseholdSize,
   IncomeBracket,
@@ -7,6 +7,7 @@ import type {
   Medication,
   ScreenId,
 } from './types';
+import { bundledNadacFeed, resolveNadacFeed, type NadacFeed } from './prices/nadacFeed';
 
 type AppState = {
   language: Language;
@@ -16,6 +17,7 @@ type AppState = {
   income: IncomeBracket | null;
   medication: Medication | null;
   searchQuery: string;
+  nadacFeed: NadacFeed;
   setLanguage: (lang: Language) => void;
   go: (screen: ScreenId) => void;
   back: () => void;
@@ -38,6 +40,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [income, setIncome] = useState<IncomeBracket | null>(null);
   const [medication, setMedication] = useState<Medication | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [nadacFeed, setNadacFeed] = useState<NadacFeed>(bundledNadacFeed);
+
+  useEffect(() => {
+    let cancelled = false;
+    resolveNadacFeed()
+      .then((feed) => {
+        if (!cancelled) setNadacFeed(feed);
+      })
+      .catch(() => {
+        /* bundled snapshot already shown */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const value = useMemo<AppState>(
     () => ({
@@ -48,6 +65,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       income,
       medication,
       searchQuery,
+      nadacFeed,
       setLanguage,
       go: (next) => {
         setHistory((h) => (screen === next ? h : [...h, screen]));
@@ -76,7 +94,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSearchQuery('');
       },
     }),
-    [language, screen, insurance, household, income, medication, searchQuery]
+    [language, screen, insurance, household, income, medication, searchQuery, nadacFeed]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

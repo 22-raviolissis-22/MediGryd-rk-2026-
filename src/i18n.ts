@@ -8,6 +8,30 @@ export function loc(text: LocalizedText, lang: Language): string {
   return text[lang] ?? text.en;
 }
 
+export function fill(template: string, vars: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (_, key: string) => vars[key] ?? '');
+}
+
+const months: Record<Language, string[]> = {
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  es: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+  zh: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+  hi: ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'],
+};
+
+export function formatIsoDate(iso: string, lang: Language): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  const year = m[1];
+  const month = Number(m[2]);
+  const day = Number(m[3]);
+  const name = months[lang][month - 1] ?? m[2];
+  if (lang === 'zh') return `${year}年${month}月${day}日`;
+  if (lang === 'es') return `${day} de ${name} de ${year}`;
+  if (lang === 'hi') return `${day} ${name} ${year}`;
+  return `${name} ${day}, ${year}`;
+}
+
 const en = {
   appName: 'APP NAME',
   insuranceQ: 'Do you currently have health insurance?',
@@ -75,6 +99,8 @@ const en = {
   costPlusHint: 'Mail-order checkout on costplusdrugs.com. Prescription required; shipping and tax are extra.',
   nadacNotBuyable:
     'NADAC is the average amount pharmacies pay wholesalers. You cannot check out at this number.',
+  pricesUpdatedAsOf: 'Prices updated as of {date}',
+  costPlusAsOf: 'Cost Plus snapshot {date}',
   searchA11y: 'Search medications',
   startOver: 'Start over',
   hoursCvsLocator: 'See CVS store locator for pharmacy hours',
@@ -152,6 +178,8 @@ const es: typeof en = {
   costPlusHint: 'Pedido por correo en costplusdrugs.com. Se requiere receta; envío e impuestos aparte.',
   nadacNotBuyable:
     'NADAC es el promedio que las farmacias pagan a mayoristas. No puedes pagar esa cifra en caja.',
+  pricesUpdatedAsOf: 'Precios actualizados al {date}',
+  costPlusAsOf: 'Instantánea de Cost Plus del {date}',
   searchA11y: 'Buscar medicamentos',
   startOver: 'Empezar de nuevo',
   hoursCvsLocator: 'Consulta el localizador de CVS para el horario de la farmacia',
@@ -224,6 +252,8 @@ const zh: typeof en = {
   goodRxHint: '在参与药房出示此优惠券。金额显示在 GoodRx 上，因门店而异 — 我们不在此编造数字。',
   costPlusHint: '在 costplusdrugs.com 邮购结账。需有处方；运费和税费另计。',
   nadacNotBuyable: 'NADAC 是药房向批发商支付的平均金额。您无法按此数字结账。',
+  pricesUpdatedAsOf: '价格更新于 {date}',
+  costPlusAsOf: 'Cost Plus 快照日期 {date}',
   searchA11y: '搜索药品',
   startOver: '重新开始',
   hoursCvsLocator: '请在 CVS 门店查询中查看药房营业时间',
@@ -299,6 +329,8 @@ const hi: typeof en = {
   costPlusHint: 'costplusdrugs.com पर मेल-ऑर्डर चेकआउट। पर्चा आवश्यक; शिपिंग और कर अलग।',
   nadacNotBuyable:
     'NADAC वह औसत राशि है जो फार्मेसी थोक विक्रेताओं को देती हैं। आप इस संख्या पर चेकआउट नहीं कर सकते।',
+  pricesUpdatedAsOf: 'कीमतें {date} तक अपडेट',
+  costPlusAsOf: 'Cost Plus स्नैपशॉट {date}',
   searchA11y: 'दवाएं खोजें',
   startOver: 'फिर से शुरू करें',
   hoursCvsLocator: 'फार्मेसी समय के लिए CVS स्टोर लोकेटर देखें',

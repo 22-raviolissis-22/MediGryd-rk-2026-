@@ -1,0 +1,99 @@
+[
+  {
+    "id": "atorvastatin",
+    "drug": "atorvastatin",
+    "ndcDescription": "ATORVASTATIN 20 MG TABLET",
+    "strength": "20 mg",
+    "quantity": 30,
+    "preferGeneric": true
+  },
+  {
+    "id": "metformin",
+    "drug": "metformin",
+    "ndcDescription": "METFORMIN HCL 500 MG TABLET",
+    "strength": "500 mg",
+    "quantity": 60,
+    "preferGeneric": true
+  },
+  {
+    "id": "lisinopril",
+    "drug": "lisinopril",
+    "ndcDescription": "LISINOPRIL 10 MG TABLET",
+    "strength": "10 mg",
+    "quantity": 30,
+    "preferGeneric": true
+  },
+  {
+    "id": "omeprazole",
+    "drug": "omeprazole",
+    "ndcDescription": "OMEPRAZOLE DR 20 MG CAPSULE",
+    "strength": "20 mg",
+    "quantity": 30,
+    "preferGeneric": true
+  },
+  {
+    "id": "albuterol",
+    "drug": "albuterol",
+    "ndcDescription": "ALBUTEROL HFA 90 MCG INHALER",
+    "strength": "90 mcg",
+    "quantity": 18,
+    "preferGeneric": true,
+    "preferPerUnit": 1.82548
+  },
+  {
+    "id": "insulin-glargine",
+    "drug": "insulin glargine",
+    "ndcDescription": "LANTUS 100 UNIT/ML VIAL",
+    "strength": "100 unit/mL",
+    "quantity": 10,
+    "preferGeneric": false
+  },
+  {
+    "id": "ozempic",
+    "drug": "semaglutide",
+    "ndcDescription": "OZEMPIC 1 MG/DOSE (4 MG/3 ML) PEN",
+    "strength": "1 mg/dose",
+    "quantity": 3,
+    "preferGeneric": false
+  },
+  {
+    "id": "eliquis",
+    "drug": "apixaban",
+    "ndcDescription": "ELIQUIS 5 MG TABLET",
+    "strength": "5 mg",
+    "quantity": 60,
+    "preferGeneric": false
+  },
+  {
+    "id": "humira",
+    "drug": "adalimumab",
+    "ndcDescription": "HUMIRA(CF) PEN 40 MG/0.4 ML",
+    "strength": "40 mg/0.4 mL",
+    "quantity": 2,
+    "preferGeneric": false
+  },
+  {
+    "id": "sertraline",
+    "drug": "sertraline",
+    "ndcDescription": "SERTRALINE HCL 50 MG TABLET",
+    "strength": "50 mg",
+    "quantity": 30,
+    "preferGeneric": true
+  },
+  {
+    "id": "amoxicillin",
+    "drug": "amoxicillin",
+    "ndcDescription": "AMOXICILLIN 500 MG CAPSULE",
+    "strength": "500 mg",
+    "quantity": 30,
+    "preferGeneric": true
+  },
+  {
+    "id": "advair",
+    "drug": "fluticasone / salmeterol",
+    "ndcDescription": "WIXELA 250-50 INHUB",
+    "strength": "250/50",
+    "quantity": 60,
+    "preferGeneric": true
+  }
+]
