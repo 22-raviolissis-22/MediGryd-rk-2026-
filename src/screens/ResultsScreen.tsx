@@ -77,22 +77,59 @@ export function ResultsScreen() {
             <BodyText>{c.priceDisclaimer}</BodyText>
             <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{c.retrievedOn}</Text>
           </WhiteCard>
-          {med.benchmarks.map((b) => (
-            <WhiteCard key={b.source + loc(b.package, 'en')}>
-              <Text style={[styles.kind, typeface(language, 'bodyBold')]}>
-                {b.source === 'nadac' ? c.nadacBenchmark : c.costPlusList}
-              </Text>
-              <Text style={[styles.price, typeface(language, 'display')]}>
-                {b.price == null ? c.notListed : `$${b.price.toFixed(2)}`}
-              </Text>
-              <Text style={[styles.meta, typeface(language, 'body')]}>
-                {loc(b.package, language)}
-              </Text>
-              <Text style={[styles.note, typeface(language, 'body')]}>
-                {loc(b.note, language)}
-              </Text>
+
+          <DisplayTitle>{c.lowestToday}</DisplayTitle>
+
+          {med.benchmarks
+            .filter((b) => b.source === 'costplus')
+            .map((b) => (
+              <View key="costplus-buy">
+                <WhiteCard>
+                  <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.costPlusList}</Text>
+                  <Text style={[styles.price, typeface(language, 'display')]}>
+                    {b.price == null ? c.notListed : `$${b.price.toFixed(2)}`}
+                  </Text>
+                  <Text style={[styles.meta, typeface(language, 'body')]}>
+                    {loc(b.package, language)}
+                  </Text>
+                  <Text style={[styles.note, typeface(language, 'body')]}>{c.costPlusHint}</Text>
+                  <Text style={[styles.note, typeface(language, 'body')]}>
+                    {loc(b.note, language)}
+                  </Text>
+                </WhiteCard>
+                {med.costPlusUrl ? (
+                  <WhitePill label={c.buyCostPlus} onPress={() => openUrl(med.costPlusUrl!)} />
+                ) : null}
+              </View>
+            ))}
+
+          <View>
+            <WhiteCard>
+              <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.goodRxCoupon}</Text>
+              <Text style={[styles.pharm, typeface(language, 'display')]}>{med.generic}</Text>
+              <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxHint}</Text>
             </WhiteCard>
-          ))}
+            <WhitePill label={c.openGoodRx} onPress={() => openUrl(med.goodrxUrl)} />
+          </View>
+
+          <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
+          {med.benchmarks
+            .filter((b) => b.source === 'nadac')
+            .map((b) => (
+              <WhiteCard key="nadac-ref">
+                <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.nadacNotBuyable}</Text>
+                <Text style={[styles.price, typeface(language, 'display')]}>
+                  {b.price == null ? c.notListed : `$${b.price.toFixed(2)}`}
+                </Text>
+                <Text style={[styles.meta, typeface(language, 'body')]}>
+                  {loc(b.package, language)}
+                </Text>
+                <Text style={[styles.note, typeface(language, 'body')]}>
+                  {loc(b.note, language)}
+                </Text>
+              </WhiteCard>
+            ))}
+
           <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
           <BodyText>{c.nearbyHint}</BodyText>
           {med.pharmacies.map((p) => (

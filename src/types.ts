@@ -60,4 +60,8 @@ export type Medication = {
   benchmarks: PriceBenchmark[];
   pharmacies: PharmacyOffer[];
   programs: AssistanceProgram[];
+  /** Real GoodRx coupon page for this drug, e.g. https://www.goodrx.com/atorvastatin */
+  goodrxUrl: string;
+  /** Cost Plus product page when the SKU is in their catalog; otherwise null. */
+  costPlusUrl: string | null;
 };

@@ -55,7 +55,7 @@ const en = {
     'Patient assistance programs (PAPs) and nonprofits can provide free or low-cost medicine if you qualify.',
   noPrograms: 'No listed programs for this medication.',
   priceDisclaimer:
-    'In-store cash prices vary and should be confirmed at the pharmacy. The dollar amounts below are national or mail-order benchmarks (NADAC or Cost Plus Drugs list prices), not the price a specific store charges.',
+    'In-store cash prices vary and should be confirmed at the pharmacy. Cost Plus is a mail-order checkout price (shipping extra). GoodRx coupon amounts are set on GoodRx by pharmacy and ZIP — we do not invent a coupon dollar figure. NADAC is not a price you can buy at. None of these figures is a specific store’s cash charge.',
   nearbyPharmacies: 'Pharmacies in CA-17 and CA-19',
   nearbyHint:
     'Addresses from official store locators. Call ahead — they do not list these benchmark prices as their cash charge.',
@@ -63,8 +63,18 @@ const en = {
   notListed: 'Not listed',
   retrievedOn: 'Data retrieved October 3, 2026',
   back: 'Back',
-  nadacBenchmark: 'NADAC benchmark',
-  costPlusList: 'Cost Plus Drugs list price',
+  nadacBenchmark:
+    'Fair-price reference (what pharmacies pay wholesalers — not a price you can buy at)',
+  costPlusList: 'Cost Plus Drugs — buy now',
+  lowestToday: 'Lowest prices you can get today',
+  buyCostPlus: 'Buy at Cost Plus Drugs',
+  openGoodRx: 'Open GoodRx coupon',
+  goodRxCoupon: 'GoodRx coupon',
+  goodRxHint:
+    'Show this coupon at a participating pharmacy. The dollar amount is on GoodRx and changes by store — we do not invent one here.',
+  costPlusHint: 'Mail-order checkout on costplusdrugs.com. Prescription required; shipping and tax are extra.',
+  nadacNotBuyable:
+    'NADAC is the average amount pharmacies pay wholesalers. You cannot check out at this number.',
   searchA11y: 'Search medications',
   startOver: 'Start over',
   hoursCvsLocator: 'See CVS store locator for pharmacy hours',
@@ -122,7 +132,7 @@ const es: typeof en = {
     'Los programas de asistencia al paciente (PAP) y las organizaciones sin fines de lucro pueden ofrecer medicina gratis o de bajo costo si calificas.',
   noPrograms: 'No hay programas listados para este medicamento.',
   priceDisclaimer:
-    'Los precios en efectivo en la farmacia varían y se deben confirmar en el mostrador. Las cifras de abajo son referencias nacionales o de pedido por correo (NADAC o precio de lista de Cost Plus Drugs), no lo que cobra una tienda específica.',
+    'Los precios en efectivo en la farmacia varían y se deben confirmar en el mostrador. Cost Plus es un precio de pedido por correo (envío aparte). El cupón de GoodRx muestra el monto en su sitio según farmacia y ZIP — no inventamos esa cifra. NADAC no es un precio de compra. Ninguna cifra es el cobro en efectivo de una tienda específica.',
   nearbyPharmacies: 'Farmacias en CA-17 y CA-19',
   nearbyHint:
     'Direcciones de localizadores oficiales. Llama antes: estas farmacias no publican estos precios de referencia como su cobro en efectivo.',
@@ -130,8 +140,18 @@ const es: typeof en = {
   notListed: 'No listado',
   retrievedOn: 'Datos consultados el 3 de octubre de 2026',
   back: 'Atrás',
-  nadacBenchmark: 'Referencia NADAC',
-  costPlusList: 'Precio de lista de Cost Plus Drugs',
+  nadacBenchmark:
+    'Referencia de precio justo (lo que las farmacias pagan a mayoristas — no es un precio al que puedas comprar)',
+  costPlusList: 'Cost Plus Drugs — comprar ahora',
+  lowestToday: 'Los precios más bajos que puedes obtener hoy',
+  buyCostPlus: 'Comprar en Cost Plus Drugs',
+  openGoodRx: 'Abrir cupón de GoodRx',
+  goodRxCoupon: 'Cupón de GoodRx',
+  goodRxHint:
+    'Muestra este cupón en una farmacia participante. El monto está en GoodRx y cambia por tienda — no inventamos uno aquí.',
+  costPlusHint: 'Pedido por correo en costplusdrugs.com. Se requiere receta; envío e impuestos aparte.',
+  nadacNotBuyable:
+    'NADAC es el promedio que las farmacias pagan a mayoristas. No puedes pagar esa cifra en caja.',
   searchA11y: 'Buscar medicamentos',
   startOver: 'Empezar de nuevo',
   hoursCvsLocator: 'Consulta el localizador de CVS para el horario de la farmacia',
@@ -188,15 +208,22 @@ const zh: typeof en = {
   papHint: '患者援助计划（PAP）和非营利组织可在您符合条件时提供免费或低价药品。',
   noPrograms: '此药品暂无列出的援助项目。',
   priceDisclaimer:
-    '店内自费价格因药房而异，请到店确认。下列金额为全国或邮购参考价（NADAC 或 Cost Plus Drugs 标价），并非某家门店的收费。',
+    '店内自费价格因药房而异，请到店确认。Cost Plus 为邮购结账价（运费另计）。GoodRx 优惠券金额在其网站按药房和邮编显示 — 我们不编造该数字。NADAC 不是可购买的价格。以上均不是某家门店的自费售价。',
   nearbyPharmacies: 'CA-17 与 CA-19 的药房',
   nearbyHint: '地址来自官方门店查询。请提前致电 — 门店不会将这些参考价作为自费售价公布。',
   openLocator: '打开门店查询',
   notListed: '未列出',
   retrievedOn: '数据获取于 2026 年 10 月 3 日',
   back: '返回',
-  nadacBenchmark: 'NADAC 参考价',
-  costPlusList: 'Cost Plus Drugs 标价',
+  nadacBenchmark: '公平价格参考（药房向批发商支付的金额 — 不是您可以购买的价格）',
+  costPlusList: 'Cost Plus Drugs — 立即购买',
+  lowestToday: '今天就能买到的最低价',
+  buyCostPlus: '在 Cost Plus Drugs 购买',
+  openGoodRx: '打开 GoodRx 优惠券',
+  goodRxCoupon: 'GoodRx 优惠券',
+  goodRxHint: '在参与药房出示此优惠券。金额显示在 GoodRx 上，因门店而异 — 我们不在此编造数字。',
+  costPlusHint: '在 costplusdrugs.com 邮购结账。需有处方；运费和税费另计。',
+  nadacNotBuyable: 'NADAC 是药房向批发商支付的平均金额。您无法按此数字结账。',
   searchA11y: '搜索药品',
   startOver: '重新开始',
   hoursCvsLocator: '请在 CVS 门店查询中查看药房营业时间',
@@ -252,7 +279,7 @@ const hi: typeof en = {
     'रोगी सहायता कार्यक्रम (PAP) और गैर-लाभ संगठन पात्र होने पर मुफ्त या सस्ती दवा दे सकते हैं।',
   noPrograms: 'इस दवा के लिए कोई सूचीबद्ध कार्यक्रम नहीं है।',
   priceDisclaimer:
-    'स्टोर की नकद कीमतें अलग-अलग होती हैं और फार्मेसी पर पुष्टि करनी चाहिए। नीचे की राशियाँ राष्ट्रीय या मेल-ऑर्डर संदर्भ हैं (NADAC या Cost Plus Drugs सूची कीमत), किसी खास स्टोर का शुल्क नहीं।',
+    'स्टोर की नकद कीमतें अलग-अलग होती हैं और फार्मेसी पर पुष्टि करनी चाहिए। Cost Plus मेल-ऑर्डर चेकआउट कीमत है (शिपिंग अलग)। GoodRx कूपन राशि उनकी साइट पर फार्मेसी और ZIP के अनुसार दिखती है — हम वह आंकड़ा नहीं बनाते। NADAC वह कीमत नहीं है जिस पर आप खरीद सकते हैं। इनमें से कोई भी किसी खास स्टोर का नकद शुल्क नहीं है।',
   nearbyPharmacies: 'CA-17 और CA-19 की फार्मेसी',
   nearbyHint:
     'पते आधिकारिक स्टोर लोकेटर से हैं। पहले कॉल करें — ये स्टोर इन संदर्भ कीमतों को अपनी नकद कीमत के रूप में नहीं दिखाते।',
@@ -260,8 +287,18 @@ const hi: typeof en = {
   notListed: 'सूची में नहीं',
   retrievedOn: 'डेटा 3 अक्टूबर 2026 को लिया गया',
   back: 'वापस',
-  nadacBenchmark: 'NADAC संदर्भ',
-  costPlusList: 'Cost Plus Drugs सूची कीमत',
+  nadacBenchmark:
+    'उचित-मूल्य संदर्भ (फार्मेसी थोक विक्रेताओं को क्या देती हैं — वह कीमत नहीं जिस पर आप खरीद सकते हैं)',
+  costPlusList: 'Cost Plus Drugs — अभी खरीदें',
+  lowestToday: 'सबसे कम कीमतें जो आप आज पा सकते हैं',
+  buyCostPlus: 'Cost Plus Drugs पर खरीदें',
+  openGoodRx: 'GoodRx कूपन खोलें',
+  goodRxCoupon: 'GoodRx कूपन',
+  goodRxHint:
+    'सहभागी फार्मेसी पर यह कूपन दिखाएँ। राशि GoodRx पर है और स्टोर के अनुसार बदलती है — हम यहाँ कोई आंकड़ा नहीं बनाते।',
+  costPlusHint: 'costplusdrugs.com पर मेल-ऑर्डर चेकआउट। पर्चा आवश्यक; शिपिंग और कर अलग।',
+  nadacNotBuyable:
+    'NADAC वह औसत राशि है जो फार्मेसी थोक विक्रेताओं को देती हैं। आप इस संख्या पर चेकआउट नहीं कर सकते।',
   searchA11y: 'दवाएं खोजें',
   startOver: 'फिर से शुरू करें',
   hoursCvsLocator: 'फार्मेसी समय के लिए CVS स्टोर लोकेटर देखें',

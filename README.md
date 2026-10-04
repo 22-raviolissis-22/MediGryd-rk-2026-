@@ -36,13 +36,17 @@ On web the UI is framed as a vertical iPhone (390×844).
 - **Source:** [NADAC 2026 weekly file on data.medicaid.gov](https://data.medicaid.gov/dataset/fbb83258-11c7-47f5-8b18-5f8e79f7e704) (public U.S. government data).
 - **API:** `POST https://data.medicaid.gov/api/1/datastore/query/fbb83258-11c7-47f5-8b18-5f8e79f7e704/0`
 - **What we used:** Current `nadac_per_unit` for each listed product, filtered to `as_of_date = 2026-09-30` (latest week in the file on retrieval day). Effective date on those rows was `2026-09-23`.
-- **How it is shown:** Per-unit NADAC × typical package size for the strength already in the app (for example 30 atorvastatin 20 mg tablets). Each card is labeled **NADAC benchmark**.
+- **How it is shown:** Per-unit NADAC × typical package size. On results this sits **below** buy-now options and is labeled **Fair-price reference (what pharmacies pay wholesalers — not a price you can buy at)**. NADAC is never treated as a checkout price.
 
 ### Mark Cuban Cost Plus Drugs
 
 - **Source:** Public Cost Plus Drugs pricing API (`https://us-central1-costplusdrugs-publicapi.cloudfunctions.net/main`) and catalog (`https://api.costplusdrugs.com/pricelist/cpd`). Product pages live on [costplusdrugs.com](https://www.costplusdrugs.com/).
-- **What we used:** `requested_quote` for the matching strength and quantity. Cost Plus’s published formula is **acquisition cost + 15% markup + pharmacist fee** (quotes include that fee; shipping is extra).
+- **What we used:** `requested_quote` for the matching strength and quantity. Cost Plus’s published formula is **acquisition cost + 15% markup + pharmacist fee** (quotes include that fee; shipping is extra). Results lead with this as a **buy-now** mail-order price and link the matching product page on [costplusdrugs.com](https://www.costplusdrugs.com/).
 - **Not listed:** Lantus / insulin glargine, Ozempic / semaglutide, and Eliquis / apixaban had **no catalog match** on October 3, 2026. Those cards say “Not listed” instead of inventing a price. Humira’s Cost Plus card is the **adalimumab-aacf biosimilar** kit, not brand Humira.
+
+### GoodRx coupons
+
+Each medication links to that drug’s real GoodRx page (`https://www.goodrx.com/<drug>`), for example [atorvastatin](https://www.goodrx.com/atorvastatin) or [Lantus](https://www.goodrx.com/lantus). Coupon dollar amounts are **not** copied into the app because they vary by pharmacy; the user opens GoodRx to see the current coupon.
 
 ### Pharmacy addresses (CA-17 and CA-19)
 
@@ -74,7 +78,7 @@ No store is shown with a dollar amount attached to that location.
 | Eligibility B | Covered California subsidy notice + enroll link. |
 | Eligibility C | Standard marketplace notice + enroll link. |
 | Search | Live filter of brand/generic names; tap a drug for benchmarks. |
-| Results | NADAC / Cost Plus cards, CA-17 and CA-19 pharmacies, then PAP / nonprofit programs. |
+| Results | Cost Plus buy-now + GoodRx coupon first, then NADAC as a non-purchasable wholesale reference, CA-17/CA-19 pharmacies (no store prices), then PAP / nonprofit programs. |
 
 ## Stack
 

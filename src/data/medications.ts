@@ -125,6 +125,8 @@ export const medications: Medication[] = [
     ),
     category: L('Cholesterol', 'Colesterol', '胆固醇', 'कोलेस्ट्रॉल'),
     searchTerms: ['lipitor', 'atorvastatin', 'statin', 'cholesterol', '胆固醇', 'कोलेस्ट्रॉल'],
+    goodrxUrl: 'https://www.goodrx.com/atorvastatin',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/atorvastatin-20mg-tablet/',
     benchmarks: [
       nadac(
         0.84,
@@ -183,6 +185,8 @@ export const medications: Medication[] = [
     ),
     category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
     searchTerms: ['metformin', 'glucophage', 'diabetes', 'type 2', '糖尿病', 'मधुमेह'],
+    goodrxUrl: 'https://www.goodrx.com/metformin',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/metformin-500mg-tablet/',
     benchmarks: [
       nadac(
         0.87,
@@ -240,6 +244,8 @@ export const medications: Medication[] = [
     ),
     category: L('Blood pressure', 'Presión arterial', '血压', 'रक्तचाप'),
     searchTerms: ['lisinopril', 'zestril', 'prinivil', 'blood pressure', 'ace', '血压', 'रक्तचाप'],
+    goodrxUrl: 'https://www.goodrx.com/lisinopril',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/lisinopril-10mg-tablet/',
     benchmarks: [
       nadac(
         0.54,
@@ -277,6 +283,8 @@ export const medications: Medication[] = [
     ),
     category: L('Acid reflux', 'Reflujo', '胃酸反流', 'एसिड रिफ्लक्स'),
     searchTerms: ['omeprazole', 'prilosec', 'gerd', 'heartburn', '胃酸', 'रिफ्लक्स'],
+    goodrxUrl: 'https://www.goodrx.com/omeprazole',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/omeprazoledelayedreleasedr-20mg-capsule/',
     benchmarks: [
       nadac(
         0.88,
@@ -309,6 +317,8 @@ export const medications: Medication[] = [
     form: L('inhaler, 1 inhaler', 'inhalador, 1 unidad', '吸入器，1 支', 'इनहेलर, 1 इनहेलर'),
     category: L('Asthma', 'Asma', '哮喘', 'अस्थमा'),
     searchTerms: ['albuterol', 'ventolin', 'proair', 'inhaler', 'asthma', '哮喘', 'अस्थमा'],
+    goodrxUrl: 'https://www.goodrx.com/albuterol',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/albuterol-90mcg-inhaler18g/',
     benchmarks: [
       nadac(
         32.86,
@@ -371,6 +381,8 @@ export const medications: Medication[] = [
     form: L('vial, 1 month', 'frasco, 1 mes', '瓶装，1 个月', 'वायल, 1 महीना'),
     category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
     searchTerms: ['lantus', 'insulin', 'glargine', 'basaglar', 'diabetes', '胰岛素', 'इंसुलिन'],
+    goodrxUrl: 'https://www.goodrx.com/lantus',
+    costPlusUrl: null,
     benchmarks: [
       nadac(
         61.52,
@@ -437,6 +449,8 @@ export const medications: Medication[] = [
     form: L('pen, 1 month', 'pluma, 1 mes', '笔式注射器，1 个月', 'पेन, 1 महीना'),
     category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
     searchTerms: ['ozempic', 'semaglutide', 'wegovy', 'glp-1', 'diabetes'],
+    goodrxUrl: 'https://www.goodrx.com/ozempic',
+    costPlusUrl: null,
     benchmarks: [
       nadac(
         995.7,
@@ -491,6 +505,8 @@ export const medications: Medication[] = [
     ),
     category: L('Blood thinner', 'Anticoagulante', '抗凝药', 'रक्त पतला करने वाली दवा'),
     searchTerms: ['eliquis', 'apixaban', 'blood thinner', 'afib'],
+    goodrxUrl: 'https://www.goodrx.com/eliquis',
+    costPlusUrl: null,
     benchmarks: [
       nadac(
         331.27,
@@ -540,6 +556,8 @@ export const medications: Medication[] = [
     form: L('pen, 1 month', 'pluma, 1 mes', '笔式注射器，1 个月', 'पेन, 1 महीना'),
     category: L('Autoimmune', 'Autoinmune', '自身免疫', 'स्वप्रतिरक्षी'),
     searchTerms: ['humira', 'adalimumab', 'amjevita', 'arthritis', 'crohns'],
+    goodrxUrl: 'https://www.goodrx.com/humira',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/adalimumab-aacf-40mg_0_8ml-prefilled-syringe-kit-1/',
     benchmarks: [
       nadac(
         6734.83,
@@ -626,6 +644,8 @@ export const medications: Medication[] = [
     ),
     category: L('Mental health', 'Salud mental', '精神健康', 'मानसिक स्वास्थ्य'),
     searchTerms: ['zoloft', 'sertraline', 'ssri', 'depression', 'anxiety', '抑郁', 'अवसाद'],
+    goodrxUrl: 'https://www.goodrx.com/sertraline',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/sertraline-50mg-tablet/',
     benchmarks: [
       nadac(
         1.04,
@@ -683,6 +703,8 @@ export const medications: Medication[] = [
     ),
     category: L('Antibiotic', 'Antibiótico', '抗生素', 'एंटीबायोटिक'),
     searchTerms: ['amoxicillin', 'amoxil', 'antibiotic', '抗生素', 'एंटीबायोटिक'],
+    goodrxUrl: 'https://www.goodrx.com/amoxicillin',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/amoxicillin-500mg-capsule-amoxil/',
     benchmarks: [
       nadac(
         2.36,
@@ -720,6 +742,9 @@ export const medications: Medication[] = [
     form: L('250/50 inhaler', 'inhalador 250/50', '250/50 吸入器', '250/50 इनहेलर'),
     category: L('Asthma / COPD', 'Asma / EPOC', '哮喘 / 慢阻肺', 'अस्थमा / COPD'),
     searchTerms: ['advair', 'fluticasone', 'salmeterol', 'wixela', 'copd', 'asthma'],
+    goodrxUrl: 'https://www.goodrx.com/fluticasone-salmeterol',
+    costPlusUrl:
+      'https://www.costplusdrugs.com/medications/fluticasone-salmeterol-250mcg-50mcg-aerosol-powder-60-doses/',
     benchmarks: [
       nadac(
         74.71,
