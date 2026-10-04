@@ -33,5 +33,5 @@ export function InsuranceScreen() {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', gap: 12 },
+  row: { flexDirection: 'row', gap: 12, alignSelf: 'stretch' },
 });

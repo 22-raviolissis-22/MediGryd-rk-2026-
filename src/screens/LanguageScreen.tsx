@@ -62,7 +62,7 @@ export function LanguageScreen() {
 const styles = StyleSheet.create({
   headerSpacer: { height: 2 },
   pill: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     borderRadius: 28,
     paddingVertical: 14,
     paddingHorizontal: 22,

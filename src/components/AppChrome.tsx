@@ -45,9 +45,8 @@ export function AppChrome({
   showSearch?: boolean;
   autoFocusSearch?: boolean;
 }) {
-  const { language, screen, searchQuery, setSearchQuery, go, back, reset } = useApp();
+  const { language, screen, searchQuery, setSearchQuery, go, back, reset, canGoBack } = useApp();
   const c = t(language);
-  const showBack = screen !== 'language';
 
   const onChangeSearch = (text: string) => {
     setSearchQuery(text);
@@ -59,24 +58,7 @@ export function AppChrome({
       <GridBackground />
       <View style={styles.pad}>
         <View style={styles.header}>
-          {showBack ? (
-            <Pressable
-              onPress={back}
-              hitSlop={6}
-              style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
-              accessibilityLabel={c.back}
-              accessibilityRole="button"
-            >
-              <Text style={[styles.backLabel, typeface(language, 'display')]} numberOfLines={1}>
-                {c.back}
-              </Text>
-            </Pressable>
-          ) : null}
-          <Pressable
-            onPress={() => (screen === 'language' ? null : back())}
-            hitSlop={6}
-            style={showSearch ? undefined : { flex: 1 }}
-          >
+          <Pressable hitSlop={6} style={showSearch ? undefined : { flex: 1 }}>
             <Text
               style={[styles.appName, !showSearch && styles.appNameLarge]}
               numberOfLines={1}
@@ -119,6 +101,20 @@ export function AppChrome({
         >
           {children}
         </ScrollView>
+        {canGoBack ? (
+          <Pressable
+            onPress={back}
+            hitSlop={12}
+            style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
+            accessibilityLabel={c.back}
+            accessibilityRole="button"
+          >
+            <View style={styles.chevron}>
+              <View style={styles.chevronArmTop} />
+              <View style={styles.chevronArmBottom} />
+            </View>
+          </Pressable>
+        ) : null}
       </View>
     </View>
   );
@@ -214,19 +210,36 @@ const styles = StyleSheet.create({
     ...shadow,
   },
   backBtn: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 2,
-    borderColor: ink,
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    height: 36,
+    alignSelf: 'flex-start',
+    width: 56,
+    height: 48,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 4,
   },
-  backLabel: {
-    fontSize: 13,
-    color: ink,
-    letterSpacing: 0.2,
+  chevron: {
+    width: 22,
+    height: 22,
+  },
+  chevronArmTop: {
+    position: 'absolute',
+    width: 16,
+    height: 3.5,
+    backgroundColor: ink,
+    borderRadius: 2,
+    top: 4,
+    left: 2,
+    transform: [{ rotate: '-42deg' }],
+  },
+  chevronArmBottom: {
+    position: 'absolute',
+    width: 16,
+    height: 3.5,
+    backgroundColor: ink,
+    borderRadius: 2,
+    bottom: 4,
+    left: 2,
+    transform: [{ rotate: '42deg' }],
   },
   appName: {
     fontFamily: fonts.display,
@@ -291,12 +304,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#9BB6F5',
   },
   plus: { fontSize: 26, fontWeight: '800', color: ink, marginTop: -2, lineHeight: 30 },
-  body: { paddingTop: 14, paddingBottom: 24, gap: 12 },
+  body: { paddingTop: 14, paddingBottom: 8, gap: 12, alignItems: 'stretch' },
   whiteCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 28,
     paddingVertical: 16,
     paddingHorizontal: 14,
+    alignSelf: 'stretch',
     ...shadow,
   },
   question: {

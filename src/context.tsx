@@ -18,6 +18,7 @@ type AppState = {
   medication: Medication | null;
   searchQuery: string;
   nadacFeed: NadacFeed;
+  canGoBack: boolean;
   setLanguage: (lang: Language) => void;
   go: (screen: ScreenId) => void;
   back: () => void;
@@ -66,6 +67,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       medication,
       searchQuery,
       nadacFeed,
+      canGoBack: history.length > 0,
       setLanguage,
       go: (next) => {
         setHistory((h) => (screen === next ? h : [...h, screen]));
@@ -94,7 +96,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSearchQuery('');
       },
     }),
-    [language, screen, insurance, household, income, medication, searchQuery, nadacFeed]
+    [language, screen, insurance, household, income, medication, searchQuery, nadacFeed, history]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -32,5 +32,5 @@ export function HouseholdScreen() {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', gap: 10 },
+  row: { flexDirection: 'row', gap: 10, alignSelf: 'stretch' },
 });
