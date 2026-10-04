@@ -123,6 +123,7 @@ export function ResultsScreen() {
               <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.goodRxCoupon}</Text>
               <Text style={[styles.pharm, typeface(language, 'display')]}>{med.generic}</Text>
               <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxHint}</Text>
+              <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxPromoNote}</Text>
             </WhiteCard>
             <WhitePill label={c.openGoodRx} onPress={() => openUrl(med.goodrxUrl)} />
           </View>
