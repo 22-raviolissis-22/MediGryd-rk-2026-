@@ -109,6 +109,33 @@ const en = {
   hoursWalgreens24:
     'Pharmacy open 24 hours; closes 1:30–2:00am for meal break (Walgreens locator)',
   hoursCostcoGilroy: 'Mon-Fri 9:00am-7:00pm; Sat 9:00am-6:00pm; Sun closed (Costco warehouse page)',
+  papLikelyTitle: 'Programs you likely qualify for',
+  papOtherTitle: 'Other programs worth checking',
+  papDisclaimer:
+    '“Likely qualifies” is a screening hint, not a decision. Every program makes its own determination — confirm eligibility with them before you rely on free or discounted medicine.',
+  papRenewal:
+    'PAP enrollments typically expire every 12 months. If you get free medicine, set a reminder to reapply before your term ends — renewal is not automatic.',
+  papNoManufacturer:
+    'We did not find a verified manufacturer patient assistance program that currently enrolls new patients for this medicine. Generic versions often have no brand PAP. Do not assume a program exists.',
+  papNoProgramsAtAll:
+    'No verified manufacturer PAP or nonprofit mail-order listing for this medicine. Check cash prices on the Prices tab, or search RxAssist and NeedyMeds yourself in case a new program opens.',
+  papUserSituation: 'Your answers: household of {size} · income {income} · {insured}',
+  papCutoffVsYou: 'Program cutoff: {pct}% FPL (about {amount}/year for a household of {size})',
+  papUnpublishedCutoff: 'Income limit is not published as a public FPL % —',
+  papNoLimitCutoff: 'No income cutoff.',
+  papIncomeSkipped: 'income not collected (insured path)',
+  papHouseholdSkipped: 'size not collected',
+  papYouInsured: 'have health insurance',
+  papYouUninsured: 'do not have health insurance',
+  papDocuments: 'What to send',
+  papSend: 'Where to send',
+  papCall: 'Phone',
+  papScript: 'What to say when you call',
+  papOpenApply: 'Open application page',
+  papClosed: 'Closed to new patients',
+  papCovers: 'Covers',
+  papEmptyLikely:
+    'Nothing in this list is a clear match for your screener answers. Programs below may still be worth a call — they are not guaranteed.',
 };
 
 const es: typeof en = {
@@ -189,6 +216,33 @@ const es: typeof en = {
     'Farmacia abierta 24 horas; cierra 1:30–2:00 a. m. para el descanso (localizador de Walgreens)',
   hoursCostcoGilroy:
     'Lun-vie 9:00 a. m.-7:00 p. m.; sáb 9:00 a. m.-6:00 p. m.; dom cerrado (página del almacén Costco)',
+  papLikelyTitle: 'Programas para los que es probable que califiques',
+  papOtherTitle: 'Otros programas que conviene revisar',
+  papDisclaimer:
+    '“Es probable que califiques” es una pista de filtro, no una decisión. Cada programa decide por su cuenta: confirma la elegibilidad con ellos antes de contar con medicina gratis o con descuento.',
+  papRenewal:
+    'Las inscripciones a PAP suelen vencer cada 12 meses. Si recibes medicina gratis, pon un recordatorio para volver a solicitar antes de que termine el período: la renovación no es automática.',
+  papNoManufacturer:
+    'No encontramos un programa de asistencia del fabricante verificado que ahora acepte pacientes nuevos para este medicamento. Las versiones genéricas a menudo no tienen PAP de marca. No asumas que existe un programa.',
+  papNoProgramsAtAll:
+    'No hay un PAP de fabricante verificado ni un listado de farmacia sin fines de lucro para este medicamento. Revisa precios en efectivo en la pestaña de Precios, o busca en RxAssist y NeedyMeds por si abre un programa nuevo.',
+  papUserSituation: 'Tus respuestas: hogar de {size} · ingresos {income} · {insured}',
+  papCutoffVsYou: 'Tope del programa: {pct}% del FPL (unos {amount}/año para un hogar de {size})',
+  papUnpublishedCutoff: 'El límite de ingresos no se publica como % de FPL —',
+  papNoLimitCutoff: 'Sin tope de ingresos.',
+  papIncomeSkipped: 'ingresos no recopilados (ruta con seguro)',
+  papHouseholdSkipped: 'tamaño no recopilado',
+  papYouInsured: 'tengo seguro médico',
+  papYouUninsured: 'no tengo seguro médico',
+  papDocuments: 'Qué enviar',
+  papSend: 'Dónde enviar',
+  papCall: 'Teléfono',
+  papScript: 'Qué decir al llamar',
+  papOpenApply: 'Abrir página de solicitud',
+  papClosed: 'Cerrado a pacientes nuevos',
+  papCovers: 'Cubre',
+  papEmptyLikely:
+    'Nada de esta lista encaja con claridad con tus respuestas. Los programas de abajo aún pueden valer una llamada — no están garantizados.',
 };
 
 const zh: typeof en = {
@@ -261,6 +315,33 @@ const zh: typeof en = {
   hoursCostcoWarehouse: '请在 Costco 仓储门店页面查看药房营业时间',
   hoursWalgreens24: '药房 24 小时营业；凌晨 1:30–2:00 休息（Walgreens 查询）',
   hoursCostcoGilroy: '周一至周五 9:00–19:00；周六 9:00–18:00；周日休息（Costco 仓储页面）',
+  papLikelyTitle: '你可能符合的项目',
+  papOtherTitle: '其他值得了解的项目',
+  papDisclaimer:
+    '“可能符合”只是筛选提示，不是决定。每个项目自行审核资格——在依赖免费或优惠药品之前，请向项目方确认。',
+  papRenewal:
+    '患者援助计划的登记通常每 12 个月到期。如果获得免费药品，请设置提醒在期限结束前重新申请——续期不会自动完成。',
+  papNoManufacturer:
+    '我们未找到目前接收该药品新患者的、已核实的制药商援助计划。仿制药往往没有原研 PAP。请不要假定存在这样的项目。',
+  papNoProgramsAtAll:
+    '该药品没有已核实的制药商 PAP，也没有非营利邮购目录。请在“价格”页查看自费价，或自行检索 RxAssist 与 NeedyMeds，以防新项目开放。',
+  papUserSituation: '你的回答：家庭 {size} 人 · 收入 {income} · {insured}',
+  papCutoffVsYou: '项目门槛：联邦贫困线的 {pct}%（{size} 人家庭约每年 {amount}）',
+  papUnpublishedCutoff: '收入上限未以公开贫困线百分比公布 —',
+  papNoLimitCutoff: '无收入门槛。',
+  papIncomeSkipped: '未采集收入（有保险路径）',
+  papHouseholdSkipped: '未采集家庭人数',
+  papYouInsured: '有医疗保险',
+  papYouUninsured: '没有医疗保险',
+  papDocuments: '需要提交的材料',
+  papSend: '提交方式',
+  papCall: '电话',
+  papScript: '打电话时可以说',
+  papOpenApply: '打开申请页面',
+  papClosed: '已停止接收新患者',
+  papCovers: '覆盖药品',
+  papEmptyLikely:
+    '根据你的筛选答案，下面没有明确匹配的项目。仍可致电了解——不能保证合格。',
 };
 
 const hi: typeof en = {
@@ -338,6 +419,33 @@ const hi: typeof en = {
   hoursCostcoWarehouse: 'फार्मेसी समय के लिए Costco वेयरहाउस पेज देखें',
   hoursWalgreens24: 'फार्मेसी 24 घंटे खुली; भोजन विराम के लिए 1:30–2:00 बजे बंद (Walgreens लोकेटर)',
   hoursCostcoGilroy: 'सोम-शुक्र 9:00–19:00; शनि 9:00–18:00; रवि बंद (Costco वेयरहाउस पेज)',
+  papLikelyTitle: 'कार्यक्रम जिनके लिए आप संभवतः पात्र हैं',
+  papOtherTitle: 'अन्य कार्यक्रम जिन्हें जाँचना चाहिए',
+  papDisclaimer:
+    '“संभवतः पात्र” केवल स्क्रीनिंग संकेत है, निर्णय नहीं। हर कार्यक्रम खुद पात्रता तय करता है — मुफ्त या छूट वाली दवा पर भरोसा करने से पहले उनसे पुष्टि करें।',
+  papRenewal:
+    'PAP नामांकन आमतौर पर हर 12 महीने में समाप्त होता है। यदि मुफ्त दवा मिलती है, अवधि खत्म होने से पहले फिर आवेदन करने का रिमाइंडर सेट करें — नवीकरण अपने आप नहीं होता।',
+  papNoManufacturer:
+    'इस दवा के लिए कोई सत्यापित निर्माता रोगी सहायता कार्यक्रम नहीं मिला जो अभी नए रोगियों को नामांकित करता हो। जेनेरिक संस्करणों का अक्सर ब्रांड PAP नहीं होता। यह न मानें कि कार्यक्रम मौजूद है।',
+  papNoProgramsAtAll:
+    'इस दवा के लिए कोई सत्यापित निर्माता PAP या गैर-लाभ मेल-ऑर्डर सूची नहीं है। कीमत टैब पर नकद कीमत देखें, या RxAssist और NeedyMeds स्वयं खोजें यदि कोई नया कार्यक्रम खुले।',
+  papUserSituation: 'आपके उत्तर: घर में {size} · आय {income} · {insured}',
+  papCutoffVsYou: 'कार्यक्रम की कटौती: {pct}% FPL ({size} लोगों के घर के लिए लगभग {amount}/वर्ष)',
+  papUnpublishedCutoff: 'आय सीमा सार्वजनिक FPL % के रूप में प्रकाशित नहीं है —',
+  papNoLimitCutoff: 'कोई आय कटौती नहीं।',
+  papIncomeSkipped: 'आय नहीं ली गई (बीमा वाला रास्ता)',
+  papHouseholdSkipped: 'घर का आकार नहीं लिया गया',
+  papYouInsured: 'स्वास्थ्य बीमा है',
+  papYouUninsured: 'स्वास्थ्य बीमा नहीं है',
+  papDocuments: 'क्या भेजना है',
+  papSend: 'कहाँ भेजें',
+  papCall: 'फ़ोन',
+  papScript: 'कॉल पर क्या कहें',
+  papOpenApply: 'आवेदन पृष्ठ खोलें',
+  papClosed: 'नए रोगियों के लिए बंद',
+  papCovers: 'कवर करता है',
+  papEmptyLikely:
+    'आपके स्क्रीनर उत्तरों से इस सूची में कोई स्पष्ट मेल नहीं है। नीचे के कार्यक्रम फिर भी कॉल के लायक हो सकते हैं — गारंटी नहीं।',
 };
 
 export const copy = { en, es, zh, hi };

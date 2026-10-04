@@ -41,13 +41,35 @@ export type PharmacyOffer = {
   addressVerified: boolean;
 };
 
-export type AssistanceProgram = {
+/** Who the program is designed for, based on insurance. */
+export type PapInsuranceRule =
+  | 'any'
+  | 'uninsured'
+  | 'insured'
+  | 'uninsuredOrGovernment'
+  | 'uninsuredOrMedicare';
+
+export type PapProgram = {
+  id: string;
   name: string;
   kind: 'pap' | 'nonprofit';
   sponsor: string;
+  /** Medication ids in this app that the program actually covers. */
+  medicationIds: string[];
+  covers: LocalizedText;
   summary: LocalizedText;
-  eligibility: LocalizedText;
-  url: string;
+  /** Max household income as % of FPL. Null when the program publishes no FPL figure. */
+  fplMax: number | null;
+  insuranceRule: PapInsuranceRule;
+  /** True when the program will not enroll new patients for this medicine. */
+  closedToNew: boolean;
+  applicationUrl: string;
+  phone: string;
+  sendWhere: LocalizedText;
+  documents: LocalizedText[];
+  callScript: LocalizedText;
+  cutoff: LocalizedText;
+  verifiedNote: LocalizedText;
 };
 
 export type Medication = {
@@ -59,7 +81,8 @@ export type Medication = {
   searchTerms: string[];
   benchmarks: PriceBenchmark[];
   pharmacies: PharmacyOffer[];
-  programs: AssistanceProgram[];
+  programIds: string[];
+  hasManufacturerPap: boolean;
   /** Real GoodRx coupon page for this drug, e.g. https://www.goodrx.com/atorvastatin */
   goodrxUrl: string;
   /** Cost Plus product page when the SKU is in their catalog; otherwise null. */

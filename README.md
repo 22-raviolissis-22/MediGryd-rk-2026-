@@ -92,6 +92,18 @@ Addresses come from official chain locators, not guesswork. Stores included:
 
 No store is shown with a dollar amount attached to that location.
 
+### Patient assistance programs (verified October 2026)
+
+The PAP tab is a matcher, not a directory of invented links. Each entry was checked against the manufacturer or nonprofit **application** page plus [RxAssist](https://www.rxassist.org/) / [NeedyMeds](https://www.needymeds.org/) listings. Phone numbers, fax/mail addresses, and FPL rules come from those sources. **Lilly Cares** and **AZ&Me** are omitted because they do not cover any drug in this app.
+
+Manufacturer PAPs in the catalog: Pfizer PAP Connect (Lipitor), GSK PAP (Ventolin HFA, Advair Diskus), Sanofi Patient Connection (Lantus), NovoCare PAP (Ozempic, 200% FPL, uninsured; Medicare Part D not eligible in 2026), Bristol Myers Squibb PAF (Eliquis; income cap unpublished). **myAbbVie Assist is closed to new HUMIRA patients as of July 1, 2026** — the app says so and does not treat it as an open match.
+
+Nonprofit / free-or-low-cost: Rx Outreach (no income application; listed generics), TotalAssist, HealthWell Foundation, Good Days (copay funds for insured patients; funds open and close).
+
+No verified manufacturer PAP for generic metformin, lisinopril, omeprazole, sertraline, or amoxicillin. Amoxicillin also was not on the Rx Outreach list we checked. The matcher says that plainly.
+
+Matching uses the insurance screener (household size, income bracket A/B/C, insured/uninsured). “Likely qualifies” only when the **entire** income bracket sits at or under the program FPL cap **and** insurance rules fit. It is never a guarantee — the UI says to confirm with the program. PAP enrollment typically expires yearly; the tab reminds users to reapply.
+
 ## What the buttons do
 
 | Screen | Behavior |

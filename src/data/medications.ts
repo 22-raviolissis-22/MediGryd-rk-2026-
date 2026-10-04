@@ -1,4 +1,4 @@
-import type { AssistanceProgram, LocalizedText, Medication, PriceBenchmark } from '../types';
+import type { LocalizedText, Medication, PriceBenchmark } from '../types';
 import { L } from '../i18n';
 import { areaPharmacies } from './pharmacies';
 
@@ -8,82 +8,6 @@ export const PRICE_RETRIEVED_ON = 'October 3, 2026';
 export const COST_PLUS_AS_OF = '2026-10-03';
 export const NADAC_AS_OF = '2026-09-30';
 export const NADAC_EFFECTIVE = '2026-09-23';
-
-const needyMeds: AssistanceProgram = {
-  name: 'NeedyMeds',
-  kind: 'nonprofit',
-  sponsor: 'NeedyMeds',
-  summary: L(
-    'Directory of PAPs, discount cards, and clinics that help pay for prescriptions.',
-    'Directorio de PAPs, tarjetas de descuento y clínicas que ayudan a pagar recetas.',
-    '患者援助计划、折扣卡和诊所目录，帮助支付处方药费用。',
-    'PAP, छूट कार्ड और क्लिनिक निर्देशिका जो पर्चे की दवाओं का भुगतान करने में मदद करती है।'
-  ),
-  eligibility: L(
-    'Open to anyone looking for assistance; programs have their own rules.',
-    'Abierto a cualquiera que busque ayuda; cada programa tiene sus propias reglas.',
-    '任何寻求帮助的人都可以查阅；各项目有各自的规则。',
-    'सहायता चाहने वाला कोई भी देख सकता है; प्रत्येक कार्यक्रम के अपने नियम हैं।'
-  ),
-  url: 'https://www.needymeds.org/',
-};
-
-const rxAssist: AssistanceProgram = {
-  name: 'RxAssist',
-  kind: 'nonprofit',
-  sponsor: 'RxAssist',
-  summary: L(
-    'Independent guide to manufacturer patient assistance programs.',
-    'Guía independiente de programas de asistencia al paciente de los fabricantes.',
-    '制药商患者援助计划的独立指南。',
-    'निर्माता रोगी सहायता कार्यक्रमों की स्वतंत्र मार्गदर्शिका।'
-  ),
-  eligibility: L(
-    'Varies by manufacturer; often uninsured or underinsured with income limits.',
-    'Varía según el fabricante; a menudo sin seguro o con seguro insuficiente e ingresos limitados.',
-    '因制药商而异；通常面向无保险或保险不足且有收入限制的患者。',
-    'निर्माता के अनुसार अलग; अक्सर बिना बीमा या अपर्याप्त बीमा और आय सीमा के साथ।'
-  ),
-  url: 'https://www.rxassist.org/',
-};
-
-const goodDays: AssistanceProgram = {
-  name: 'Good Days',
-  kind: 'nonprofit',
-  sponsor: 'Good Days',
-  summary: L(
-    'Helps insured patients cover copays for high-cost specialty medicines.',
-    'Ayuda a pacientes con seguro a cubrir copagos de medicamentos especializados de alto costo.',
-    '帮助有保险的患者支付高价专科药品的共付额。',
-    'बीमा वाले रोगियों को महंगी विशेषज्ञ दवाओं का सह-भुगतान कवर करने में मदद करता है।'
-  ),
-  eligibility: L(
-    'Usually commercially insured; disease-specific funds open and close.',
-    'Por lo general con seguro comercial; los fondos por enfermedad abren y cierran.',
-    '通常面向商业保险患者；按病种设立的基金不定期开放和关闭。',
-    'आमतौर पर व्यावसायिक बीमा; रोग-विशिष्ट फंड खुलते और बंद होते रहते हैं।'
-  ),
-  url: 'https://www.mygooddays.org/',
-};
-
-const pan: AssistanceProgram = {
-  name: 'PAN Foundation',
-  kind: 'nonprofit',
-  sponsor: 'Patient Access Network Foundation',
-  summary: L(
-    'Copay assistance grants for people with insurance who cannot afford out-of-pocket costs.',
-    'Becas para copagos para personas con seguro que no pueden pagar los costos de bolsillo.',
-    '为有保险但无力承担自付费用的人提供共付额补助。',
-    'बीमा वाले उन लोगों के लिए सह-भुगतान अनुदान जो जेब का खर्च वहन नहीं कर सकते।'
-  ),
-  eligibility: L(
-    'Must have insurance; income and diagnosis must match an open fund.',
-    'Debes tener seguro; ingresos y diagnóstico deben coincidir con un fondo abierto.',
-    '须有保险；收入和诊断须符合当前开放的基金。',
-    'बीमा होना चाहिए; आय और निदान किसी खुले फंड से मेल खाने चाहिए।'
-  ),
-  url: 'https://www.panfoundation.org/',
-};
 
 function nadac(price: number, pkg: LocalizedText, note: LocalizedText): PriceBenchmark {
   return { source: 'nadac', price, package: pkg, note };
@@ -152,28 +76,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      needyMeds,
-      rxAssist,
-      {
-        name: 'Pfizer Patient Assistance',
-        kind: 'pap',
-        sponsor: 'Pfizer',
-        summary: L(
-          'May provide Lipitor or atorvastatin at no cost for qualifying patients.',
-          'Puede proporcionar Lipitor o atorvastatina sin costo a pacientes que califiquen.',
-          '可能为符合条件的患者免费提供 Lipitor 或阿托伐他汀。',
-          'पात्र रोगियों को Lipitor या एटोरवास्टैटिन निःशुल्क दे सकता है।'
-        ),
-        eligibility: L(
-          'Typically uninsured or underinsured; household income often up to 300% FPL.',
-          'Por lo general sin seguro o con seguro insuficiente; ingresos hasta ~300% del nivel federal de pobreza.',
-          '通常面向无保险或保险不足者；家庭收入一般不超过联邦贫困线的 300%。',
-          'आमतौर पर बिना बीमा या अपर्याप्त बीमा; घरेलू आय अक्सर संघीय गरीबी रेखा के 300% तक।'
-        ),
-        url: 'https://www.pfizerforall.com/',
-      },
-    ],
+    hasManufacturerPap: true,
+    programIds: ['pfizer-pap', 'rx-outreach'],
   },
   {
     id: 'metformin',
@@ -212,27 +116,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      needyMeds,
-      {
-        name: 'Americares Medicine Access',
-        kind: 'nonprofit',
-        sponsor: 'Americares',
-        summary: L(
-          'Connects clinics and patients with donated chronic-care medicines.',
-          'Conecta clínicas y pacientes con medicamentos donados para enfermedades crónicas.',
-          '将诊所和患者与捐赠的慢性病药品对接。',
-          'क्लिनिक और रोगियों को दान की गई दीर्घकालिक दवाओं से जोड़ता है।'
-        ),
-        eligibility: L(
-          'Usually through a participating safety-net clinic.',
-          'Por lo general a través de una clínica de red de seguridad participante.',
-          '通常通过参与的安全网诊所提供。',
-          'आमतौर पर किसी सहभागी सुरक्षा-नेट क्लिनिक के माध्यम से।'
-        ),
-        url: 'https://www.americares.org/',
-      },
-    ],
+    hasManufacturerPap: false,
+    programIds: ['rx-outreach'],
   },
   {
     id: 'lisinopril',
@@ -271,7 +156,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [needyMeds, rxAssist],
+    hasManufacturerPap: false,
+    programIds: ['rx-outreach'],
   },
   {
     id: 'omeprazole',
@@ -310,7 +196,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [needyMeds],
+    hasManufacturerPap: false,
+    programIds: ['rx-outreach'],
   },
   {
     id: 'albuterol',
@@ -354,27 +241,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      needyMeds,
-      {
-        name: 'GSK Patient Assistance',
-        kind: 'pap',
-        sponsor: 'GSK',
-        summary: L(
-          'May provide Ventolin and other GSK inhalers at no cost.',
-          'Puede proporcionar Ventolin y otros inhaladores de GSK sin costo.',
-          '可能免费提供 Ventolin 及其他 GSK 吸入器。',
-          'Ventolin और अन्य GSK इनहेलर निःशुल्क दे सकता है।'
-        ),
-        eligibility: L(
-          'Uninsured or Medicare Part D in the coverage gap; income limits apply.',
-          'Sin seguro o Medicare Parte D en el período sin cobertura; hay límites de ingresos.',
-          '无保险，或 Medicare D 部分处于保障缺口期；适用收入限制。',
-          'बिना बीमा या कवरेज गैप में Medicare भाग D; आय सीमा लागू।'
-        ),
-        url: 'https://www.gskforyou.com/',
-      },
-    ],
+    hasManufacturerPap: true,
+    programIds: ['gsk-pap', 'rx-outreach'],
   },
   {
     id: 'insulin-glargine',
@@ -404,45 +272,8 @@ export const medications: Medication[] = [
       costplus(null, notListedPkg, notOnCostPlus),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      {
-        name: 'Sanofi Patient Connection',
-        kind: 'pap',
-        sponsor: 'Sanofi',
-        summary: L(
-          'Free Lantus or other Sanofi insulins for eligible uninsured patients.',
-          'Lantus u otras insulinas de Sanofi gratis para pacientes elegibles sin seguro.',
-          '为符合条件的无保险患者免费提供 Lantus 或其他赛诺菲胰岛素。',
-          'पात्र बिना बीमा वाले रोगियों के लिए मुफ्त Lantus या अन्य Sanofi इंसुलिन।'
-        ),
-        eligibility: L(
-          'Uninsured or functionally uninsured; income typically ≤400% FPL.',
-          'Sin seguro o sin cobertura funcional; ingresos generalmente ≤400% FPL.',
-          '无保险或实质上无保障；收入一般不超过联邦贫困线的 400%。',
-          'बिना बीमा या व्यावहारिक रूप से बिना कवरेज; आय आमतौर पर ≤400% FPL।'
-        ),
-        url: 'https://www.sanofipatientconnection.com/',
-      },
-      needyMeds,
-      {
-        name: 'Insulin for Life / Direct Relief',
-        kind: 'nonprofit',
-        sponsor: 'Direct Relief',
-        summary: L(
-          'Donated insulin and diabetes supplies through partner clinics.',
-          'Insulina y suministros donados a través de clínicas asociadas.',
-          '通过合作诊所提供捐赠的胰岛素和糖尿病用品。',
-          'साझेदार क्लिनिकों के माध्यम से दान किया इंसुलिन और मधुमेह सामान।'
-        ),
-        eligibility: L(
-          'Distributed via partner health centers, not direct-to-patient mail.',
-          'Se entrega en centros de salud asociados, no por correo directo al paciente.',
-          '通过合作卫生中心发放，不直接邮寄给患者。',
-          'साझेदार स्वास्थ्य केंद्रों के माध्यम से वितरित, रोगी को सीधे डाक नहीं।'
-        ),
-        url: 'https://www.directrelief.org/',
-      },
-    ],
+    hasManufacturerPap: true,
+    programIds: ['sanofi-spc', 'totalassist', 'healthwell', 'good-days'],
   },
   {
     id: 'ozempic',
@@ -472,28 +303,8 @@ export const medications: Medication[] = [
       costplus(null, notListedPkg, notOnCostPlus),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      {
-        name: 'Novo Nordisk Patient Assistance',
-        kind: 'pap',
-        sponsor: 'Novo Nordisk',
-        summary: L(
-          'May provide Ozempic at no cost for qualifying uninsured patients.',
-          'Puede proporcionar Ozempic sin costo a pacientes elegibles sin seguro.',
-          '可能为符合条件的无保险患者免费提供 Ozempic。',
-          'पात्र बिना बीमा वाले रोगियों को Ozempic निःशुल्क दे सकता है।'
-        ),
-        eligibility: L(
-          'Uninsured, US resident, prescription required, household income limits.',
-          'Sin seguro, residente de EE. UU., receta requerida y límites de ingresos.',
-          '无保险、美国居民、须有处方，并有家庭收入限制。',
-          'बिना बीमा, अमेरिकी निवासी, पर्चा आवश्यक, घरेलू आय सीमा।'
-        ),
-        url: 'https://www.novocare.com/',
-      },
-      pan,
-      goodDays,
-    ],
+    hasManufacturerPap: true,
+    programIds: ['novo-pap', 'totalassist', 'healthwell', 'good-days'],
   },
   {
     id: 'eliquis',
@@ -528,28 +339,8 @@ export const medications: Medication[] = [
       costplus(null, notListedPkg, notOnCostPlus),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      {
-        name: 'Bristol Myers Squibb Patient Assistance',
-        kind: 'pap',
-        sponsor: 'Bristol Myers Squibb',
-        summary: L(
-          'Free Eliquis for people who qualify based on insurance and income.',
-          'Eliquis gratis para quienes califiquen según seguro e ingresos.',
-          '根据保险和收入符合条件者可免费获得 Eliquis。',
-          'बीमा और आय के आधार पर पात्र लोगों के लिए मुफ्त Eliquis।'
-        ),
-        eligibility: L(
-          'Uninsured or Medicare with unaffordable costs; income screening required.',
-          'Sin seguro o Medicare con costos inasequibles; se revisan los ingresos.',
-          '无保险，或 Medicare 自付费用过高；须进行收入审核。',
-          'बिना बीमा या असहनीय लागत वाला Medicare; आय जाँच आवश्यक।'
-        ),
-        url: 'https://www.bms.com/patient-and-caregivers/patient-assistance.html',
-      },
-      pan,
-      needyMeds,
-    ],
+    hasManufacturerPap: true,
+    programIds: ['bms-paf', 'totalassist', 'healthwell', 'good-days'],
   },
   {
     id: 'humira',
@@ -593,46 +384,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      {
-        name: 'AbbVie Patient Assistance',
-        kind: 'pap',
-        sponsor: 'AbbVie',
-        summary: L(
-          'myAbbVie Assist may provide Humira at no cost if you qualify.',
-          'myAbbVie Assist puede proporcionar Humira sin costo si calificas.',
-          '若符合条件，myAbbVie Assist 可能免费提供 Humira。',
-          'पात्र होने पर myAbbVie Assist Humira निःशुल्क दे सकता है।'
-        ),
-        eligibility: L(
-          'Uninsured or underinsured; financial criteria and prescription required.',
-          'Sin seguro o con seguro insuficiente; criterios financieros y receta.',
-          '无保险或保险不足；须符合财务标准并持有处方。',
-          'बिना बीमा या अपर्याप्त बीमा; वित्तीय मानदंड और पर्चा आवश्यक।'
-        ),
-        url: 'https://www.abbvie.com/patients/patient-assistance.html',
-      },
-      pan,
-      goodDays,
-      {
-        name: 'HealthWell Foundation',
-        kind: 'nonprofit',
-        sponsor: 'HealthWell Foundation',
-        summary: L(
-          'Copay and premium assistance when a matching disease fund is open.',
-          'Ayuda con copagos y primas cuando hay un fondo de enfermedad abierto.',
-          '在相应病种基金开放时，提供共付额和保费援助。',
-          'जब मेल खाता रोग फंड खुला हो तो सह-भुगतान और प्रीमियम सहायता।'
-        ),
-        eligibility: L(
-          'Insured; income generally up to 400–500% FPL depending on fund.',
-          'Con seguro; ingresos generalmente hasta 400–500% FPL según el fondo.',
-          '须有保险；收入一般不超过联邦贫困线的 400–500%，视基金而定。',
-          'बीमा होना चाहिए; आय आमतौर पर फंड के अनुसार 400–500% FPL तक।'
-        ),
-        url: 'https://www.healthwellfoundation.org/',
-      },
-    ],
+    hasManufacturerPap: false,
+    programIds: ['abbvie-humira', 'totalassist', 'healthwell', 'good-days'],
   },
   {
     id: 'sertraline',
@@ -671,27 +424,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      needyMeds,
-      {
-        name: 'Viatris Patient Assistance',
-        kind: 'pap',
-        sponsor: 'Viatris',
-        summary: L(
-          'Assistance for certain generic and brand mental-health medicines.',
-          'Asistencia para ciertos medicamentos de salud mental de marca y genéricos.',
-          '为部分品牌及仿制精神健康药品提供援助。',
-          'कुछ जेनेरिक और ब्रांड मानसिक स्वास्थ्य दवाओं के लिए सहायता।'
-        ),
-        eligibility: L(
-          'Uninsured with documented financial need.',
-          'Sin seguro y con necesidad económica documentada.',
-          '无保险且有书面经济困难证明。',
-          'बिना बीमा और दस्तावेजी वित्तीय आवश्यकता के साथ।'
-        ),
-        url: 'https://www.viatris.com/',
-      },
-    ],
+    hasManufacturerPap: false,
+    programIds: ['rx-outreach'],
   },
   {
     id: 'amoxicillin',
@@ -735,7 +469,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [needyMeds],
+    hasManufacturerPap: false,
+    programIds: [],
   },
   {
     id: 'advair',
@@ -780,28 +515,8 @@ export const medications: Medication[] = [
       ),
     ],
     pharmacies: areaPharmacies,
-    programs: [
-      {
-        name: 'GSK Patient Assistance',
-        kind: 'pap',
-        sponsor: 'GSK',
-        summary: L(
-          'Free Advair or authorized generic for eligible patients.',
-          'Advair o genérico autorizado gratis para pacientes elegibles.',
-          '为符合条件的患者免费提供 Advair 或授权仿制药。',
-          'पात्र रोगियों के लिए मुफ्त Advair या अधिकृत जेनेरिक।'
-        ),
-        eligibility: L(
-          'Uninsured or Medicare Part D; income documentation required.',
-          'Sin seguro o Medicare Parte D; se requiere documentación de ingresos.',
-          '无保险或 Medicare D 部分；须提供收入证明。',
-          'बिना बीमा या Medicare भाग D; आय दस्तावेज़ आवश्यक।'
-        ),
-        url: 'https://www.gskforyou.com/',
-      },
-      needyMeds,
-      rxAssist,
-    ],
+    hasManufacturerPap: true,
+    programIds: ['gsk-pap', 'rx-outreach'],
   },
 ];
 
