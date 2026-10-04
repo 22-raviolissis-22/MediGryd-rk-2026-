@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   AppChrome,
@@ -17,11 +17,6 @@ export function ResultsScreen() {
   const c = t(language);
   const [tab, setTab] = useState<'rx' | 'pap'>('rx');
   const med = medication;
-
-  const pharmacies = useMemo(
-    () => (med ? [...med.pharmacies].sort((a, b) => a.price - b.price) : []),
-    [med]
-  );
 
   if (!med) {
     return (
@@ -62,17 +57,32 @@ export function ResultsScreen() {
 
       {tab === 'rx' ? (
         <>
-          <BodyText>{c.couponNote}</BodyText>
-          {pharmacies.map((p, i) => (
-            <WhiteCard key={p.name}>
-              <Text style={styles.pharm}>{p.name}</Text>
-              <Text style={styles.meta}>
-                {p.distanceMiles.toFixed(1)} {c.miles} · {p.address}
+          <WhiteCard>
+            <BodyText>{c.priceDisclaimer}</BodyText>
+            <Text style={styles.retrieved}>{c.retrievedOn}</Text>
+          </WhiteCard>
+          {med.benchmarks.map((b) => (
+            <WhiteCard key={b.source + (b.package || '')}>
+              <Text style={styles.kind}>{b.sourceLabel}</Text>
+              <Text style={styles.price}>
+                {b.price == null ? c.notListed : `$${b.price.toFixed(2)}`}
               </Text>
-              <Text style={styles.price}>${p.price.toFixed(2)}</Text>
-              <Text style={styles.cash}>{c.cashPrice}</Text>
-              {i === 0 ? <Text style={styles.best}>{language === 'en' ? 'Lowest' : 'Más bajo'}</Text> : null}
+              <Text style={styles.meta}>{language === 'es' ? b.packageEs : b.package}</Text>
+              <Text style={styles.note}>{language === 'es' ? b.noteEs : b.note}</Text>
             </WhiteCard>
+          ))}
+          <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
+          <BodyText>{c.nearbyHint}</BodyText>
+          {med.pharmacies.map((p) => (
+            <View key={p.district + p.address}>
+              <WhiteCard>
+                <Text style={styles.pharm}>{p.name}</Text>
+                <Text style={styles.kind}>{p.district}</Text>
+                <Text style={styles.meta}>{p.address}</Text>
+                <Text style={styles.meta}>{p.hours}</Text>
+              </WhiteCard>
+              <WhitePill label={c.openLocator} onPress={() => openUrl(p.locatorUrl)} />
+            </View>
           ))}
         </>
       ) : (
@@ -116,8 +126,21 @@ const styles = StyleSheet.create({
   pharm: { fontFamily: fonts.display, fontSize: 18, color: ink, textAlign: 'center' },
   meta: { fontFamily: fonts.body, fontSize: 12, color: '#444', textAlign: 'center', marginTop: 4 },
   price: { fontFamily: fonts.display, fontSize: 28, color: ink, textAlign: 'center', marginTop: 6 },
-  cash: { fontFamily: fonts.body, fontSize: 12, textAlign: 'center', color: '#444' },
-  best: { fontFamily: fonts.bodyBold, textAlign: 'center', marginTop: 6, color: '#5B7AD4' },
+  note: {
+    fontFamily: fonts.body,
+    fontSize: 12,
+    lineHeight: 17,
+    color: '#444',
+    textAlign: 'center',
+    marginTop: 8,
+  },
+  retrieved: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 8,
+    color: '#5B7AD4',
+  },
   kind: {
     fontFamily: fonts.bodyBold,
     fontSize: 12,

@@ -13,12 +13,26 @@ export type ScreenId =
   | 'search'
   | 'results';
 
+export type District = 'CA-17' | 'CA-19';
+
+export type PriceBenchmark = {
+  source: 'nadac' | 'costplus';
+  /** Shown on the results card. */
+  sourceLabel: 'NADAC benchmark' | 'Cost Plus Drugs list price';
+  price: number | null;
+  package: string;
+  packageEs: string;
+  note: string;
+  noteEs: string;
+};
+
 export type PharmacyOffer = {
   name: string;
-  distanceMiles: number;
-  price: number;
   address: string;
+  district: District;
   hours: string;
+  locatorUrl: string;
+  addressVerified: boolean;
 };
 
 export type AssistanceProgram = {
@@ -41,6 +55,7 @@ export type Medication = {
   category: string;
   categoryEs: string;
   searchTerms: string[];
+  benchmarks: PriceBenchmark[];
   pharmacies: PharmacyOffer[];
   programs: AssistanceProgram[];
 };

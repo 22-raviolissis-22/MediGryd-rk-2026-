@@ -36,19 +36,23 @@ const en = {
   searchEmpty: 'Start typing or pick a common prescription below.',
   noMatches: 'No medications match that search. Try the generic name.',
   commonRx: 'Common prescriptions',
-  pharmaciesTab: 'Local Pharmacy Prices',
+  pharmaciesTab: 'Prices & pharmacies',
   papsTab: 'PAPs & Free Medicine',
-  cashPrice: 'Cash / discount price',
-  miles: 'mi',
   apply: 'Open program',
   manufacturerPAP: 'Manufacturer PAP',
   nonprofit: 'Nonprofit / free medicine',
   resultsFor: 'Prices and programs for',
-  insuredBanner: 'Comparing cash prices — still check your insurance copay.',
+  insuredBanner: 'These are cash benchmarks — still check your insurance copay.',
   papHint:
     'Patient assistance programs (PAPs) and nonprofits can provide free or low-cost medicine if you qualify.',
   noPrograms: 'No listed programs for this medication.',
-  couponNote: 'Show the pharmacy this cash price or a discount card at pickup.',
+  priceDisclaimer:
+    'In-store cash prices vary and should be confirmed at the pharmacy. The dollar amounts below are national or mail-order benchmarks (NADAC or Cost Plus Drugs list prices), not the price a specific store charges.',
+  nearbyPharmacies: 'Pharmacies in CA-17 and CA-19',
+  nearbyHint: 'Addresses from official store locators. Call ahead — they do not list these benchmark prices as their cash charge.',
+  openLocator: 'Open store locator',
+  notListed: 'Not listed',
+  retrievedOn: 'Data retrieved October 3, 2026',
 };
 
 const es: typeof en = {
@@ -87,19 +91,24 @@ const es: typeof en = {
   searchEmpty: 'Empieza a escribir o elige una receta frecuente.',
   noMatches: 'No hay coincidencias. Prueba el nombre genérico.',
   commonRx: 'Recetas frecuentes',
-  pharmaciesTab: 'Precios de farmacias locales',
+  pharmaciesTab: 'Precios y farmacias',
   papsTab: 'PAPs y medicina gratis',
-  cashPrice: 'Precio en efectivo / descuento',
-  miles: 'mi',
   apply: 'Abrir programa',
   manufacturerPAP: 'PAP del fabricante',
   nonprofit: 'Organización sin fines de lucro',
   resultsFor: 'Precios y programas para',
-  insuredBanner: 'Comparando precios en efectivo — revisa también tu copago.',
+  insuredBanner: 'Estas son referencias en efectivo — revisa también tu copago.',
   papHint:
     'Los programas de asistencia al paciente (PAP) y las organizaciones sin fines de lucro pueden ofrecer medicina gratis o de bajo costo si calificas.',
   noPrograms: 'No hay programas listados para este medicamento.',
-  couponNote: 'Muestra este precio en efectivo o una tarjeta de descuento al recoger.',
+  priceDisclaimer:
+    'Los precios en efectivo en la farmacia varían y se deben confirmar en el mostrador. Las cifras de abajo son referencias nacionales o de pedido por correo (NADAC o precio de lista de Cost Plus Drugs), no lo que cobra una tienda específica.',
+  nearbyPharmacies: 'Farmacias en CA-17 y CA-19',
+  nearbyHint:
+    'Direcciones de localizadores oficiales. Llama antes: estas farmacias no publican estos precios de referencia como su cobro en efectivo.',
+  openLocator: 'Abrir localizador',
+  notListed: 'No listado',
+  retrievedOn: 'Datos consultados el 3 de octubre de 2026',
 };
 
 export const copy = { en, es };
