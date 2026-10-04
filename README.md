@@ -67,7 +67,7 @@ No store is shown with a dollar amount attached to that location.
 
 | Screen | Behavior |
 | --- | --- |
-| Language | English or Español sets all later copy, then insurance. |
+| Language | English, Español, 简体中文, or हिन्दी sets all later copy, then insurance. |
 | Insurance **YES** | Coverage checklist, then skip income screening and go to medication search. |
 | Insurance **NO** | Household size → income brackets for that size → eligibility. |
 | Eligibility A | Medi-Cal notice + Covered California and BenefitsCal links. |

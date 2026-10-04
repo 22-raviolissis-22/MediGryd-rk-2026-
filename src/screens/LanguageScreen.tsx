@@ -1,7 +1,15 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { AppChrome, shadow } from '../components/AppChrome';
 import { useApp } from '../context';
-import { fonts, ink, periwinkle } from '../theme';
+import { ink, periwinkle, typeface } from '../theme';
+import type { Language } from '../types';
+
+const OPTIONS: { lang: Language; label: string; caption: string; tone: 'white' | 'blue' }[] = [
+  { lang: 'en', label: 'GET STARTED?', caption: 'English', tone: 'white' },
+  { lang: 'es', label: '¿EMPEZAMOS?', caption: 'Español', tone: 'blue' },
+  { lang: 'zh', label: '开始使用？', caption: '简体中文', tone: 'white' },
+  { lang: 'hi', label: 'शुरू करें?', caption: 'हिन्दी', tone: 'blue' },
+];
 
 export function LanguageScreen() {
   const { setLanguage, go } = useApp();
@@ -9,24 +17,44 @@ export function LanguageScreen() {
   return (
     <AppChrome showSearch={false}>
       <View style={styles.headerSpacer} />
-      <Pressable
-        onPress={() => {
-          setLanguage('en');
-          go('insurance');
-        }}
-        style={({ pressed }) => [styles.pill, styles.white, pressed && styles.pressed]}
-      >
-        <Text style={styles.dark}>GET STARTED?</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          setLanguage('es');
-          go('insurance');
-        }}
-        style={({ pressed }) => [styles.pill, styles.blue, pressed && styles.pressed]}
-      >
-        <Text style={styles.light}>¿EMPEZAMOS?</Text>
-      </Pressable>
+      {OPTIONS.map((opt) => {
+        const onBlue = opt.tone === 'blue';
+        return (
+          <Pressable
+            key={opt.lang}
+            onPress={() => {
+              setLanguage(opt.lang);
+              go('insurance');
+            }}
+            style={({ pressed }) => [
+              styles.pill,
+              onBlue ? styles.blue : styles.white,
+              pressed && styles.pressed,
+            ]}
+            accessibilityLabel={opt.caption}
+            accessibilityRole="button"
+          >
+            <Text
+              style={[
+                styles.label,
+                typeface(opt.lang, 'display'),
+                onBlue ? styles.light : styles.dark,
+              ]}
+            >
+              {opt.label}
+            </Text>
+            <Text
+              style={[
+                styles.caption,
+                typeface(opt.lang, 'bodySemi'),
+                onBlue ? styles.lightCaption : styles.darkCaption,
+              ]}
+            >
+              {opt.caption}
+            </Text>
+          </Pressable>
+        );
+      })}
     </AppChrome>
   );
 }
@@ -36,13 +64,17 @@ const styles = StyleSheet.create({
   pill: {
     alignSelf: 'flex-start',
     borderRadius: 28,
-    paddingVertical: 16,
+    paddingVertical: 14,
     paddingHorizontal: 22,
     ...shadow,
   },
   white: { backgroundColor: '#FFFFFF' },
   blue: { backgroundColor: periwinkle },
-  dark: { fontFamily: fonts.display, fontSize: 26, color: ink },
-  light: { fontFamily: fonts.display, fontSize: 26, color: '#FFFFFF' },
+  label: { fontSize: 24, lineHeight: 30 },
+  caption: { fontSize: 13, marginTop: 2 },
+  dark: { color: ink },
+  light: { color: '#FFFFFF' },
+  darkCaption: { color: '#5B7AD4' },
+  lightCaption: { color: '#EEF3FF' },
   pressed: { opacity: 0.88, transform: [{ scale: 0.98 }] },
 });

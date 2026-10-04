@@ -8,7 +8,7 @@ import type { IncomeBracket } from '../types';
 export function IncomeScreen() {
   const { language, household, go, setIncome } = useApp();
   const c = t(language);
-  const ranges = incomeOptions[household ?? 1];
+  const ranges = incomeOptions(household ?? 1, language);
 
   const pick = (bracket: IncomeBracket) => {
     setIncome(bracket);

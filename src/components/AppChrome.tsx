@@ -11,7 +11,7 @@ import {
 import { GridBackground } from './GridBackground';
 import { useApp } from '../context';
 import { t } from '../i18n';
-import { fonts, ink, periwinkle } from '../theme';
+import { fonts, ink, periwinkle, typeface } from '../theme';
 
 const shadow = Platform.select({
   web: { boxShadow: '0 5px 12px rgba(90, 160, 200, 0.2)' },
@@ -67,7 +67,7 @@ export function AppChrome({
               accessibilityLabel={c.back}
               accessibilityRole="button"
             >
-              <Text style={styles.backLabel} numberOfLines={1}>
+              <Text style={[styles.backLabel, typeface(language, 'display')]} numberOfLines={1}>
                 {c.back}
               </Text>
             </Pressable>
@@ -102,12 +102,12 @@ export function AppChrome({
                 autoCapitalize="none"
                 autoCorrect={false}
                 returnKeyType="search"
-                style={styles.searchInput}
-                accessibilityLabel="Search medications"
+                style={[styles.searchInput, typeface(language, 'body')]}
+                accessibilityLabel={c.searchA11y}
               />
             </View>
           ) : null}
-          <Pressable onPress={reset} accessibilityLabel="Start over">
+          <Pressable onPress={reset} accessibilityLabel={c.startOver}>
             <PlusMark />
           </Pressable>
         </View>
@@ -129,15 +129,18 @@ export function WhiteCard({ children }: { children: ReactNode }) {
 }
 
 export function Question({ children }: { children: ReactNode }) {
-  return <Text style={styles.question}>{children}</Text>;
+  const { language } = useApp();
+  return <Text style={[styles.question, typeface(language, 'body')]}>{children}</Text>;
 }
 
 export function DisplayTitle({ children }: { children: ReactNode }) {
-  return <Text style={styles.displayTitle}>{children}</Text>;
+  const { language } = useApp();
+  return <Text style={[styles.displayTitle, typeface(language, 'display')]}>{children}</Text>;
 }
 
 export function BodyText({ children }: { children: ReactNode }) {
-  return <Text style={styles.bodyText}>{children}</Text>;
+  const { language } = useApp();
+  return <Text style={[styles.bodyText, typeface(language, 'body')]}>{children}</Text>;
 }
 
 export function WhitePill({
@@ -153,6 +156,7 @@ export function WhitePill({
   center?: boolean;
   display?: boolean;
 }) {
+  const { language } = useApp();
   return (
     <Pressable
       onPress={onPress}
@@ -163,7 +167,14 @@ export function WhitePill({
         pressed && styles.pressed,
       ]}
     >
-      <Text style={[styles.pillLabel, display && styles.pillDisplay, grow && styles.pillLabelTight]}>
+      <Text
+        style={[
+          styles.pillLabel,
+          typeface(language, display ? 'display' : 'body'),
+          display && styles.pillDisplay,
+          grow && styles.pillLabelTight,
+        ]}
+      >
         {label}
       </Text>
     </Pressable>
@@ -171,12 +182,13 @@ export function WhitePill({
 }
 
 export function BlueBox({ label, onPress }: { label: string; onPress: () => void }) {
+  const { language } = useApp();
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [styles.blueBox, pressed && styles.pressed]}
     >
-      <Text style={styles.blueBoxLabel}>{label}</Text>
+      <Text style={[styles.blueBoxLabel, typeface(language, 'display')]}>{label}</Text>
     </Pressable>
   );
 }
@@ -212,7 +224,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backLabel: {
-    fontFamily: fonts.display,
     fontSize: 13,
     color: ink,
     letterSpacing: 0.2,
@@ -254,7 +265,7 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
   searchRule: { width: 2, height: 18, backgroundColor: ink, borderRadius: 1 },
-  searchInput: { flex: 1, fontSize: 14, color: ink, paddingVertical: 0, fontFamily: fonts.body },
+  searchInput: { flex: 1, fontSize: 14, color: ink, paddingVertical: 0 },
   plusBtn: {
     width: 40,
     height: 40,
@@ -289,21 +300,18 @@ const styles = StyleSheet.create({
     ...shadow,
   },
   question: {
-    fontFamily: fonts.body,
     fontSize: 20,
     lineHeight: 28,
     color: ink,
     textAlign: 'center',
   },
   displayTitle: {
-    fontFamily: fonts.display,
     fontSize: 22,
     lineHeight: 28,
     color: ink,
     textAlign: 'center',
   },
   bodyText: {
-    fontFamily: fonts.body,
     fontSize: 14,
     lineHeight: 20,
     color: ink,
@@ -321,7 +329,6 @@ const styles = StyleSheet.create({
   pillGrow: { flex: 1 },
   pillCenter: { alignSelf: 'center', paddingHorizontal: 28 },
   pillLabel: {
-    fontFamily: fonts.body,
     fontSize: 16,
     lineHeight: 20,
     color: ink,
@@ -329,7 +336,6 @@ const styles = StyleSheet.create({
   },
   pillLabelTight: { fontSize: 13, lineHeight: 17 },
   pillDisplay: {
-    fontFamily: fonts.display,
     fontSize: 13,
     letterSpacing: 0.2,
   },
@@ -343,7 +349,6 @@ const styles = StyleSheet.create({
     ...shadow,
   },
   blueBoxLabel: {
-    fontFamily: fonts.display,
     fontSize: 36,
     color: '#FFFFFF',
   },

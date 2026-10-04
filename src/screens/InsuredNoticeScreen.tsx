@@ -7,7 +7,7 @@ import {
 } from '../components/AppChrome';
 import { useApp } from '../context';
 import { t } from '../i18n';
-import { fonts, ink } from '../theme';
+import { ink, typeface } from '../theme';
 
 export function InsuredNoticeScreen() {
   const { language, go } = useApp();
@@ -19,11 +19,11 @@ export function InsuredNoticeScreen() {
         <DisplayTitle>{c.insuredTitle}</DisplayTitle>
       </WhiteCard>
       <WhiteCard>
-        <Text style={styles.leftBody}>{c.insuredLead}</Text>
-        <Text style={styles.before}>{c.insuredBefore}</Text>
-        <Text style={styles.bullet}>{`•  ${c.insuredStep1}`}</Text>
-        <Text style={styles.bullet}>{`•  ${c.insuredStep2}`}</Text>
-        <Text style={styles.bullet}>{`•  ${c.insuredStep3}`}</Text>
+        <Text style={[styles.leftBody, typeface(language, 'body')]}>{c.insuredLead}</Text>
+        <Text style={[styles.before, typeface(language, 'bodyBold')]}>{c.insuredBefore}</Text>
+        <Text style={[styles.bullet, typeface(language, 'body')]}>{`•  ${c.insuredStep1}`}</Text>
+        <Text style={[styles.bullet, typeface(language, 'body')]}>{`•  ${c.insuredStep2}`}</Text>
+        <Text style={[styles.bullet, typeface(language, 'body')]}>{`•  ${c.insuredStep3}`}</Text>
       </WhiteCard>
       <WhitePill display label={c.continueCompare} onPress={() => go('search')} />
     </AppChrome>
@@ -32,7 +32,6 @@ export function InsuredNoticeScreen() {
 
 const styles = StyleSheet.create({
   leftBody: {
-    fontFamily: fonts.body,
     fontSize: 14,
     lineHeight: 20,
     color: ink,
@@ -40,7 +39,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   before: {
-    fontFamily: fonts.bodyBold,
     fontSize: 14,
     color: ink,
     marginTop: 14,
@@ -48,7 +46,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   bullet: {
-    fontFamily: fonts.body,
     fontSize: 14,
     lineHeight: 20,
     color: ink,

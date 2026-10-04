@@ -9,8 +9,8 @@ import {
 } from '../components/AppChrome';
 import { openUrl } from '../components/ui';
 import { useApp } from '../context';
-import { t } from '../i18n';
-import { fonts, ink, periwinkle } from '../theme';
+import { loc, pharmacyHours, t } from '../i18n';
+import { ink, periwinkle, typeface } from '../theme';
 
 export function ResultsScreen() {
   const { language, medication, insurance } = useApp();
@@ -34,7 +34,7 @@ export function ResultsScreen() {
         <BodyText>{c.resultsFor}</BodyText>
         <DisplayTitle>{med.brand}</DisplayTitle>
         <BodyText>
-          {med.generic} · {language === 'es' ? med.formEs : med.form}
+          {med.generic} · {loc(med.form, language)}
         </BodyText>
       </WhiteCard>
       {insurance === 'yes' ? (
@@ -45,13 +45,29 @@ export function ResultsScreen() {
 
       <View style={styles.tabs}>
         <Pressable onPress={() => setTab('rx')} style={[styles.tab, tab === 'rx' && styles.tabOn]}>
-          <Text style={[styles.tabTxt, tab === 'rx' && styles.tabTxtOn]}>{c.pharmaciesTab}</Text>
+          <Text
+            style={[
+              styles.tabTxt,
+              typeface(language, 'bodyBold'),
+              tab === 'rx' && styles.tabTxtOn,
+            ]}
+          >
+            {c.pharmaciesTab}
+          </Text>
         </Pressable>
         <Pressable
           onPress={() => setTab('pap')}
           style={[styles.tab, tab === 'pap' && styles.tabOn]}
         >
-          <Text style={[styles.tabTxt, tab === 'pap' && styles.tabTxtOn]}>{c.papsTab}</Text>
+          <Text
+            style={[
+              styles.tabTxt,
+              typeface(language, 'bodyBold'),
+              tab === 'pap' && styles.tabTxtOn,
+            ]}
+          >
+            {c.papsTab}
+          </Text>
         </Pressable>
       </View>
 
@@ -59,16 +75,22 @@ export function ResultsScreen() {
         <>
           <WhiteCard>
             <BodyText>{c.priceDisclaimer}</BodyText>
-            <Text style={styles.retrieved}>{c.retrievedOn}</Text>
+            <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{c.retrievedOn}</Text>
           </WhiteCard>
           {med.benchmarks.map((b) => (
-            <WhiteCard key={b.source + (b.package || '')}>
-              <Text style={styles.kind}>{b.sourceLabel}</Text>
-              <Text style={styles.price}>
+            <WhiteCard key={b.source + loc(b.package, 'en')}>
+              <Text style={[styles.kind, typeface(language, 'bodyBold')]}>
+                {b.source === 'nadac' ? c.nadacBenchmark : c.costPlusList}
+              </Text>
+              <Text style={[styles.price, typeface(language, 'display')]}>
                 {b.price == null ? c.notListed : `$${b.price.toFixed(2)}`}
               </Text>
-              <Text style={styles.meta}>{language === 'es' ? b.packageEs : b.package}</Text>
-              <Text style={styles.note}>{language === 'es' ? b.noteEs : b.note}</Text>
+              <Text style={[styles.meta, typeface(language, 'body')]}>
+                {loc(b.package, language)}
+              </Text>
+              <Text style={[styles.note, typeface(language, 'body')]}>
+                {loc(b.note, language)}
+              </Text>
             </WhiteCard>
           ))}
           <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
@@ -76,10 +98,12 @@ export function ResultsScreen() {
           {med.pharmacies.map((p) => (
             <View key={p.district + p.address}>
               <WhiteCard>
-                <Text style={styles.pharm}>{p.name}</Text>
-                <Text style={styles.kind}>{p.district}</Text>
-                <Text style={styles.meta}>{p.address}</Text>
-                <Text style={styles.meta}>{p.hours}</Text>
+                <Text style={[styles.pharm, typeface(language, 'display')]}>{p.name}</Text>
+                <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{p.district}</Text>
+                <Text style={[styles.meta, typeface(language, 'body')]}>{p.address}</Text>
+                <Text style={[styles.meta, typeface(language, 'body')]}>
+                  {pharmacyHours(language, p.hoursId)}
+                </Text>
               </WhiteCard>
               <WhitePill label={c.openLocator} onPress={() => openUrl(p.locatorUrl)} />
             </View>
@@ -91,11 +115,11 @@ export function ResultsScreen() {
           {med.programs.map((prog) => (
             <View key={prog.name + prog.sponsor}>
               <WhiteCard>
-                <Text style={styles.kind}>
+                <Text style={[styles.kind, typeface(language, 'bodyBold')]}>
                   {prog.kind === 'pap' ? c.manufacturerPAP : c.nonprofit}
                 </Text>
-                <Text style={styles.pharm}>{prog.name}</Text>
-                <BodyText>{language === 'es' ? prog.summaryEs : prog.summary}</BodyText>
+                <Text style={[styles.pharm, typeface(language, 'display')]}>{prog.name}</Text>
+                <BodyText>{loc(prog.summary, language)}</BodyText>
               </WhiteCard>
               <WhitePill label={c.apply} onPress={() => openUrl(prog.url)} />
             </View>
@@ -117,17 +141,15 @@ const styles = StyleSheet.create({
   },
   tabOn: { backgroundColor: periwinkle },
   tabTxt: {
-    fontFamily: fonts.bodyBold,
     fontSize: 12,
     color: ink,
     textAlign: 'center',
   },
   tabTxtOn: { color: '#FFFFFF' },
-  pharm: { fontFamily: fonts.display, fontSize: 18, color: ink, textAlign: 'center' },
-  meta: { fontFamily: fonts.body, fontSize: 12, color: '#444', textAlign: 'center', marginTop: 4 },
-  price: { fontFamily: fonts.display, fontSize: 28, color: ink, textAlign: 'center', marginTop: 6 },
+  pharm: { fontSize: 18, color: ink, textAlign: 'center' },
+  meta: { fontSize: 12, color: '#444', textAlign: 'center', marginTop: 4 },
+  price: { fontSize: 28, color: ink, textAlign: 'center', marginTop: 6 },
   note: {
-    fontFamily: fonts.body,
     fontSize: 12,
     lineHeight: 17,
     color: '#444',
@@ -135,14 +157,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   retrieved: {
-    fontFamily: fonts.bodyBold,
     fontSize: 12,
     textAlign: 'center',
     marginTop: 8,
     color: '#5B7AD4',
   },
   kind: {
-    fontFamily: fonts.bodyBold,
     fontSize: 12,
     textAlign: 'center',
     color: '#5B7AD4',

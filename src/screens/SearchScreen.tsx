@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 import { AppChrome, BodyText, WhiteCard } from '../components/AppChrome';
 import { useApp } from '../context';
 import { medications, searchMedications } from '../data/medications';
-import { t } from '../i18n';
-import { fonts, ink } from '../theme';
+import { loc, t } from '../i18n';
+import { ink, typeface } from '../theme';
 import type { Medication } from '../types';
 
 export function SearchScreen() {
@@ -29,11 +29,13 @@ export function SearchScreen() {
       </WhiteCard>
       {list.map((med) => (
         <Pressable key={med.id} onPress={() => select(med)} style={styles.card}>
-          <Text style={styles.brand}>{med.brand}</Text>
-          <Text style={styles.generic}>
-            {med.generic} · {language === 'es' ? med.formEs : med.form}
+          <Text style={[styles.brand, typeface(language, 'display')]}>{med.brand}</Text>
+          <Text style={[styles.generic, typeface(language, 'body')]}>
+            {med.generic} · {loc(med.form, language)}
           </Text>
-          <Text style={styles.cat}>{language === 'es' ? med.categoryEs : med.category}</Text>
+          <Text style={[styles.cat, typeface(language, 'bodySemi')]}>
+            {loc(med.category, language)}
+          </Text>
         </Pressable>
       ))}
     </AppChrome>
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 14,
   },
-  brand: { fontFamily: fonts.display, fontSize: 18, color: ink },
-  generic: { fontFamily: fonts.body, color: '#444', marginTop: 2, fontSize: 13 },
-  cat: { fontFamily: fonts.bodySemi, color: '#5B7AD4', marginTop: 6, fontSize: 12 },
+  brand: { fontSize: 18, color: ink },
+  generic: { color: '#444', marginTop: 2, fontSize: 13 },
+  cat: { color: '#5B7AD4', marginTop: 6, fontSize: 12 },
 });
