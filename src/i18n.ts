@@ -53,6 +53,7 @@ const en = {
   openLocator: 'Open store locator',
   notListed: 'Not listed',
   retrievedOn: 'Data retrieved October 3, 2026',
+  back: 'Back',
 };
 
 const es: typeof en = {
@@ -109,6 +110,7 @@ const es: typeof en = {
   openLocator: 'Abrir localizador',
   notListed: 'No listado',
   retrievedOn: 'Datos consultados el 3 de octubre de 2026',
+  back: 'Atras',
 };
 
 export const copy = { en, es };

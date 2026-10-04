@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { GridBackground } from './GridBackground';
 import { useApp } from '../context';
+import { t } from '../i18n';
 import { fonts, ink, periwinkle } from '../theme';
 
 const shadow = Platform.select({
@@ -44,7 +45,9 @@ export function AppChrome({
   showSearch?: boolean;
   autoFocusSearch?: boolean;
 }) {
-  const { screen, searchQuery, setSearchQuery, go, back, reset } = useApp();
+  const { language, screen, searchQuery, setSearchQuery, go, back, reset } = useApp();
+  const c = t(language);
+  const showBack = screen !== 'language';
 
   const onChangeSearch = (text: string) => {
     setSearchQuery(text);
@@ -56,6 +59,19 @@ export function AppChrome({
       <GridBackground />
       <View style={styles.pad}>
         <View style={styles.header}>
+          {showBack ? (
+            <Pressable
+              onPress={back}
+              hitSlop={6}
+              style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
+              accessibilityLabel={c.back}
+              accessibilityRole="button"
+            >
+              <Text style={styles.backLabel} numberOfLines={1}>
+                {c.back}
+              </Text>
+            </Pressable>
+          ) : null}
           <Pressable
             onPress={() => (screen === 'language' ? null : back())}
             hitSlop={6}
@@ -184,6 +200,22 @@ const styles = StyleSheet.create({
     gap: 8,
     minHeight: 58,
     ...shadow,
+  },
+  backBtn: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: ink,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    height: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backLabel: {
+    fontFamily: fonts.display,
+    fontSize: 13,
+    color: ink,
+    letterSpacing: 0.2,
   },
   appName: {
     fontFamily: fonts.display,
