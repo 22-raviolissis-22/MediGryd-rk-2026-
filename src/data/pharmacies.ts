@@ -55,8 +55,9 @@ export const areaPharmacies: PharmacyOffer[] = [
     name: 'Walgreens Pharmacy',
     address: '440 Blossom Hill Rd, San Jose, CA 95123',
     district: 'CA-19',
-    hours: 'See Walgreens store locator for pharmacy hours',
-    locatorUrl: 'https://www.walgreens.com/storelocator/drive-thru-pharmacy/gilroy-ca',
+    hours: 'Pharmacy open 24 hours; closes 1:30–2:00am for meal break (Walgreens locator)',
+    locatorUrl:
+      'https://www.walgreens.com/locator/walgreens-440+blossom+hill+rd-san+jose-ca-95123/id=2739',
     addressVerified: true,
   },
   {
@@ -64,7 +65,7 @@ export const areaPharmacies: PharmacyOffer[] = [
     address: '745 E Dunne Ave, Morgan Hill, CA 95037',
     district: 'CA-19',
     hours: 'See Walgreens store locator for pharmacy hours',
-    locatorUrl: 'https://www.walgreens.com/storelocator/pharmacy/gilroy-ca',
+    locatorUrl: 'https://www.walgreens.com/storelocator/pharmacy/morgan-hill-ca',
     addressVerified: true,
   },
   {
@@ -88,7 +89,7 @@ export const areaPharmacies: PharmacyOffer[] = [
     address: '1532 N Main St, Salinas, CA 93906',
     district: 'CA-19',
     hours: 'See Walgreens store locator for pharmacy hours',
-    locatorUrl: 'https://www.walgreens.com/storelocator/pharmacy/gilroy-ca',
+    locatorUrl: 'https://www.walgreens.com/storelocator/pharmacy/salinas-ca',
     addressVerified: true,
   },
 ];

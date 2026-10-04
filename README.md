@@ -55,11 +55,11 @@ Addresses come from official chain locators, not guesswork. Stores included:
 | CA-17 | CVS Pharmacy | 2004 El Camino Real, Santa Clara, CA 95050 | [CVS #17658](https://www.cvs.com/store-locator/santa-clara-ca-pharmacies/2004-el-camino-real-santa-clara-ca-95050/storeid=17658) |
 | CA-17 | Walgreens Pharmacy | 1833 N Milpitas Blvd, Milpitas, CA 95035 | [Walgreens #5480](https://www.walgreens.com/locator/walgreens-1833+n+milpitas+blvd-milpitas-ca-95035/id=5480) |
 | CA-17 | Costco Pharmacy | 1709 Automation Pkwy, San Jose, CA 95131 | [Costco #1004](https://www.costco.com/w/-/ca/san-jose/1004) |
-| CA-19 | Walgreens Pharmacy | 440 Blossom Hill Rd, San Jose, CA 95123 | [Walgreens locator](https://www.walgreens.com/storelocator/drive-thru-pharmacy/gilroy-ca) |
-| CA-19 | Walgreens Pharmacy | 745 E Dunne Ave, Morgan Hill, CA 95037 | [Walgreens locator](https://www.walgreens.com/storelocator/pharmacy/gilroy-ca) |
+| CA-19 | Walgreens Pharmacy | 440 Blossom Hill Rd, San Jose, CA 95123 | [Walgreens #2739](https://www.walgreens.com/locator/walgreens-440+blossom+hill+rd-san+jose-ca-95123/id=2739) |
+| CA-19 | Walgreens Pharmacy | 745 E Dunne Ave, Morgan Hill, CA 95037 | [Walgreens locator](https://www.walgreens.com/storelocator/pharmacy/morgan-hill-ca) |
 | CA-19 | Walgreens Pharmacy | 770 1st St, Gilroy, CA 95020 | [Walgreens #9516](https://www.walgreens.com/locator/walgreens-770+1st+st-gilroy-ca-95020/id=9516) |
 | CA-19 | Costco Pharmacy | 7251 Camino Arroyo, Gilroy, CA 95020 | [Costco Gilroy](https://www.costco.com/warehouse-locations/gilroy-ca-760.html) |
-| CA-19 | Walgreens Pharmacy | 1532 N Main St, Salinas, CA 93906 | [Walgreens locator](https://www.walgreens.com/storelocator/pharmacy/gilroy-ca) |
+| CA-19 | Walgreens Pharmacy | 1532 N Main St, Salinas, CA 93906 | [Walgreens locator](https://www.walgreens.com/storelocator/pharmacy/salinas-ca) |
 
 No store is shown with a dollar amount attached to that location.
 
