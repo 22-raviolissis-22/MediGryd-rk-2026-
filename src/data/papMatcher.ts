@@ -136,3 +136,21 @@ export function fillScript(
     .replaceAll('{insured}', vars.insured)
     .replaceAll('{drug}', vars.drug);
 }
+
+/** True when the newest listing date among these programs is more than 6 months before `now`. */
+export function papListingsAreStale(
+  programs: { verifiedAsOf: string }[],
+  now: Date = new Date()
+): boolean {
+  if (programs.length === 0) return false;
+  let newest = '';
+  for (const p of programs) {
+    if (p.verifiedAsOf > newest) newest = p.verifiedAsOf;
+  }
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(newest);
+  if (!m) return false;
+  const verified = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  const staleAfter = new Date(verified);
+  staleAfter.setMonth(staleAfter.getMonth() + 6);
+  return now.getTime() > staleAfter.getTime();
+}

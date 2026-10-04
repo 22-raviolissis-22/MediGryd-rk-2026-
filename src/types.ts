@@ -65,6 +65,8 @@ export type PapProgram = {
   closedToNew: boolean;
   applicationUrl: string;
   phone: string;
+  /** ISO date the listing was last checked against official application pages. */
+  verifiedAsOf: string;
   sendWhere: LocalizedText;
   documents: LocalizedText[];
   callScript: LocalizedText;

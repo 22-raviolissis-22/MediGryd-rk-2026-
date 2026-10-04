@@ -136,6 +136,9 @@ const en = {
   papCovers: 'Covers',
   papEmptyLikely:
     'Nothing in this list is a clear match for your screener answers. Programs below may still be worth a call — they are not guaranteed.',
+  papVerifiedAsOf: 'Program details verified as of {date}',
+  papStaleBanner:
+    'Program details change over time — please confirm eligibility and application steps with the program before applying.',
 };
 
 const es: typeof en = {
@@ -243,6 +246,9 @@ const es: typeof en = {
   papCovers: 'Cubre',
   papEmptyLikely:
     'Nada de esta lista encaja con claridad con tus respuestas. Los programas de abajo aún pueden valer una llamada — no están garantizados.',
+  papVerifiedAsOf: 'Datos del programa verificados al {date}',
+  papStaleBanner:
+    'Los datos de los programas cambian con el tiempo — confirma la elegibilidad y los pasos de solicitud con el programa antes de aplicar.',
 };
 
 const zh: typeof en = {
@@ -342,6 +348,9 @@ const zh: typeof en = {
   papCovers: '覆盖药品',
   papEmptyLikely:
     '根据你的筛选答案，下面没有明确匹配的项目。仍可致电了解——不能保证合格。',
+  papVerifiedAsOf: '项目详情核实于 {date}',
+  papStaleBanner:
+    '项目详情会随时间变化 — 申请前请向该项目确认资格和申请步骤。',
 };
 
 const hi: typeof en = {
@@ -446,6 +455,9 @@ const hi: typeof en = {
   papCovers: 'कवर करता है',
   papEmptyLikely:
     'आपके स्क्रीनर उत्तरों से इस सूची में कोई स्पष्ट मेल नहीं है। नीचे के कार्यक्रम फिर भी कॉल के लायक हो सकते हैं — गारंटी नहीं।',
+  papVerifiedAsOf: 'कार्यक्रम विवरण {date} तक सत्यापित',
+  papStaleBanner:
+    'कार्यक्रम विवरण समय के साथ बदलते हैं — आवेदन से पहले पात्रता और आवेदन चरण कार्यक्रम से पुष्टि करें।',
 };
 
 export const copy = { en, es, zh, hi };

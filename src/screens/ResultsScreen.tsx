@@ -12,7 +12,7 @@ import { useApp } from '../context';
 import { fill, formatIsoDate, loc, pharmacyHours, t } from '../i18n';
 import { COST_PLUS_AS_OF } from '../data/medications';
 import { incomeOptions } from '../data/income';
-import { fillScript, rankPrograms, type RankedProgram } from '../data/papMatcher';
+import { fillScript, papListingsAreStale, rankPrograms, type RankedProgram } from '../data/papMatcher';
 import { nadacPriceFor } from '../prices/nadacFeed';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize } from '../types';
@@ -218,6 +218,11 @@ function PapTab({
 
   return (
     <>
+      {papListingsAreStale(ranked.map((r) => r.program)) ? (
+        <WhiteCard>
+          <Text style={[styles.renewal, typeface(language, 'body')]}>{c.papStaleBanner}</Text>
+        </WhiteCard>
+      ) : null}
       <WhiteCard>
         <BodyText>{c.papHint}</BodyText>
         <Text style={[styles.note, typeface(language, 'body')]}>{c.papDisclaimer}</Text>
@@ -313,6 +318,9 @@ function ProgramCard({
         <Text style={[styles.section, typeface(language, 'bodyBold')]}>{c.papScript}</Text>
         <Text style={[styles.script, typeface(language, 'body')]}>
           {fillScript(loc(p.callScript, language), scriptVars)}
+        </Text>
+        <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>
+          {fill(c.papVerifiedAsOf, { date: formatIsoDate(p.verifiedAsOf, language) })}
         </Text>
       </WhiteCard>
       <WhitePill label={c.papOpenApply} onPress={() => openUrl(p.applicationUrl)} />

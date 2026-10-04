@@ -31,6 +31,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://www.pfizerpapconnect.com/',
     phone: '1-844-989-7284',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Apply online at PfizerPAPConnect.com. If you cannot apply online, call 1-844-989-PATH (1-844-989-7284) for the manual process.',
       'Solicita en línea en PfizerPAPConnect.com. Si no puedes en línea, llama al 1-844-989-7284 para el proceso manual.',
@@ -100,6 +101,7 @@ export const papPrograms: PapProgram[] = [
     applicationUrl:
       'https://gskforyou.com/content/dam/cf-pharma/gskforyou/master/pdf/GSK-PAP-English.pdf',
     phone: '1-866-728-4368',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Fax the signed application, prescription, and income/insurance papers to 1-855-474-3063, or mail GSK Patient Assistance Program, PO Box 220590, Charlotte, NC 28222-0590. Hours: Monday–Friday 8am–8pm ET.',
       'Envía por fax la solicitud firmada, la receta y los papeles de ingresos/seguro al 1-855-474-3063, o por correo a GSK Patient Assistance Program, PO Box 220590, Charlotte, NC 28222-0590. Lunes a viernes, 8 a. m.–8 p. m. ET.',
@@ -168,6 +170,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://www.sanofipatientconnection.com/media/pdf/SPC_Application.pdf',
     phone: '1-888-847-4877',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Download the application, complete it with your doctor (both must sign), then fax 1-888-847-1797 or mail Sanofi Patient Connection, PO Box 222138, Charlotte, NC 28222-2138. Phone Monday–Friday 9am–8pm ET.',
       'Descarga la solicitud, complétala con tu médico (ambos deben firmar) y envía por fax al 1-888-847-1797 o por correo a Sanofi Patient Connection, PO Box 222138, Charlotte, NC 28222-2138. Teléfono lunes a viernes, 9 a. m.–8 p. m. ET.',
@@ -236,6 +239,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://diabetespap.novocare.com/',
     phone: '1-866-310-7549',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Fastest: online at diabetespap.novocare.com (patient portion, then your clinician completes theirs by email). Paper: NovoCare PAP application PDF; fax 1-866-441-4190 or mail Novo Nordisk, Inc., PO Box 370, Somerville, NJ 08876. Faxes must come from the prescriber’s office.',
       'Más rápido: en línea en diabetespap.novocare.com (tú llenas tu parte; el clínico completa la suya por correo). Papel: PDF de NovoCare PAP; fax 1-866-441-4190 o correo Novo Nordisk, Inc., PO Box 370, Somerville, NJ 08876. Los faxes deben salir del consultorio.',
@@ -304,6 +308,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://www.bmspaf.org/apply',
     phone: '1-800-736-0003',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Start at bmspaf.org/apply (eligibility check, then application). You can also mail the completed form to Bristol Myers Squibb Patient Assistance Foundation, PO Box 220769, Charlotte, NC 28222-0769 or fax 1-800-736-1611. Phone Monday–Friday 8am–8pm ET. Applying directly is free.',
       'Empieza en bmspaf.org/apply (elegibilidad y luego solicitud). También puedes enviar el formulario a Bristol Myers Squibb Patient Assistance Foundation, PO Box 220769, Charlotte, NC 28222-0769 o fax 1-800-736-1611. Lunes a viernes, 8 a. m.–8 p. m. ET. Solicitar directo es gratis.',
@@ -373,6 +378,7 @@ export const papPrograms: PapProgram[] = [
     applicationUrl:
       'https://www.abbvie.com/patients/patient-support/patient-assistance/available-programs/humira-program-update.html',
     phone: '1-800-222-6885',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Do not send a new HUMIRA PAP application. Read AbbVie’s HUMIRA program update page. Existing enrollees: 1-800-222-6885, Monday–Friday 7am–7pm CT; fax 1-866-250-2803. Mail for other AbbVie products (not new HUMIRA): AbbVie Patient Access Support, D-617927, AP5 NE, 1 N. Waukegan Rd., North Chicago, IL 60064.',
       'No envíes una solicitud nueva de PAP para HUMIRA. Lee la página de actualización de AbbVie. Ya inscritos: 1-800-222-6885, lunes a viernes 7 a. m.–7 p. m. CT; fax 1-866-250-2803. Correo para otros productos AbbVie (no HUMIRA nuevo): AbbVie Patient Access Support, D-617927, AP5 NE, 1 N. Waukegan Rd., North Chicago, IL 60064.',
@@ -443,6 +449,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://rxoutreach.org/patients/',
     phone: '1-888-796-1234',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'No PAP form. Create an account from the patients page or call 1-888-796-1234 / 1-314-222-0472. Ask your clinician to e-prescribe or fax the prescription to 1-800-875-6591. Pharmacy: 3171 Riverport Tech Center Dr, Maryland Heights, MO 63043.',
       'No hay formulario PAP. Crea una cuenta desde la página de pacientes o llama al 1-888-796-1234 / 1-314-222-0472. Pide a tu médico receta electrónica o fax al 1-800-875-6591. Farmacia: 3171 Riverport Tech Center Dr, Maryland Heights, MO 63043.',
@@ -505,6 +512,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://totalassist.org/apply-patients/',
     phone: '1-866-512-3861',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Apply online at totalassist.org/apply-patients or call 866-512-3861, Monday–Friday 8:30am–5:30pm ET. Claims for some legacy grants: fax (757) 952-0119 or mail TotalAssist, 421 Butler Farm Rd., Hampton, VA 23666.',
       'Solicita en línea en totalassist.org/apply-patients o llama al 866-512-3861, lunes a viernes 8:30 a. m.–5:30 p. m. ET. Reclamos de algunas becas anteriores: fax (757) 952-0119 o correo TotalAssist, 421 Butler Farm Rd., Hampton, VA 23666.',
@@ -573,6 +581,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://healthwellfoundation.my.salesforce-sites.com/onlineapplication',
     phone: '1-800-675-8416',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Apply online at the HealthWell Salesforce application, or call (800) 675-8416, Monday–Friday 9am–5pm ET. Fax (800) 282-7692. Mail: P.O. Box 489, Buckeystown, MD 21717.',
       'Solicita en línea en la aplicación Salesforce de HealthWell, o llama al (800) 675-8416, lunes a viernes 9 a. m.–5 p. m. ET. Fax (800) 282-7692. Correo: P.O. Box 489, Buckeystown, MD 21717.',
@@ -641,6 +650,7 @@ export const papPrograms: PapProgram[] = [
     closedToNew: false,
     applicationUrl: 'https://mygooddays.org/patients/how-to-apply/qualify/',
     phone: '1-877-968-7233',
+    verifiedAsOf: '2026-10-03',
     sendWhere: L(
       'Apply from the Good Days how-to-apply / qualify page after you confirm an open program. Care Navigators: 877-968-7233. Main office: Good Days, 2611 Internet Blvd Suite 105, Frisco, TX 75034. Fax 214-570-3621.',
       'Solicita desde la página de cómo aplicar / calificar de Good Days después de confirmar un programa abierto. Navegadores: 877-968-7233. Oficina: Good Days, 2611 Internet Blvd Suite 105, Frisco, TX 75034. Fax 214-570-3621.',
