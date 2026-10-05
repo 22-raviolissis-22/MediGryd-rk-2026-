@@ -73,6 +73,8 @@ Cost Plus Drugs quotes stay the October 3, 2026 snapshot and are labeled as such
 
 Each medication links to that drug’s real GoodRx page (`https://www.goodrx.com/<drug>`), for example [atorvastatin](https://www.goodrx.com/atorvastatin) or [Lantus](https://www.goodrx.com/lantus). Coupon dollar amounts are **not** copied into the app because they vary by pharmacy; the user opens GoodRx to see the current coupon.
 
+A second button, **Compare on SingleCare**, sits beside the GoodRx link and opens that drug’s real SingleCare coupon page (`https://www.singlecare.com/prescription/<drug-name>`). SingleCare lists free coupon prices without a subscription upsell. Coupon amounts are not copied into the app.
+
 ### Pharmacy addresses (CA-17 and CA-19)
 
 Addresses come from official chain locators, not guesswork. Stores included:
