@@ -87,6 +87,8 @@ export type Medication = {
   hasManufacturerPap: boolean;
   /** Real GoodRx coupon page for this drug, e.g. https://www.goodrx.com/atorvastatin */
   goodrxUrl: string;
+  /** Real SingleCare coupon page when one exists; otherwise null. */
+  singlecareUrl: string | null;
   /** Cost Plus product page when the SKU is in their catalog; otherwise null. */
   costPlusUrl: string | null;
 };

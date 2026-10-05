@@ -98,6 +98,8 @@ const en = {
     'Show this coupon at a participating pharmacy. The dollar amount is on GoodRx and changes by store — we do not invent one here.',
   goodRxPromoNote:
     'GoodRx lists promotional prices (like “$0.00 with Companion,” which needs a paid subscription) at the top — compare the free coupon prices to find the real cheapest option.',
+  compareSingleCare: 'Compare on SingleCare',
+  singleCareHint: 'SingleCare shows free coupon prices without a subscription upsell.',
   costPlusHint: 'Mail-order checkout on costplusdrugs.com. Prescription required; shipping and tax are extra.',
   nadacNotBuyable:
     'NADAC is the average amount pharmacies pay wholesalers. You cannot check out at this number.',
@@ -209,6 +211,8 @@ const es: typeof en = {
     'Muestra este cupón en una farmacia participante. El monto está en GoodRx y cambia por tienda — no inventamos uno aquí.',
   goodRxPromoNote:
     'GoodRx pone arriba precios promocionales (como “$0.00 with Companion”, que exige una suscripción de pago) — compara los cupones gratis para ver la opción realmente más barata.',
+  compareSingleCare: 'Comparar en SingleCare',
+  singleCareHint: 'SingleCare muestra precios de cupón gratis, sin promocionar una suscripción de pago.',
   costPlusHint: 'Pedido por correo en costplusdrugs.com. Se requiere receta; envío e impuestos aparte.',
   nadacNotBuyable:
     'NADAC es el promedio que las farmacias pagan a mayoristas. No puedes pagar esa cifra en caja.',
@@ -316,6 +320,8 @@ const zh: typeof en = {
   goodRxHint: '在参与药房出示此优惠券。金额显示在 GoodRx 上，因门店而异 — 我们不在此编造数字。',
   goodRxPromoNote:
     'GoodRx 会把促销价排在最上面（例如 “$0.00 with Companion”，需付费订阅）— 请对比免费优惠券价格，才能找到真正最便宜的选项。',
+  compareSingleCare: '在 SingleCare 上比较',
+  singleCareHint: 'SingleCare 显示免费优惠券价格，不会推销付费订阅。',
   costPlusHint: '在 costplusdrugs.com 邮购结账。需有处方；运费和税费另计。',
   nadacNotBuyable: 'NADAC 是药房向批发商支付的平均金额。您无法按此数字结账。',
   pricesUpdatedAsOf: '价格更新于 {date}',
@@ -424,6 +430,8 @@ const hi: typeof en = {
     'सहभागी फार्मेसी पर यह कूपन दिखाएँ। राशि GoodRx पर है और स्टोर के अनुसार बदलती है — हम यहाँ कोई आंकड़ा नहीं बनाते।',
   goodRxPromoNote:
     'GoodRx ऊपर प्रचार कीमतें दिखाता है (जैसे “$0.00 with Companion,” जिसके लिए पेड सब्सक्रिप्शन चाहिए) — असली सबसे सस्ता विकल्प पाने के लिए मुफ्त कूपन कीमतों की तुलना करें।',
+  compareSingleCare: 'SingleCare पर तुलना करें',
+  singleCareHint: 'SingleCare मुफ्त कूपन कीमतें दिखाता है, बिना पेड सब्सक्रिप्शन का अपसेल किए।',
   costPlusHint: 'costplusdrugs.com पर मेल-ऑर्डर चेकआउट। पर्चा आवश्यक; शिपिंग और कर अलग।',
   nadacNotBuyable:
     'NADAC वह औसत राशि है जो फार्मेसी थोक विक्रेताओं को देती हैं। आप इस संख्या पर चेकआउट नहीं कर सकते।',

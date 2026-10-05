@@ -52,6 +52,7 @@ export const medications: Medication[] = [
     category: L('Cholesterol', 'Colesterol', '胆固醇', 'कोलेस्ट्रॉल'),
     searchTerms: ['lipitor', 'atorvastatin', 'statin', 'cholesterol', '胆固醇', 'कोलेस्ट्रॉल'],
     goodrxUrl: 'https://www.goodrx.com/atorvastatin',
+    singlecareUrl: 'https://www.singlecare.com/prescription/atorvastatin-calcium',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/atorvastatin-20mg-tablet/',
     benchmarks: [
       nadac(
@@ -92,6 +93,7 @@ export const medications: Medication[] = [
     category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
     searchTerms: ['metformin', 'glucophage', 'diabetes', 'type 2', '糖尿病', 'मधुमेह'],
     goodrxUrl: 'https://www.goodrx.com/metformin',
+    singlecareUrl: 'https://www.singlecare.com/prescription/metformin-hcl',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/metformin-500mg-tablet/',
     benchmarks: [
       nadac(
@@ -132,6 +134,7 @@ export const medications: Medication[] = [
     category: L('Blood pressure', 'Presión arterial', '血压', 'रक्तचाप'),
     searchTerms: ['lisinopril', 'zestril', 'prinivil', 'blood pressure', 'ace', '血压', 'रक्तचाप'],
     goodrxUrl: 'https://www.goodrx.com/lisinopril',
+    singlecareUrl: 'https://www.singlecare.com/prescription/lisinopril',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/lisinopril-10mg-tablet/',
     benchmarks: [
       nadac(
@@ -172,6 +175,7 @@ export const medications: Medication[] = [
     category: L('Acid reflux', 'Reflujo', '胃酸反流', 'एसिड रिफ्लक्स'),
     searchTerms: ['omeprazole', 'prilosec', 'gerd', 'heartburn', '胃酸', 'रिफ्लक्स'],
     goodrxUrl: 'https://www.goodrx.com/omeprazole',
+    singlecareUrl: 'https://www.singlecare.com/prescription/omeprazole',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/omeprazoledelayedreleasedr-20mg-capsule/',
     benchmarks: [
       nadac(
@@ -207,6 +211,7 @@ export const medications: Medication[] = [
     category: L('Asthma', 'Asma', '哮喘', 'अस्थमा'),
     searchTerms: ['albuterol', 'ventolin', 'proair', 'inhaler', 'asthma', '哮喘', 'अस्थमा'],
     goodrxUrl: 'https://www.goodrx.com/albuterol',
+    singlecareUrl: 'https://www.singlecare.com/prescription/albuterol-sulfate-hfa',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/albuterol-90mcg-inhaler18g/',
     benchmarks: [
       nadac(
@@ -252,6 +257,7 @@ export const medications: Medication[] = [
     category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
     searchTerms: ['lantus', 'insulin', 'glargine', 'basaglar', 'diabetes', '胰岛素', 'इंसुलिन'],
     goodrxUrl: 'https://www.goodrx.com/lantus',
+    singlecareUrl: 'https://www.singlecare.com/prescription/lantus',
     costPlusUrl: null,
     benchmarks: [
       nadac(
@@ -283,6 +289,7 @@ export const medications: Medication[] = [
     category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
     searchTerms: ['ozempic', 'semaglutide', 'wegovy', 'glp-1', 'diabetes'],
     goodrxUrl: 'https://www.goodrx.com/ozempic',
+    singlecareUrl: 'https://www.singlecare.com/prescription/ozempic',
     costPlusUrl: null,
     benchmarks: [
       nadac(
@@ -319,6 +326,7 @@ export const medications: Medication[] = [
     category: L('Blood thinner', 'Anticoagulante', '抗凝药', 'रक्त पतला करने वाली दवा'),
     searchTerms: ['eliquis', 'apixaban', 'blood thinner', 'afib'],
     goodrxUrl: 'https://www.goodrx.com/eliquis',
+    singlecareUrl: 'https://www.singlecare.com/prescription/eliquis',
     costPlusUrl: null,
     benchmarks: [
       nadac(
@@ -350,6 +358,7 @@ export const medications: Medication[] = [
     category: L('Autoimmune', 'Autoinmune', '自身免疫', 'स्वप्रतिरक्षी'),
     searchTerms: ['humira', 'adalimumab', 'amjevita', 'arthritis', 'crohns'],
     goodrxUrl: 'https://www.goodrx.com/humira',
+    singlecareUrl: 'https://www.singlecare.com/prescription/humira',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/adalimumab-aacf-40mg_0_8ml-prefilled-syringe-kit-1/',
     benchmarks: [
       nadac(
@@ -400,6 +409,7 @@ export const medications: Medication[] = [
     category: L('Mental health', 'Salud mental', '精神健康', 'मानसिक स्वास्थ्य'),
     searchTerms: ['zoloft', 'sertraline', 'ssri', 'depression', 'anxiety', '抑郁', 'अवसाद'],
     goodrxUrl: 'https://www.goodrx.com/sertraline',
+    singlecareUrl: 'https://www.singlecare.com/prescription/sertraline-hcl',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/sertraline-50mg-tablet/',
     benchmarks: [
       nadac(
@@ -440,6 +450,7 @@ export const medications: Medication[] = [
     category: L('Antibiotic', 'Antibiótico', '抗生素', 'एंटीबायोटिक'),
     searchTerms: ['amoxicillin', 'amoxil', 'antibiotic', '抗生素', 'एंटीबायोटिक'],
     goodrxUrl: 'https://www.goodrx.com/amoxicillin',
+    singlecareUrl: 'https://www.singlecare.com/prescription/amoxicillin',
     costPlusUrl: 'https://www.costplusdrugs.com/medications/amoxicillin-500mg-capsule-amoxil/',
     benchmarks: [
       nadac(
@@ -480,6 +491,7 @@ export const medications: Medication[] = [
     category: L('Asthma / COPD', 'Asma / EPOC', '哮喘 / 慢阻肺', 'अस्थमा / COPD'),
     searchTerms: ['advair', 'fluticasone', 'salmeterol', 'wixela', 'copd', 'asthma'],
     goodrxUrl: 'https://www.goodrx.com/fluticasone-salmeterol',
+    singlecareUrl: 'https://www.singlecare.com/prescription/fluticasone-salmeterol',
     costPlusUrl:
       'https://www.costplusdrugs.com/medications/fluticasone-salmeterol-250mcg-50mcg-aerosol-powder-60-doses/',
     benchmarks: [

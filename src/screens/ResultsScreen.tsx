@@ -124,8 +124,20 @@ export function ResultsScreen() {
               <Text style={[styles.pharm, typeface(language, 'display')]}>{med.generic}</Text>
               <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxHint}</Text>
               <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxPromoNote}</Text>
+              {med.singlecareUrl ? (
+                <Text style={[styles.note, typeface(language, 'body')]}>{c.singleCareHint}</Text>
+              ) : null}
             </WhiteCard>
-            <WhitePill label={c.openGoodRx} onPress={() => openUrl(med.goodrxUrl)} />
+            <View style={styles.couponRow}>
+              <WhitePill grow label={c.openGoodRx} onPress={() => openUrl(med.goodrxUrl)} />
+              {med.singlecareUrl ? (
+                <WhitePill
+                  grow
+                  label={c.compareSingleCare}
+                  onPress={() => openUrl(med.singlecareUrl!)}
+                />
+              ) : null}
+            </View>
           </View>
 
           <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
@@ -330,6 +342,7 @@ function ProgramCard({
 }
 
 const styles = StyleSheet.create({
+  couponRow: { flexDirection: 'row', gap: 10, alignSelf: 'stretch' },
   tabs: { flexDirection: 'row', gap: 8 },
   tab: {
     flex: 1,
