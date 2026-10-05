@@ -75,6 +75,15 @@ Each medication links to that drug’s real GoodRx page (`https://www.goodrx.com
 
 A second button, **Compare on SingleCare**, sits beside the GoodRx link and opens that drug’s real SingleCare coupon page (`https://www.singlecare.com/prescription/<drug-name>`). SingleCare lists free coupon prices without a subscription upsell. Coupon amounts are not copied into the app.
 
+### Generic competition outlook
+
+On the results Prices tab, five drugs show a one-line outlook (the seven already-generic pills get none):
+
+- **Ozempic / semaglutide** and **Eliquis / apixaban**: mapped from the earliest remaining FDA Orange Book patent or exclusivity date (August 2026 data files). Language is always “may face,” never a promised launch day.
+- **Lantus**, **Humira**, and **Advair Diskus**: already have an FDA-approved biosimilar or generic alternative (informational only).
+
+Notes are dated **October 4, 2026**. The same six-month staleness check used on the PAP tab shows a banner if that date is more than six months old.
+
 ### Pharmacy addresses (CA-17 and CA-19)
 
 Addresses come from official chain locators, not guesswork. Stores included:

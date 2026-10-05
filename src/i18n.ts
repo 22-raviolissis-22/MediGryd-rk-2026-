@@ -143,6 +143,19 @@ const en = {
   papVerifiedAsOf: 'Program details verified as of {date}',
   papStaleBanner:
     'Program details change over time — please confirm eligibility and application steps with the program before applying.',
+  outlookWithin12:
+    'May face generic competition within ~12 months — prices could drop sharply. Consider shorter fills.',
+  outlookComingYears:
+    'Generic competition may be possible in coming years — this is not a launch date. Consider shorter fills if a lower-cost generic would change what you pay.',
+  outlookAlreadyHas:
+    'This medicine already has an FDA-approved generic or biosimilar alternative — ask the pharmacist which version they can fill.',
+  outlookBiosimilarVsGeneric:
+    'A biosimilar is a highly similar version of a biologic shot or infusion; a generic is a copy of a small-molecule pill or inhaler. An interchangeable biosimilar may be substituted like a generic in many states — a regular biosimilar usually needs the prescriber to write that product.',
+  outlookSourceDate:
+    'Earliest listed Orange Book date used: {date} ({label}). Other listed patents or exclusivities may still apply. This is not a promised generic launch date.',
+  outlookVerifiedAsOf: 'Generic-competition notes verified as of {date}',
+  outlookStaleBanner:
+    'Patent and exclusivity listings change — check the FDA Orange Book before relying on this outlook.',
 };
 
 const es: typeof en = {
@@ -257,6 +270,19 @@ const es: typeof en = {
   papVerifiedAsOf: 'Datos del programa verificados al {date}',
   papStaleBanner:
     'Los datos de los programas cambian con el tiempo — confirma la elegibilidad y los pasos de solicitud con el programa antes de aplicar.',
+  outlookWithin12:
+    'Puede enfrentar competencia de genéricos en ~12 meses — los precios podrían bajar mucho. Considera recetas más cortas.',
+  outlookComingYears:
+    'La competencia de genéricos puede ser posible en los próximos años — esto no es una fecha de lanzamiento. Considera recetas más cortas si un genérico más barato cambiaría lo que pagas.',
+  outlookAlreadyHas:
+    'Este medicamento ya tiene un genérico o biosimilar aprobado por la FDA — pregunta al farmacéutico qué versión puede despachar.',
+  outlookBiosimilarVsGeneric:
+    'Un biosimilar es una versión muy similar de un biológico inyectable o en infusión; un genérico es una copia de una pastilla o inhalador de molécula pequeña. Un biosimilar intercambiable puede sustituirse como un genérico en muchos estados — un biosimilar común suele requerir que el médico lo indique.',
+  outlookSourceDate:
+    'Fecha más temprana del Orange Book usada: {date} ({label}). Pueden seguir vigentes otras patentes o exclusividades. No es una fecha prometida de genérico.',
+  outlookVerifiedAsOf: 'Notas de competencia de genéricos verificadas al {date}',
+  outlookStaleBanner:
+    'Las patentes y exclusividades cambian — consulta el Orange Book de la FDA antes de confiar en este panorama.',
 };
 
 const zh: typeof en = {
@@ -363,6 +389,16 @@ const zh: typeof en = {
   papVerifiedAsOf: '项目详情核实于 {date}',
   papStaleBanner:
     '项目详情会随时间变化 — 申请前请向该项目确认资格和申请步骤。',
+  outlookWithin12: '大约 12 个月内可能面临仿制药竞争 — 价格可能大幅下降。可考虑开较短疗程。',
+  outlookComingYears:
+    '今后几年可能出现仿制药竞争 — 这不是上市日期。如果更便宜的仿制药会改变您的自费，可考虑较短疗程。',
+  outlookAlreadyHas: '该药已有 FDA 批准的仿制药或生物类似药 — 请向药师询问可调配的版本。',
+  outlookBiosimilarVsGeneric:
+    '生物类似药是注射或输液用生物制剂的高度相似版本；仿制药是小分子片剂或吸入剂的复制品。可互换生物类似药在许多州可像仿制药一样替代 — 普通生物类似药通常需要医生写明该产品。',
+  outlookSourceDate:
+    '所用 Orange Book 最早日期：{date}（{label}）。其他已列专利或独占权仍可能有效。这不是承诺的仿制药上市日。',
+  outlookVerifiedAsOf: '仿制药竞争说明核实于 {date}',
+  outlookStaleBanner: '专利与独占权会变更 — 请在依赖此展望前查阅 FDA Orange Book。',
 };
 
 const hi: typeof en = {
@@ -474,6 +510,19 @@ const hi: typeof en = {
   papVerifiedAsOf: 'कार्यक्रम विवरण {date} तक सत्यापित',
   papStaleBanner:
     'कार्यक्रम विवरण समय के साथ बदलते हैं — आवेदन से पहले पात्रता और आवेदन चरण कार्यक्रम से पुष्टि करें।',
+  outlookWithin12:
+    'लगभग 12 महीनों में जेनेरिक प्रतिस्पर्धा हो सकती है — कीमतें तेज़ी से गिर सकती हैं। छोटी सप्लाई पर विचार करें।',
+  outlookComingYears:
+    'आने वाले वर्षों में जेनेरिक प्रतिस्पर्धा संभव हो सकती है — यह लॉन्च तारीख नहीं है। यदि सस्ता जेनेरिक आपकी लागत बदल दे तो छोटी सप्लाई सोचें।',
+  outlookAlreadyHas:
+    'इस दवा का FDA-अनुमोदित जेनेरिक या बायोसिमिलर विकल्प पहले से है — फार्मासिस्ट से पूछें कि कौन सा संस्करण भर सकते हैं।',
+  outlookBiosimilarVsGeneric:
+    'बायोसिमिलर इंजेक्शन या इन्फ्यूजन वाले बायोलॉजिक का अत्यंत समान संस्करण है; जेनेरिक छोटी-अणु गोली या इनहेलर की कॉपी है। इंटरचेंजेबल बायोसिमिलर कई राज्यों में जेनेरिक जैसा बदला जा सकता है — सामान्य बायोसिमिलर के लिए आमतौर पर डॉक्टर को वह उत्पाद लिखना पड़ता है।',
+  outlookSourceDate:
+    'प्रयुक्त सबसे पहले Orange Book तारीख: {date} ({label})। अन्य सूचीबद्ध पेटेंट या एक्सक्लूसिविटी अभी भी लागू हो सकती हैं। यह वादा की गई जेनेरिक लॉन्च तारीख नहीं है।',
+  outlookVerifiedAsOf: 'जेनेरिक-प्रतिस्पर्धा नोट {date} तक सत्यापित',
+  outlookStaleBanner:
+    'पेटेंट और एक्सक्लूसिविटी सूचियाँ बदलती हैं — इस दृष्टिकोण पर भरोसा करने से पहले FDA Orange Book देखें।',
 };
 
 export const copy = { en, es, zh, hi };

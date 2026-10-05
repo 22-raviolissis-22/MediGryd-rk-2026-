@@ -12,6 +12,10 @@ import { useApp } from '../context';
 import { fill, formatIsoDate, loc, pharmacyHours, t } from '../i18n';
 import { COST_PLUS_AS_OF } from '../data/medications';
 import { incomeOptions } from '../data/income';
+import {
+  genericOutlookIsStale,
+  outlookForMedication,
+} from '../data/genericOutlook';
 import { fillScript, papListingsAreStale, rankPrograms, type RankedProgram } from '../data/papMatcher';
 import { nadacPriceFor } from '../prices/nadacFeed';
 import { ink, periwinkle, typeface } from '../theme';
@@ -163,6 +167,8 @@ export function ResultsScreen() {
               );
             })}
 
+          <GenericOutlookCard medicationId={med.id} />
+
           <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
           <BodyText>{c.nearbyHint}</BodyText>
           {med.pharmacies.map((p) => (
@@ -206,6 +212,49 @@ export function ResultsScreen() {
         />
       )}
     </AppChrome>
+  );
+}
+
+function GenericOutlookCard({ medicationId }: { medicationId: string }) {
+  const { language } = useApp();
+  const c = t(language);
+  const hit = outlookForMedication(medicationId);
+  if (!hit) return null;
+
+  const headline =
+    hit.tier === 'within12Months'
+      ? c.outlookWithin12
+      : hit.tier === 'comingYears'
+        ? c.outlookComingYears
+        : c.outlookAlreadyHas;
+
+  return (
+    <>
+      {genericOutlookIsStale() ? (
+        <WhiteCard>
+          <Text style={[styles.renewal, typeface(language, 'body')]}>{c.outlookStaleBanner}</Text>
+        </WhiteCard>
+      ) : null}
+      <WhiteCard>
+        <Text style={[styles.note, typeface(language, 'body')]}>{headline}</Text>
+        {hit.record.expiryDate && hit.record.expiryLabel ? (
+          <Text style={[styles.note, typeface(language, 'body')]}>
+            {fill(c.outlookSourceDate, {
+              date: formatIsoDate(hit.record.expiryDate, language),
+              label: hit.record.expiryLabel,
+            })}
+          </Text>
+        ) : null}
+        {hit.record.biosimilarExplainer ? (
+          <Text style={[styles.note, typeface(language, 'body')]}>{c.outlookBiosimilarVsGeneric}</Text>
+        ) : null}
+        <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>
+          {fill(c.outlookVerifiedAsOf, {
+            date: formatIsoDate(hit.record.verifiedAsOf, language),
+          })}
+        </Text>
+      </WhiteCard>
+    </>
   );
 }
 
