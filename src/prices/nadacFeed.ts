@@ -106,6 +106,18 @@ export async function resolveNadacFeed(): Promise<NadacFeed> {
   return best;
 }
 
+export function nadacRowFor(feed: NadacFeed | null, medId: string): NadacDrug | null {
+  return feed?.drugs.find((d) => d.id === medId) ?? bundledNadacFeed.drugs.find((d) => d.id === medId) ?? null;
+}
+
+/** Only per-tablet / per-capsule NADAC rows can honestly be multiplied by a pill count. */
+export function countableUnit(row: NadacDrug | null): 'tablet' | 'capsule' | null {
+  if (!row) return null;
+  if (/\bTABLET\b/i.test(row.ndcDescription)) return 'tablet';
+  if (/\bCAPSULE\b/i.test(row.ndcDescription)) return 'capsule';
+  return null;
+}
+
 export function nadacPriceFor(feed: NadacFeed | null, medId: string): number | null {
   const row = feed?.drugs.find((d) => d.id === medId);
   return row ? row.nadacPrice : null;

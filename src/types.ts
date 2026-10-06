@@ -14,7 +14,9 @@ export type ScreenId =
   | 'income'
   | 'eligibility'
   | 'search'
-  | 'results';
+  | 'results'
+  | 'help'
+  | 'saved';
 
 export type District = 'CA-17' | 'CA-19';
 

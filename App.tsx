@@ -16,6 +16,8 @@ import { IncomeScreen } from './src/screens/IncomeScreen';
 import { EligibilityScreen } from './src/screens/EligibilityScreen';
 import { SearchScreen } from './src/screens/SearchScreen';
 import { ResultsScreen } from './src/screens/ResultsScreen';
+import { HelpScreen } from './src/screens/HelpScreen';
+import { SavedScreen } from './src/screens/SavedScreen';
 
 function Router() {
   const { screen } = useApp();
@@ -36,6 +38,10 @@ function Router() {
       return <SearchScreen />;
     case 'results':
       return <ResultsScreen />;
+    case 'help':
+      return <HelpScreen />;
+    case 'saved':
+      return <SavedScreen />;
     default:
       return <LanguageScreen />;
   }

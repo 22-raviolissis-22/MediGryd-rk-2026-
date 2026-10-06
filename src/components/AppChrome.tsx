@@ -4,10 +4,10 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';
+import { Text } from './AppText';
 import { GridBackground } from './GridBackground';
 import { useApp } from '../context';
 import { t } from '../i18n';
@@ -45,8 +45,21 @@ export function AppChrome({
   showSearch?: boolean;
   autoFocusSearch?: boolean;
 }) {
-  const { language, screen, searchQuery, setSearchQuery, go, back, reset, canGoBack } = useApp();
+  const {
+    language,
+    screen,
+    searchQuery,
+    setSearchQuery,
+    go,
+    back,
+    reset,
+    canGoBack,
+    textSize,
+    textScale,
+    setTextSize,
+  } = useApp();
   const c = t(language);
+  const largeOn = textSize === 'large';
 
   const onChangeSearch = (text: string) => {
     setSearchQuery(text);
@@ -84,7 +97,11 @@ export function AppChrome({
                 autoCapitalize="none"
                 autoCorrect={false}
                 returnKeyType="search"
-                style={[styles.searchInput, typeface(language, 'body')]}
+                style={[
+                  styles.searchInput,
+                  { fontSize: Math.round(14 * textScale) },
+                  typeface(language, 'body'),
+                ]}
                 accessibilityLabel={c.searchA11y}
               />
             </View>
@@ -92,6 +109,29 @@ export function AppChrome({
           <Pressable onPress={reset} accessibilityLabel={c.startOver}>
             <PlusMark />
           </Pressable>
+        </View>
+        <View style={styles.tools}>
+          <ChipButton
+            label={c.getHelp}
+            selected={screen === 'help'}
+            onPress={() => {
+              if (screen !== 'help') go('help');
+            }}
+          />
+          <ChipButton
+            label={c.myMedicines}
+            selected={screen === 'saved'}
+            onPress={() => {
+              if (screen !== 'saved') go('saved');
+            }}
+          />
+          <ChipButton
+            label={`A+  ${c.largeText}`}
+            selected={largeOn}
+            onPress={() => setTextSize(largeOn ? 'normal' : 'large')}
+            accessibilityLabel={c.largeTextA11y}
+            accessibilityRole="switch"
+          />
         </View>
         <ScrollView
           style={{ flex: 1 }}
@@ -171,6 +211,36 @@ export function WhitePill({
           grow && styles.pillLabelTight,
         ]}
       >
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+
+export function ChipButton({
+  label,
+  onPress,
+  selected = false,
+  accessibilityLabel,
+  accessibilityRole = 'button',
+}: {
+  label: string;
+  onPress: () => void;
+  selected?: boolean;
+  accessibilityLabel?: string;
+  accessibilityRole?: 'button' | 'switch';
+}) {
+  const { language } = useApp();
+  return (
+    <Pressable
+      onPress={onPress}
+      hitSlop={4}
+      accessibilityRole={accessibilityRole}
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={accessibilityRole === 'switch' ? { checked: selected } : { selected }}
+      style={({ pressed }) => [styles.chip, selected && styles.chipOn, pressed && styles.pressed]}
+    >
+      <Text style={[styles.chipLabel, typeface(language, 'bodyBold'), selected && styles.chipLabelOn]}>
         {label}
       </Text>
     </Pressable>
@@ -366,5 +436,24 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: '#FFFFFF',
   },
+  tools: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+    marginTop: 10,
+  },
+  chip: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    minHeight: 44,
+    justifyContent: 'center',
+    ...shadow,
+  },
+  chipOn: { backgroundColor: periwinkle },
+  chipLabel: { fontSize: 13, lineHeight: 17, color: ink, textAlign: 'center' },
+  chipLabelOn: { color: '#FFFFFF' },
   pressed: { opacity: 0.88, transform: [{ scale: 0.99 }] },
 });

@@ -8,6 +8,14 @@ import type {
   ScreenId,
 } from './types';
 import { bundledNadacFeed, resolveNadacFeed, type NadacFeed } from './prices/nadacFeed';
+import {
+  DEFAULT_PREFS,
+  loadPrefs,
+  savePlanPhone,
+  saveSavedMedications,
+  saveTextSize,
+  type TextSize,
+} from './storage';
 
 type AppState = {
   language: Language;
@@ -19,6 +27,10 @@ type AppState = {
   searchQuery: string;
   nadacFeed: NadacFeed;
   canGoBack: boolean;
+  textSize: TextSize;
+  textScale: number;
+  savedMedicationIds: string[];
+  planPhone: string;
   setLanguage: (lang: Language) => void;
   go: (screen: ScreenId) => void;
   back: () => void;
@@ -27,8 +39,14 @@ type AppState = {
   setIncome: (value: IncomeBracket) => void;
   setMedication: (med: Medication) => void;
   setSearchQuery: (q: string) => void;
+  setTextSize: (size: TextSize) => void;
+  isSaved: (medId: string) => boolean;
+  toggleSaved: (medId: string) => void;
+  setPlanPhone: (phone: string) => void;
   reset: () => void;
 };
+
+export const LARGE_TEXT_SCALE = 1.3;
 
 const AppContext = createContext<AppState | null>(null);
 
@@ -42,6 +60,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [medication, setMedication] = useState<Medication | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [nadacFeed, setNadacFeed] = useState<NadacFeed>(bundledNadacFeed);
+  const [textSize, setTextSizeState] = useState<TextSize>(DEFAULT_PREFS.textSize);
+  const [savedMedicationIds, setSavedIds] = useState<string[]>(DEFAULT_PREFS.savedMedicationIds);
+  const [planPhone, setPlanPhoneState] = useState(DEFAULT_PREFS.planPhone);
 
   useEffect(() => {
     let cancelled = false;
@@ -52,6 +73,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       .catch(() => {
         /* bundled snapshot already shown */
       });
+    loadPrefs().then((prefs) => {
+      if (cancelled) return;
+      setTextSizeState(prefs.textSize);
+      setSavedIds(prefs.savedMedicationIds);
+      setPlanPhoneState(prefs.planPhone);
+    });
     return () => {
       cancelled = true;
     };
@@ -68,6 +95,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       searchQuery,
       nadacFeed,
       canGoBack: history.length > 0,
+      textSize,
+      textScale: textSize === 'large' ? LARGE_TEXT_SCALE : 1,
+      savedMedicationIds,
+      planPhone,
       setLanguage,
       go: (next) => {
         setHistory((h) => (screen === next ? h : [...h, screen]));
@@ -86,6 +117,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setIncome,
       setMedication,
       setSearchQuery,
+      setTextSize: (size) => {
+        setTextSizeState(size);
+        saveTextSize(size);
+      },
+      isSaved: (medId) => savedMedicationIds.includes(medId),
+      toggleSaved: (medId) => {
+        setSavedIds((ids) => {
+          const next = ids.includes(medId) ? ids.filter((id) => id !== medId) : [...ids, medId];
+          saveSavedMedications(next);
+          return next;
+        });
+      },
+      setPlanPhone: (phone) => {
+        setPlanPhoneState(phone);
+        savePlanPhone(phone);
+      },
       reset: () => {
         setScreen('language');
         setHistory([]);
@@ -96,7 +143,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSearchQuery('');
       },
     }),
-    [language, screen, insurance, household, income, medication, searchQuery, nadacFeed, history]
+    [
+      language,
+      screen,
+      insurance,
+      household,
+      income,
+      medication,
+      searchQuery,
+      nadacFeed,
+      history,
+      textSize,
+      savedMedicationIds,
+      planPhone,
+    ]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
