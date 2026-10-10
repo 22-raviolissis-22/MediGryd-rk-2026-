@@ -57,13 +57,14 @@ export function AppChrome({
     textSize,
     textScale,
     setTextSize,
+    setLanguage,
   } = useApp();
   const c = t(language);
   const largeOn = textSize === 'large';
 
   const onChangeSearch = (text: string) => {
     setSearchQuery(text);
-    if (screen !== 'search') go('search');
+    if (screen !== 'results' && screen !== 'search') go('results');
   };
 
   return (
@@ -90,7 +91,7 @@ export function AppChrome({
                 value={searchQuery}
                 onChangeText={onChangeSearch}
                 onFocus={() => {
-                  if (screen !== 'search') go('search');
+                  if (screen !== 'results' && screen !== 'search') go('results');
                 }}
                 autoFocus={autoFocusSearch}
                 placeholder=""
@@ -110,6 +111,41 @@ export function AppChrome({
             <PlusMark />
           </Pressable>
         </View>
+        {screen !== 'language' ? (
+          <View style={styles.langRow}>
+            {(
+              [
+                ['en', 'EN'],
+                ['es', 'ES'],
+                ['zh', '中文'],
+                ['hi', 'हिन्दी'],
+              ] as const
+            ).map(([id, label]) => (
+              <Pressable
+                key={id}
+                onPress={() => setLanguage(id)}
+                accessibilityRole="button"
+                accessibilityState={{ selected: language === id }}
+                accessibilityLabel={label}
+                style={({ pressed }) => [
+                  styles.langChip,
+                  language === id && styles.chipOn,
+                  pressed && styles.pressed,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.chipLabel,
+                    typeface(id, 'bodyBold'),
+                    language === id && styles.chipLabelOn,
+                  ]}
+                >
+                  {label}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
         <View style={styles.tools}>
           <ChipButton
             label={c.getHelp}
@@ -214,6 +250,47 @@ export function WhitePill({
         {label}
       </Text>
     </Pressable>
+  );
+}
+
+export function SearchBox({
+  value,
+  onChangeText,
+  placeholder,
+  autoFocus = false,
+  accessibilityLabel,
+}: {
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder?: string;
+  autoFocus?: boolean;
+  accessibilityLabel?: string;
+}) {
+  const { language, textScale } = useApp();
+  const c = t(language);
+  return (
+    <View style={styles.searchBox}>
+      <View style={styles.mag}>
+        <View style={styles.magCircle} />
+        <View style={styles.magHandle} />
+      </View>
+      <TextInput
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor="#7A8AA0"
+        autoFocus={autoFocus}
+        autoCapitalize="none"
+        autoCorrect={false}
+        returnKeyType="search"
+        accessibilityLabel={accessibilityLabel ?? c.searchA11y}
+        style={[
+          styles.searchBoxInput,
+          { fontSize: Math.round(16 * textScale) },
+          typeface(language, 'body'),
+        ]}
+      />
+    </View>
   );
 }
 
@@ -435,6 +512,40 @@ const styles = StyleSheet.create({
   blueBoxLabel: {
     fontSize: 36,
     color: '#FFFFFF',
+  },
+  langRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+    marginTop: 10,
+  },
+  langChip: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    minHeight: 40,
+    justifyContent: 'center',
+    ...shadow,
+  },
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: ink,
+    borderRadius: 999,
+    minHeight: 48,
+    paddingHorizontal: 14,
+    gap: 8,
+    alignSelf: 'stretch',
+    ...shadow,
+  },
+  searchBoxInput: {
+    flex: 1,
+    color: ink,
+    paddingVertical: 8,
   },
   tools: {
     flexDirection: 'row',

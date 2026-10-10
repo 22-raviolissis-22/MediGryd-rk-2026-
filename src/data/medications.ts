@@ -532,6 +532,13 @@ export const medications: Medication[] = [
   },
 ];
 
+/** True when listed programs exist but there is no retail Cost Plus checkout price. */
+export function onlyAssistanceAvailable(med: Medication): boolean {
+  if (med.programIds.length === 0) return false;
+  const costplus = med.benchmarks.find((b) => b.source === 'costplus');
+  return med.costPlusUrl == null && (costplus == null || costplus.price == null);
+}
+
 export function searchMedications(query: string): Medication[] {
   const q = query.trim().toLowerCase();
   if (!q) return medications;

@@ -39,7 +39,7 @@ export function EligibilityScreen() {
           onPress={() => openUrl(LINKS.marketplace)}
         />
       )}
-      <WhitePill display label={c.continueCompare} onPress={() => go('search')} />
+      <WhitePill display label={c.continueCompare} onPress={() => go('results')} />
     </AppChrome>
   );
 }

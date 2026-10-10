@@ -26,7 +26,7 @@ export function InsuredNoticeScreen() {
         <Text style={[styles.bullet, typeface(language, 'body')]}>{`•  ${c.insuredStep2}`}</Text>
         <Text style={[styles.bullet, typeface(language, 'body')]}>{`•  ${c.insuredStep3}`}</Text>
       </WhiteCard>
-      <WhitePill display label={c.continueCompare} onPress={() => go('search')} />
+      <WhitePill display label={c.continueCompare} onPress={() => go('results')} />
     </AppChrome>
   );
 }

@@ -11,6 +11,7 @@ import { bundledNadacFeed, resolveNadacFeed, type NadacFeed } from './prices/nad
 import {
   DEFAULT_PREFS,
   loadPrefs,
+  saveLanguage,
   savePlanPhone,
   saveSavedMedications,
   saveTextSize,
@@ -78,6 +79,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setTextSizeState(prefs.textSize);
       setSavedIds(prefs.savedMedicationIds);
       setPlanPhoneState(prefs.planPhone);
+      if (prefs.language) setLanguage(prefs.language);
     });
     return () => {
       cancelled = true;
@@ -99,7 +101,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       textScale: textSize === 'large' ? LARGE_TEXT_SCALE : 1,
       savedMedicationIds,
       planPhone,
-      setLanguage,
+      setLanguage: (lang) => {
+        setLanguage(lang);
+        saveLanguage(lang);
+      },
       go: (next) => {
         setHistory((h) => (screen === next ? h : [...h, screen]));
         setScreen(next);

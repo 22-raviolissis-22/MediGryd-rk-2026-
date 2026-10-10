@@ -29,7 +29,7 @@ export function SavedScreen() {
         />
       ))}
       {saved.length === 0 ? (
-        <WhitePill display label={c.browseMedicines} onPress={() => go('search')} />
+        <WhitePill display label={c.browseMedicines} onPress={() => go('results')} />
       ) : null}
     </AppChrome>
   );

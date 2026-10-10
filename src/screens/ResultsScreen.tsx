@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../components/AppText';
 import {
@@ -6,14 +6,15 @@ import {
   BodyText,
   ChipButton,
   DisplayTitle,
+  SearchBox,
   WhiteCard,
   WhitePill,
 } from '../components/AppChrome';
-import { SaveToggle } from '../components/MedicationRow';
+import { MedicationRow, SaveToggle } from '../components/MedicationRow';
 import { openUrl } from '../components/ui';
 import { useApp } from '../context';
 import { fill, formatIsoDate, loc, pharmacyHours, t } from '../i18n';
-import { COST_PLUS_AS_OF } from '../data/medications';
+import { COST_PLUS_AS_OF, onlyAssistanceAvailable, searchMedications } from '../data/medications';
 import { incomeOptions } from '../data/income';
 import {
   genericOutlookIsStale,
@@ -25,10 +26,34 @@ import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize } from '../types';
 
 export function ResultsScreen() {
-  const { language, medication, insurance, household, income, nadacFeed } = useApp();
+  const {
+    language,
+    medication,
+    setMedication,
+    insurance,
+    household,
+    income,
+    nadacFeed,
+    searchQuery,
+    setSearchQuery,
+  } = useApp();
   const c = t(language);
   const [tab, setTab] = useState<'rx' | 'pap'>('rx');
+  const [papQuery, setPapQuery] = useState('');
+  const [pickingRx, setPickingRx] = useState(!medication);
+  const [pickingPap, setPickingPap] = useState(!medication);
   const med = medication;
+  const rxList = useMemo(() => searchMedications(searchQuery), [searchQuery]);
+  const papList = useMemo(() => searchMedications(papQuery), [papQuery]);
+
+  const pickRx = (next: import('../types').Medication) => {
+    setMedication(next);
+    setPickingRx(false);
+  };
+  const pickPap = (next: import('../types').Medication) => {
+    setMedication(next);
+    setPickingPap(false);
+  };
   const nadacAsOfLabel = fill(c.pricesUpdatedAsOf, { date: formatIsoDate(nadacFeed.asOfDate, language) });
   const costPlusAsOfLabel = fill(c.costPlusAsOf, { date: formatIsoDate(COST_PLUS_AS_OF, language) });
   const size: HouseholdSize = household ?? 1;
@@ -47,34 +72,8 @@ export function ResultsScreen() {
   const qtyLabel =
     qty == null ? '' : fill(unit === 'capsule' ? c.qtyCapsules : c.qtyTablets, { qty: String(qty) });
 
-  if (!med) {
-    return (
-      <AppChrome>
-        <WhiteCard>
-          <BodyText>{c.noMatches}</BodyText>
-        </WhiteCard>
-      </AppChrome>
-    );
-  }
-
   return (
-    <AppChrome>
-      <WhiteCard>
-        <BodyText>{c.resultsFor}</BodyText>
-        <DisplayTitle>{med.brand}</DisplayTitle>
-        <BodyText>
-          {med.generic} · {loc(med.form, language)}
-        </BodyText>
-        <View style={styles.saveRow}>
-          <SaveToggle med={med} />
-        </View>
-      </WhiteCard>
-      {insurance === 'yes' ? (
-        <WhiteCard>
-          <BodyText>{c.insuredBanner}</BodyText>
-        </WhiteCard>
-      ) : null}
-
+    <AppChrome showSearch={false}>
       <View style={styles.tabs}>
         <Pressable onPress={() => setTab('rx')} style={[styles.tab, tab === 'rx' && styles.tabOn]}>
           <Text
@@ -105,6 +104,48 @@ export function ResultsScreen() {
 
       {tab === 'rx' ? (
         <>
+          <SearchBox
+            value={searchQuery}
+            onChangeText={(text) => {
+              setSearchQuery(text);
+              setPickingRx(true);
+            }}
+            placeholder={c.regularSearchPlaceholder}
+            accessibilityLabel={c.searchA11y}
+          />
+          <BodyText>{c.regularPickHint}</BodyText>
+          {pickingRx || !med ? (
+            <>
+              {searchQuery.trim() && rxList.length === 0 ? (
+                <WhiteCard>
+                  <BodyText>{c.noMatches}</BodyText>
+                </WhiteCard>
+              ) : (
+                rxList.map((item) => (
+                  <MedicationRow key={item.id} med={item} onOpen={() => pickRx(item)} />
+                ))
+              )}
+            </>
+          ) : null}
+
+          {med && !pickingRx ? (
+        <>
+          <WhiteCard>
+            <BodyText>{c.resultsFor}</BodyText>
+            <DisplayTitle>{med.brand}</DisplayTitle>
+            <BodyText>
+              {med.generic} · {loc(med.form, language)}
+            </BodyText>
+            <View style={styles.saveRow}>
+              <SaveToggle med={med} />
+            </View>
+            <WhitePill label={c.changeMedicine} onPress={() => setPickingRx(true)} />
+          </WhiteCard>
+          {insurance === 'yes' ? (
+            <WhiteCard>
+              <BodyText>{c.insuredBanner}</BodyText>
+            </WhiteCard>
+          ) : null}
           <WhiteCard>
             <BodyText>{c.priceDisclaimer}</BodyText>
             <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
@@ -241,31 +282,74 @@ export function ResultsScreen() {
             </View>
           ))}
         </>
+          ) : null}
+        </>
       ) : (
-        <PapTab
-          language={language}
-          hasManufacturerPap={med.hasManufacturerPap}
-          ranked={rankPrograms({
-            programIds: med.programIds,
-            insurance,
-            household,
-            income,
-            language,
-            incomeLabel,
-            insuredLabel: c.papYouInsured,
-            uninsuredLabel: c.papYouUninsured,
-            userLineTpl: c.papUserSituation,
-            cutoffLineTpl: c.papCutoffVsYou,
-            unpublishedCutoff: c.papUnpublishedCutoff,
-            noLimitCutoff: c.papNoLimitCutoff,
-          })}
-          scriptVars={{
-            size: household ? String(household) : c.papHouseholdSkipped,
-            income: incomeLabel,
-            insured: insuredBit,
-            drug: `${med.brand} (${med.generic})`,
-          }}
-        />
+        <>
+          <SearchBox
+            value={papQuery}
+            onChangeText={(text) => {
+              setPapQuery(text);
+              setPickingPap(true);
+            }}
+            placeholder={c.papSearchPlaceholder}
+            accessibilityLabel={c.papSearchPlaceholder}
+          />
+          <BodyText>{c.papPickHint}</BodyText>
+          {pickingPap || !med ? (
+            <>
+              {papQuery.trim() && papList.length === 0 ? (
+                <WhiteCard>
+                  <BodyText>{c.noMatches}</BodyText>
+                </WhiteCard>
+              ) : (
+                papList.map((item) => (
+                  <MedicationRow key={item.id} med={item} onOpen={() => pickPap(item)} />
+                ))
+              )}
+            </>
+          ) : null}
+          {med && !pickingPap ? (
+            <>
+              <WhiteCard>
+                <DisplayTitle>{med.brand}</DisplayTitle>
+                <BodyText>
+                  {med.generic} · {loc(med.form, language)}
+                </BodyText>
+                <WhitePill label={c.changeMedicine} onPress={() => setPickingPap(true)} />
+              </WhiteCard>
+              {onlyAssistanceAvailable(med) ? (
+                <WhiteCard>
+                  <BodyText>{c.papOnlyExplain}</BodyText>
+                </WhiteCard>
+              ) : null}
+              <PapTab
+                language={language}
+                hasManufacturerPap={med.hasManufacturerPap}
+                ranked={rankPrograms({
+                  programIds: med.programIds,
+                  insurance,
+                  household,
+                  income,
+                  language,
+                  incomeLabel,
+                  insuredLabel: c.papYouInsured,
+                  uninsuredLabel: c.papYouUninsured,
+                  userLineTpl: c.papUserSituation,
+                  cutoffLineTpl: c.papCutoffVsYou,
+                  unpublishedCutoff: c.papUnpublishedCutoff,
+                  noLimitCutoff: c.papNoLimitCutoff,
+                })}
+                scriptVars={{
+                  size: household ? String(household) : c.papHouseholdSkipped,
+                  income: incomeLabel,
+                  insured: insuredBit,
+                  drug: `${med.brand} (${med.generic})`,
+                }}
+              />
+            </>
+          ) : null}
+        </>
       )}
     </AppChrome>
   );
@@ -441,7 +525,7 @@ function ProgramCard({
           {fill(c.papVerifiedAsOf, { date: formatIsoDate(p.verifiedAsOf, language) })}
         </Text>
       </WhiteCard>
-      <WhitePill label={c.papOpenApply} onPress={() => openUrl(p.applicationUrl)} />
+      <WhitePill label={c.papLearnMore} onPress={() => openUrl(p.applicationUrl)} />
     </View>
   );
 }
