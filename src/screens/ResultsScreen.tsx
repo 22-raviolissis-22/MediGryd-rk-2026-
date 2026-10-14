@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../components/AppText';
 import {
@@ -52,11 +52,13 @@ export function ResultsScreen() {
   const [papQuery, setPapQuery] = useState('');
   const [pickingRx, setPickingRx] = useState(!medication || medication.kind !== 'regular');
   const [pickingPap, setPickingPap] = useState(!medication || medication.kind !== 'pap');
+  const searchSource = useRef<'rx' | 'pap' | null>(null);
   const med = medication;
   const rxList = useMemo(() => searchInCatalog(regularMedications, searchQuery), [searchQuery]);
   const papList = useMemo(() => searchInCatalog(papMedications, papQuery), [papQuery]);
 
   useEffect(() => {
+    if (searchSource.current === 'pap') return;
     const hit = routeSearch(searchQuery);
     if (hit) {
       setMedication(hit);
@@ -84,6 +86,7 @@ export function ResultsScreen() {
   }, [searchQuery, setMedication, setResultsTab]);
 
   useEffect(() => {
+    if (searchSource.current === 'rx') return;
     const hit = routeSearch(papQuery);
     if (hit) {
       setMedication(hit);
@@ -160,6 +163,7 @@ export function ResultsScreen() {
         </Pressable>
         <Pressable
           onPress={() => {
+            searchSource.current = 'pap';
             setResultsTab('pap');
             if (!medication || medication.kind !== 'pap') setPickingPap(true);
           }}
@@ -182,6 +186,7 @@ export function ResultsScreen() {
           <SearchBox
             value={searchQuery}
             onChangeText={(text) => {
+              searchSource.current = 'rx';
               setSearchQuery(text);
               setPickingRx(true);
             }}
@@ -367,6 +372,7 @@ export function ResultsScreen() {
           <SearchBox
             value={papQuery}
             onChangeText={(text) => {
+              searchSource.current = 'pap';
               setPapQuery(text);
               setPickingPap(true);
             }}
