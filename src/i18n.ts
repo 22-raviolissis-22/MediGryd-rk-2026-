@@ -73,10 +73,19 @@ const en = {
   regularSearchPlaceholder: 'Search medications',
   papSearchPlaceholder: 'Search for assistance programs',
   regularPickHint:
-    'Search or pick a medicine to see prices plus nearby pharmacy names and street addresses.',
-  papPickHint: 'Search a medicine to see patient assistance programs and enrollment links.',
+    'Search or pick a regular pharmacy medicine to see cash prices, nearby stores, and coupons.',
+  papPickHint: 'Search a high-cost brand to open its patient assistance program, plus GoodRx and SingleCare links.',
+  pharmacyBadge: 'Pharmacy medicine',
+  papBadge: 'Requires a PAP',
+  regularKindBanner:
+    'This is a regular pharmacy medicine. Compare cash prices at nearby stores, Cost Plus mail-order, and coupons.',
+  papRequiredTitle: 'This medicine requires a patient assistance program',
+  papRequiredWhy:
+    '{drug} is a high-cost brand. Typical retail cash at CVS, Walgreens, or Costco is not a workable way to fill it in this guide, so it is not listed under Regular Medicines. A manufacturer PAP can provide it free or at a much lower cost if you qualify — often shipped to your home or clinic.',
+  papRequiredCoupons:
+    'GoodRx and SingleCare coupons are still here in case a pharmacy can use a discount card. They are not the manufacturer PAP. The enrollment steps below are the main path.',
   papOnlyExplain:
-    'This medicine is mainly offered through patient assistance programs, not typical retail cash prices. Read the short program notes below, then use the links to enroll or learn more.',
+    'This medicine is only listed under PAPs, not Regular Medicines. Read why below, then use GoodRx/SingleCare if useful, and enroll in the manufacturer program.',
   papLearnMore: 'Enroll / learn more',
   changeMedicine: 'Choose a different medicine',
   apply: 'Open program',
@@ -279,10 +288,20 @@ const es: typeof en = {
   regularSearchPlaceholder: 'Buscar medicamentos',
   papSearchPlaceholder: 'Buscar programas de asistencia',
   regularPickHint:
-    'Busca o elige un medicamento para ver precios y los nombres y direcciones de farmacias cercanas.',
-  papPickHint: 'Busca un medicamento para ver programas de asistencia e inscripciones.',
+    'Busca o elige un medicamento de farmacia habitual para ver precios en efectivo, tiendas cercanas y cupones.',
+  papPickHint:
+    'Busca una marca de alto costo para abrir su programa de asistencia, más enlaces de GoodRx y SingleCare.',
+  pharmacyBadge: 'Medicamento de farmacia',
+  papBadge: 'Requiere un PAP',
+  regularKindBanner:
+    'Este es un medicamento de farmacia habitual. Compara precios en efectivo en tiendas cercanas, Cost Plus por correo y cupones.',
+  papRequiredTitle: 'Este medicamento requiere un programa de asistencia al paciente',
+  papRequiredWhy:
+    '{drug} es una marca de alto costo. El precio en efectivo habitual en CVS, Walgreens o Costco no es una vía realista en esta guía, así que no está en Medicamentos regulares. Un PAP del fabricante puede darlo gratis o mucho más barato si calificas — a menudo enviado a tu casa o clínica.',
+  papRequiredCoupons:
+    'Los cupones de GoodRx y SingleCare siguen aquí por si una farmacia puede usar una tarjeta de descuento. No son el PAP del fabricante. Los pasos de inscripción abajo son la vía principal.',
   papOnlyExplain:
-    'Este medicamento se ofrece principalmente por programas de asistencia al paciente, no a precios de farmacia habituales. Lee las notas y usa los enlaces para inscribirte o saber más.',
+    'Este medicamento solo está en PAPs, no en Medicamentos regulares. Lee por qué abajo, usa GoodRx/SingleCare si sirve, e inscríbete en el programa del fabricante.',
   papLearnMore: 'Inscribirse / más información',
   changeMedicine: 'Elegir otro medicamento',
   apply: 'Abrir programa',
@@ -484,10 +503,18 @@ const zh: typeof en = {
   papsTab: '患者援助计划',
   regularSearchPlaceholder: '搜索药品',
   papSearchPlaceholder: '搜索援助计划',
-  regularPickHint: '搜索或选择药品，查看价格以及附近药房的名称和地址。',
-  papPickHint: '搜索药品以查看患者援助计划及申请链接。',
+  regularPickHint: '搜索或选择常规药房药品，查看自费价格、附近门店和优惠券。',
+  papPickHint: '搜索高价品牌药以打开其患者援助计划，以及 GoodRx 和 SingleCare 链接。',
+  pharmacyBadge: '药房药品',
+  papBadge: '需要患者援助计划',
+  regularKindBanner: '这是常规药房药品。可比较附近门店自费价、Cost Plus 邮购和优惠券。',
+  papRequiredTitle: '该药品需要患者援助计划',
+  papRequiredWhy:
+    '{drug} 是高价品牌药。本指南中 CVS、Walgreens 或 Costco 的常规自费价无法切实配药，因此不列在常规药品中。符合条件时，制药商援助计划可免费或大幅降价提供，通常寄到你家或诊所。',
+  papRequiredCoupons:
+    '仍提供 GoodRx 和 SingleCare 优惠券，以便药房使用折扣卡。它们不是制药商援助计划。下方申请步骤才是主要途径。',
   papOnlyExplain:
-    '该药品主要通过患者援助计划提供，而不是常见的药房自费价格。请阅读下方说明，并通过链接申请或了解详情。',
+    '该药品只列在患者援助计划中，不在常规药品中。请阅读下方说明，必要时使用 GoodRx/SingleCare，并申请制药商项目。',
   papLearnMore: '申请 / 了解更多',
   changeMedicine: '选择其他药品',
   apply: '打开项目',
@@ -672,10 +699,20 @@ const hi: typeof en = {
   regularSearchPlaceholder: 'दवाएं खोजें',
   papSearchPlaceholder: 'सहायता कार्यक्रम खोजें',
   regularPickHint:
-    'कीमतें और पास की फार्मेसी के नाम व पते देखने के लिए दवा खोजें या चुनें।',
-  papPickHint: 'रोगी सहायता कार्यक्रम और आवेदन लिंक देखने के लिए दवा खोजें।',
+    'नकद कीमतें, पास के स्टोर और कूपन देखने के लिए नियमित फार्मेसी दवा खोजें या चुनें।',
+  papPickHint:
+    'उच्च-लागत ब्रांड खोजें ताकि उसका रोगी सहायता कार्यक्रम खुले, साथ में GoodRx और SingleCare लिंक।',
+  pharmacyBadge: 'फार्मेसी दवा',
+  papBadge: 'PAP आवश्यक',
+  regularKindBanner:
+    'यह नियमित फार्मेसी दवा है। पास के स्टोर की नकद कीमतें, Cost Plus मेल-ऑर्डर और कूपन की तुलना करें।',
+  papRequiredTitle: 'इस दवा के लिए रोगी सहायता कार्यक्रम चाहिए',
+  papRequiredWhy:
+    '{drug} एक उच्च-लागत ब्रांड है। इस गाइड में CVS, Walgreens या Costco की आम नकद कीमत से इसे भरना व्यावहारिक नहीं, इसलिए यह नियमित दवाओं में नहीं है। पात्र होने पर निर्माता PAP इसे मुफ्त या बहुत सस्ती दे सकता है — अक्सर घर या क्लिनिक पर भेजकर।',
+  papRequiredCoupons:
+    'GoodRx और SingleCare कूपन अभी भी हैं यदि फार्मेसी डिस्काउंट कार्ड इस्तेमाल करे। वे निर्माता PAP नहीं हैं। नीचे नामांकन मुख्य रास्ता है।',
   papOnlyExplain:
-    'यह दवा आम खुदरा नकद कीमतों के बजाय मुख्य रूप से रोगी सहायता कार्यक्रमों से मिलती है। नीचे संक्षिप्त जानकारी पढ़ें, फिर नामांकन या अधिक जानने के लिए लिंक खोलें।',
+    'यह दवा केवल PAP में है, नियमित दवाओं में नहीं। नीचे कारण पढ़ें, ज़रूरत हो तो GoodRx/SingleCare इस्तेमाल करें, और निर्माता कार्यक्रम में नामांकन करें।',
   papLearnMore: 'नामांकन / और जानें',
   changeMedicine: 'दूसरी दवा चुनें',
   apply: 'कार्यक्रम खोलें',

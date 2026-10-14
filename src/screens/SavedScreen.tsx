@@ -6,7 +6,7 @@ import { t } from '../i18n';
 import type { Medication } from '../types';
 
 export function SavedScreen() {
-  const { language, savedMedicationIds, setMedication, go } = useApp();
+  const { language, savedMedicationIds, openMedication, go } = useApp();
   const c = t(language);
   const saved = savedMedicationIds
     .map((id) => medications.find((m) => m.id === id))
@@ -23,7 +23,7 @@ export function SavedScreen() {
           key={med.id}
           med={med}
           onOpen={() => {
-            setMedication(med);
+            openMedication(med);
             go('results');
           }}
         />

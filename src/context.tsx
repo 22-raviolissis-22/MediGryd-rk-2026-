@@ -25,6 +25,7 @@ type AppState = {
   household: HouseholdSize | null;
   income: IncomeBracket | null;
   medication: Medication | null;
+  resultsTab: 'rx' | 'pap';
   searchQuery: string;
   nadacFeed: NadacFeed;
   canGoBack: boolean;
@@ -39,6 +40,8 @@ type AppState = {
   setHousehold: (value: HouseholdSize) => void;
   setIncome: (value: IncomeBracket) => void;
   setMedication: (med: Medication) => void;
+  setResultsTab: (tab: 'rx' | 'pap') => void;
+  openMedication: (med: Medication) => void;
   setSearchQuery: (q: string) => void;
   setTextSize: (size: TextSize) => void;
   isSaved: (medId: string) => boolean;
@@ -59,6 +62,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [household, setHousehold] = useState<HouseholdSize | null>(null);
   const [income, setIncome] = useState<IncomeBracket | null>(null);
   const [medication, setMedication] = useState<Medication | null>(null);
+  const [resultsTab, setResultsTab] = useState<'rx' | 'pap'>('rx');
   const [searchQuery, setSearchQuery] = useState('');
   const [nadacFeed, setNadacFeed] = useState<NadacFeed>(bundledNadacFeed);
   const [textSize, setTextSizeState] = useState<TextSize>(DEFAULT_PREFS.textSize);
@@ -94,6 +98,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       household,
       income,
       medication,
+      resultsTab,
       searchQuery,
       nadacFeed,
       canGoBack: history.length > 0,
@@ -121,6 +126,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setHousehold,
       setIncome,
       setMedication,
+      setResultsTab,
+      openMedication: (med) => {
+        setMedication(med);
+        setResultsTab(med.kind === 'pap' ? 'pap' : 'rx');
+      },
       setSearchQuery,
       setTextSize: (size) => {
         setTextSizeState(size);
@@ -145,6 +155,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setHousehold(null);
         setIncome(null);
         setMedication(null);
+        setResultsTab('rx');
         setSearchQuery('');
       },
     }),
@@ -155,6 +166,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       household,
       income,
       medication,
+      resultsTab,
       searchQuery,
       nadacFeed,
       history,

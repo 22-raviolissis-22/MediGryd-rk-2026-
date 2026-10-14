@@ -22,6 +22,7 @@ export function SaveToggle({ med }: { med: Medication }) {
 
 export function MedicationRow({ med, onOpen }: { med: Medication; onOpen: () => void }) {
   const { language } = useApp();
+  const c = t(language);
   return (
     <View style={styles.card}>
       <Pressable
@@ -35,7 +36,7 @@ export function MedicationRow({ med, onOpen }: { med: Medication; onOpen: () => 
           {med.generic} · {loc(med.form, language)}
         </Text>
         <Text style={[styles.cat, typeface(language, 'bodySemi')]}>
-          {loc(med.category, language)}
+          {med.kind === 'pap' ? c.papBadge : c.pharmacyBadge} · {loc(med.category, language)}
         </Text>
       </Pressable>
       <SaveToggle med={med} />

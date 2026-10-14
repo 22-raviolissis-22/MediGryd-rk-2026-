@@ -79,8 +79,11 @@ export type PapProgram = {
   verifiedNote: LocalizedText;
 };
 
+export type MedicationKind = 'regular' | 'pap';
+
 export type Medication = {
   id: string;
+  kind: MedicationKind;
   brand: string;
   generic: string;
   form: LocalizedText;

@@ -57,6 +57,7 @@ type StdArgs = {
 function std(a: StdArgs): Medication {
   return {
     id: a.id,
+    kind: 'regular',
     brand: a.brand,
     generic: a.generic,
     form: a.form,
@@ -100,6 +101,7 @@ function specialty(a: SpecialtyArgs): Medication {
   );
   return {
     id: a.id,
+    kind: 'pap',
     brand: a.brand,
     generic: a.generic,
     form: a.form,
@@ -538,28 +540,64 @@ export const medications: Medication[] = [
   }),
 ];
 
+export const regularMedications = medications.filter((m) => m.kind === 'regular');
+export const papMedications = medications.filter((m) => m.kind === 'pap');
+
 /** True when listed programs exist but there is no retail Cost Plus checkout price. */
 export function onlyAssistanceAvailable(med: Medication): boolean {
-  if (med.programIds.length === 0) return false;
-  const cp = med.benchmarks.find((b) => b.source === 'costplus');
-  return med.costPlusUrl == null && (cp == null || cp.price == null);
+  return med.kind === 'pap';
+}
+
+function haystack(med: Medication) {
+  return [
+    med.brand,
+    med.generic,
+    med.category.en,
+    med.category.es,
+    med.category.zh,
+    med.category.hi,
+    ...med.searchTerms,
+  ]
+    .join(' ')
+    .toLowerCase();
+}
+
+export function searchInCatalog(list: Medication[], query: string): Medication[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return list;
+  return list.filter((med) => haystack(med).includes(q));
 }
 
 export function searchMedications(query: string): Medication[] {
+  return searchInCatalog(medications, query);
+}
+
+/**
+ * Open this medicine from a typed search: exact brand/generic/term, or a unique
+ * brand/generic prefix of at least 3 characters.
+ */
+export function uniqueCatalogMatch(query: string, list: Medication[]): Medication | null {
   const q = query.trim().toLowerCase();
-  if (!q) return medications;
-  return medications.filter((med) => {
-    const hay = [
-      med.brand,
-      med.generic,
-      med.category.en,
-      med.category.es,
-      med.category.zh,
-      med.category.hi,
-      ...med.searchTerms,
-    ]
-      .join(' ')
-      .toLowerCase();
-    return hay.includes(q);
-  });
+  if (q.length < 3) return null;
+  const exact = list.filter(
+    (m) =>
+      m.brand.toLowerCase() === q ||
+      m.generic.toLowerCase() === q ||
+      m.searchTerms.some((term) => term.toLowerCase() === q)
+  );
+  if (exact.length === 1) return exact[0];
+  const prefix = list.filter(
+    (m) => m.brand.toLowerCase().startsWith(q) || m.generic.toLowerCase().startsWith(q)
+  );
+  if (prefix.length === 1) return prefix[0];
+  return null;
+}
+
+/** Prefer a PAP hit when the query is a specialty brand; otherwise a regular pharmacy drug. */
+export function routeSearch(query: string): Medication | null {
+  const pap = uniqueCatalogMatch(query, papMedications);
+  const regular = uniqueCatalogMatch(query, regularMedications);
+  if (pap && !regular) return pap;
+  if (regular && !pap) return regular;
+  return null;
 }

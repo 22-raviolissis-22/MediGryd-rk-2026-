@@ -1,21 +1,25 @@
 import { useMemo } from 'react';
-import { AppChrome, BodyText, WhiteCard } from '../components/AppChrome';
+import { AppChrome, BodyText, DisplayTitle, WhiteCard } from '../components/AppChrome';
 import { MedicationRow } from '../components/MedicationRow';
 import { useApp } from '../context';
-import { medications, searchMedications } from '../data/medications';
+import { papMedications, regularMedications, searchInCatalog } from '../data/medications';
 import { t } from '../i18n';
 import type { Medication } from '../types';
 
 export function SearchScreen() {
-  const { language, go, setMedication, searchQuery } = useApp();
+  const { language, go, openMedication, searchQuery } = useApp();
   const c = t(language);
 
-  const results = useMemo(() => searchMedications(searchQuery), [searchQuery]);
-  const list = searchQuery.trim() ? results : medications;
-  const emptySearch = searchQuery.trim().length > 0 && results.length === 0;
+  const rxHits = useMemo(
+    () => searchInCatalog(regularMedications, searchQuery),
+    [searchQuery]
+  );
+  const papHits = useMemo(() => searchInCatalog(papMedications, searchQuery), [searchQuery]);
+  const emptySearch =
+    searchQuery.trim().length > 0 && rxHits.length === 0 && papHits.length === 0;
 
   const select = (med: Medication) => {
-    setMedication(med);
+    openMedication(med);
     go('results');
   };
 
@@ -26,9 +30,22 @@ export function SearchScreen() {
           {emptySearch ? c.noMatches : searchQuery.trim() ? c.commonRx : c.searchEmpty}
         </BodyText>
       </WhiteCard>
-      {list.map((med) => (
-        <MedicationRow key={med.id} med={med} onOpen={() => select(med)} />
-      ))}
+      {rxHits.length > 0 ? (
+        <>
+          <DisplayTitle>{c.pharmaciesTab}</DisplayTitle>
+          {rxHits.map((med) => (
+            <MedicationRow key={med.id} med={med} onOpen={() => select(med)} />
+          ))}
+        </>
+      ) : null}
+      {papHits.length > 0 ? (
+        <>
+          <DisplayTitle>{c.papsTab}</DisplayTitle>
+          {papHits.map((med) => (
+            <MedicationRow key={med.id} med={med} onOpen={() => select(med)} />
+          ))}
+        </>
+      ) : null}
     </AppChrome>
   );
 }
