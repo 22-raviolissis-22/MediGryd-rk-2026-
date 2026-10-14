@@ -1,8 +1,8 @@
 # CalRx Assist
 
-Expo / React Native app for California congressional districts **17** and **19**. It screens for Medi-Cal / Covered California, then shows **sourced price benchmarks** (not invented store quotes) plus **verified nearby pharmacies** and patient assistance programs (PAPs).
+Expo / React Native app for California congressional districts **17** and **19**. After a Medi-Cal / Covered California screen, it shows prices and patient assistance programs from the **Patient Assistance Programs and Pricing Guide**: 15 standard generics with Cost Plus, GoodRx, and per-store cash prices at 10 local pharmacies, plus 10 high-cost brand medicines with manufacturer PAPs.
 
-The flow is language → insurance → household/income when uninsured → eligibility → medication search → dual results (benchmarks & pharmacies vs. PAPs).
+The flow is language → insurance → household/income when uninsured → eligibility → medication search → dual results (Regular Medicines vs. PAPs).
 
 ## Run on Expo Go (iPhone)
 
@@ -29,7 +29,7 @@ On web the UI is framed as a vertical iPhone (390×844).
 
 ## Refresh NADAC prices
 
-CMS publishes a new NADAC weekly file. This repo does **not** fetch the full table inside the phone app. Instead a small Node script downloads that week, keeps only the 12 drugs in the app, and writes a trimmed JSON feed.
+CMS publishes a new NADAC weekly file. This repo does **not** fetch the full table inside the phone app. Instead a small Node script downloads that week, keeps only the catalog drugs, and writes a trimmed JSON feed.
 
 ```bash
 npm run update-prices
@@ -50,11 +50,11 @@ The default constant uses `reva-kaushik/calrx-assist`. Until that URL exists, la
 
 On launch, if the device is online, the app fetches the hosted JSON, compares `asOfDate` to the bundled snapshot, and if newer it updates displayed NADAC prices and caches the file on-device.
 
-Cost Plus Drugs quotes stay the October 3, 2026 snapshot and are labeled as such on the results screen.
+Cost Plus, GoodRx, and local cash figures follow the October 13, 2026 pricing guide and are labeled on the results screen.
 
 ## Data sources
 
-**Retrieval date: October 3, 2026.** Benchmarks in the app are snapshots from that pull. In-store cash prices vary and must be confirmed at the pharmacy. NADAC and Cost Plus figures are **not** per-pharmacy prices.
+**Guide date: October 13, 2026.** Catalog, local cash prices, Cost Plus list prices, GoodRx coupon amounts, and PAP summaries come from the Patient Assistance Programs and Pricing Guide. Confirm at the pharmacy or on the linked Cost Plus / GoodRx / manufacturer pages before you pay or apply.
 
 ### CMS NADAC (National Average Drug Acquisition Cost)
 
@@ -67,22 +67,17 @@ Cost Plus Drugs quotes stay the October 3, 2026 snapshot and are labeled as such
 
 - **Source:** Public Cost Plus Drugs pricing API (`https://us-central1-costplusdrugs-publicapi.cloudfunctions.net/main`) and catalog (`https://api.costplusdrugs.com/pricelist/cpd`). Product pages live on [costplusdrugs.com](https://www.costplusdrugs.com/).
 - **What we used:** `requested_quote` for the matching strength and quantity. Cost Plus’s published formula is **acquisition cost + 15% markup + pharmacist fee** (quotes include that fee; shipping is extra). Results lead with this as a **buy-now** mail-order price and link the matching product page on [costplusdrugs.com](https://www.costplusdrugs.com/).
-- **Not listed:** Lantus / insulin glargine, Ozempic / semaglutide, and Eliquis / apixaban had **no catalog match** on October 3, 2026. Those cards say “Not listed” instead of inventing a price. Humira’s Cost Plus card is the **adalimumab-aacf biosimilar** kit, not brand Humira.
+- **Not listed:** The 10 high-cost brand medicines (Farxiga, Jardiance, Eliquis, Humira, Trulicity, Xarelto, Keytruda, Herceptin, Xeljanz, Stelara) are not Cost Plus catalog items in the guide — those cards say “Not listed” and point to PAPs.
 
 ### GoodRx coupons
 
-Each medication links to that drug’s real GoodRx page (`https://www.goodrx.com/<drug>`), for example [atorvastatin](https://www.goodrx.com/atorvastatin) or [Lantus](https://www.goodrx.com/lantus). Coupon dollar amounts are **not** copied into the app because they vary by pharmacy; the user opens GoodRx to see the current coupon.
+Each medication links to that drug’s real GoodRx page (`https://www.goodrx.com/<drug>`), for example [atorvastatin](https://www.goodrx.com/atorvastatin). The Regular Medicines tab also shows the guide’s coupon dollar amount when one is listed. Open GoodRx (or SingleCare) to see the live coupon.
 
-A second button, **Compare on SingleCare**, sits beside the GoodRx link and opens that drug’s real SingleCare coupon page (`https://www.singlecare.com/prescription/<drug-name>`). SingleCare lists free coupon prices without a subscription upsell. Coupon amounts are not copied into the app.
+A second button, **Compare on SingleCare**, sits beside the GoodRx link (with space so it does not overlap the price card) and opens that drug’s real SingleCare coupon page.
 
 ### Generic competition outlook
 
-On the results Prices tab, five drugs show a one-line outlook (the seven already-generic pills get none):
-
-- **Ozempic / semaglutide** and **Eliquis / apixaban**: mapped from the earliest remaining FDA Orange Book patent or exclusivity date (August 2026 data files). Language is always “may face,” never a promised launch day.
-- **Lantus**, **Humira**, and **Advair Diskus**: already have an FDA-approved biosimilar or generic alternative (informational only).
-
-Notes are dated **October 4, 2026**. The same six-month staleness check used on the PAP tab shows a banner if that date is more than six months old.
+On the Regular Medicines tab, **Eliquis** still shows an Orange Book patent note and **Humira** notes existing biosimilars. Other guide medicines are already generic or are specialty brands handled on the PAP tab.
 
 ### Pharmacy addresses (CA-17 and CA-19)
 
@@ -101,17 +96,26 @@ Addresses come from official chain locators, not guesswork. Stores included:
 | CA-19 | Costco Pharmacy | 7251 Camino Arroyo, Gilroy, CA 95020 | [Costco Gilroy](https://www.costco.com/warehouse-locations/gilroy-ca-760.html) |
 | CA-19 | Walgreens Pharmacy | 1532 N Main St, Salinas, CA 93906 | [Walgreens locator](https://www.walgreens.com/storelocator/pharmacy/salinas-ca) |
 
-No store is shown with a dollar amount attached to that location.
+Each of these stores shows the guide’s cash price for each of the 15 standard medicines (for example atorvastatin 20 mg: $12.00 at CVS Sunnyvale, $9.99 at both Costco pharmacies).
 
-### Patient assistance programs (verified October 2026)
+### Patient assistance programs
 
-The PAP tab is a matcher, not a directory of invented links. Each entry was checked against the manufacturer or nonprofit **application** page plus [RxAssist](https://www.rxassist.org/) / [NeedyMeds](https://www.needymeds.org/) listings. Phone numbers, fax/mail addresses, and FPL rules come from those sources. **Lilly Cares** and **AZ&Me** are omitted because they do not cover any drug in this app.
+The PAP tab includes the guide’s overview (what a PAP is, manufacturer shipping, income/insurance screens, application) and these 10 manufacturer programs:
 
-Manufacturer PAPs in the catalog: Pfizer PAP Connect (Lipitor), GSK PAP (Ventolin HFA, Advair Diskus), Sanofi Patient Connection (Lantus), NovoCare PAP (Ozempic, 200% FPL, uninsured; Medicare Part D not eligible in 2026), Bristol Myers Squibb PAF (Eliquis; income cap unpublished). **myAbbVie Assist is closed to new HUMIRA patients as of July 1, 2026** — the app says so and does not treat it as an open match.
+| Medicine | Program |
+| --- | --- |
+| Farxiga (dapagliflozin) | AZ&Me Prescription Savings |
+| Jardiance (empagliflozin) | Boehringer Ingelheim Cares |
+| Eliquis (apixaban) | Bristol Myers Squibb Patient Assistance Foundation |
+| Humira (adalimumab) | myAbbVie Assist |
+| Trulicity (dulaglutide) | Lilly Cares |
+| Xarelto (rivaroxaban) | Johnson & Johnson Patient Assistance |
+| Keytruda (pembrolizumab) | Merck Helps |
+| Herceptin (trastuzumab) | Genentech Access Solutions |
+| Xeljanz (tofacitinib) | Pfizer RxPathways |
+| Stelara (ustekinumab) | Janssen CarePath |
 
-Nonprofit / free-or-low-cost: Rx Outreach (no income application; listed generics), TotalAssist, HealthWell Foundation, Good Days (copay funds for insured patients; funds open and close).
-
-No verified manufacturer PAP for generic metformin, lisinopril, omeprazole, sertraline, or amoxicillin. Amoxicillin also was not on the Rx Outreach list we checked. The matcher says that plainly.
+The 15 standard generics also list **Rx Outreach** (nonprofit mail-order, no income form). Eligibility figures are general estimates — confirm on the official program site or [NeedyMeds](https://www.needymeds.org/) before you apply.
 
 Matching uses the insurance screener (household size, income bracket A/B/C, insured/uninsured). “Likely qualifies” only when the **entire** income bracket sits at or under the program FPL cap **and** insurance rules fit. It is never a guarantee — the UI says to confirm with the program. PAP enrollment typically expires yearly; the tab reminds users to reapply.
 
@@ -126,7 +130,7 @@ Matching uses the insurance screener (household size, income bracket A/B/C, insu
 | Eligibility B | Covered California subsidy notice + enroll link. |
 | Eligibility C | Standard marketplace notice + enroll link. |
 | Search | Live filter of brand/generic names; tap a drug for benchmarks. |
-| Results | Cost Plus buy-now + GoodRx coupon first, then NADAC as a non-purchasable wholesale reference, CA-17/CA-19 pharmacies (no store prices), then PAP / nonprofit programs. |
+| Results | Cost Plus buy-now, GoodRx / SingleCare, NADAC wholesale reference, then each local pharmacy with its cash price. PAP tab: program overview plus ranked enrollment links. |
 
 ## Stack
 

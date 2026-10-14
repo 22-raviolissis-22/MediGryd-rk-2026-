@@ -35,12 +35,15 @@ export type PriceBenchmark = {
 };
 
 export type PharmacyOffer = {
+  id: string;
   name: string;
   address: string;
   district: District;
   hoursId: HoursId;
   locatorUrl: string;
   addressVerified: boolean;
+  /** Cash price at this store for the parent medication, when known. */
+  cashPrice: number | null;
 };
 
 /** Who the program is designed for, based on insurance. */
@@ -93,4 +96,9 @@ export type Medication = {
   singlecareUrl: string | null;
   /** Cost Plus product page when the SKU is in their catalog; otherwise null. */
   costPlusUrl: string | null;
+  /** GoodRx coupon dollar amount from the pricing guide, when listed. */
+  goodrxPrice: number | null;
+  /** Guide estimate of typical retail cash range. */
+  retailEstMin: number | null;
+  retailEstMax: number | null;
 };

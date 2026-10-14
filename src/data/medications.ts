@@ -1,542 +1,548 @@
 import type { LocalizedText, Medication, PriceBenchmark } from '../types';
 import { L } from '../i18n';
-import { areaPharmacies } from './pharmacies';
+import { pharmaciesWithCash } from './pharmacies';
 
-/** Retrieval date for NADAC and Cost Plus snapshots used below. */
-/** Human-readable Cost Plus snapshot day (mail-order quotes, not auto-updated). */
-export const PRICE_RETRIEVED_ON = 'October 3, 2026';
-export const COST_PLUS_AS_OF = '2026-10-03';
-export const NADAC_AS_OF = '2026-09-30';
-export const NADAC_EFFECTIVE = '2026-09-23';
+/** Guide retrieval date for Cost Plus, GoodRx, and local cash figures. */
+export const PRICE_RETRIEVED_ON = 'October 13, 2026';
+export const COST_PLUS_AS_OF = '2026-10-13';
+export const NADAC_AS_OF = '2026-10-13';
 
-function nadac(price: number, pkg: LocalizedText, note: LocalizedText): PriceBenchmark {
-  return { source: 'nadac', price, package: pkg, note };
+function nadac(pkg: LocalizedText, note: LocalizedText): PriceBenchmark {
+  return { source: 'nadac', price: null, package: pkg, note };
 }
 
 function costplus(price: number | null, pkg: LocalizedText, note: LocalizedText): PriceBenchmark {
   return { source: 'costplus', price, package: pkg, note };
 }
 
-const notOnCostPlus = L(
-  'Not listed in the Cost Plus Drugs public catalog on October 3, 2026. Cost Plus list prices use acquisition + 15% markup + pharmacist fee when a product is sold.',
-  'No aparece en el catálogo público de Cost Plus Drugs el 3 de octubre de 2026. Los precios de lista de Cost Plus usan costo de adquisición + 15% + tarifa de farmacéutico cuando venden el producto.',
-  '2026 年 10 月 3 日未出现在 Cost Plus Drugs 公开目录中。Cost Plus 标价在售卖时为采购成本 + 15% 加价 + 药师费。',
-  '3 अक्टूबर 2026 को Cost Plus Drugs सार्वजनिक कैटलॉग में सूचीबद्ध नहीं। बिकने पर Cost Plus सूची कीमत अधिग्रहण + 15% मार्कअप + फार्मासिस्ट शुल्क का उपयोग करती है।'
-);
+const GENERIC_PROGRAMS = ['rx-outreach'];
 
-const notListedPkg = L('Not listed', 'No listado', '未列出', 'सूची में नहीं');
+function wholesaleNote(range: string): LocalizedText {
+  return L(
+    `Wholesale NADAC reference from the Patient Assistance Programs and Pricing Guide: ${range}. This is not a checkout price.`,
+    `Referencia mayorista NADAC de la guía de PAP y precios: ${range}. No es un precio de compra.`,
+    `患者援助计划与定价指南中的 NADAC 批发参考价：${range}。不是可结账价格。`,
+    `रोगी सहायता और मूल्य गाइड से NADAC थोक संदर्भ: ${range}। यह चेकआउट कीमत नहीं है।`
+  );
+}
 
-const tabs30x20 = L('30 × 20 mg tablets', '30 tabletas de 20 mg', '30 × 20 毫克片剂', '30 × 20 मिग्रा गोलियाँ');
-const tabs60x500 = L('60 × 500 mg tablets', '60 tabletas de 500 mg', '60 × 500 毫克片剂', '60 × 500 मिग्रा गोलियाँ');
-const tabs30x10 = L('30 × 10 mg tablets', '30 tabletas de 10 mg', '30 × 10 毫克片剂', '30 × 10 मिग्रा गोलियाँ');
-const caps30x20dr = L(
-  '30 × 20 mg DR capsules',
-  '30 cápsulas DR de 20 mg',
-  '30 × 20 毫克缓释胶囊',
-  '30 × 20 मिग्रा DR कैप्सूल'
-);
-const tabs30x50 = L('30 × 50 mg tablets', '30 tabletas de 50 mg', '30 × 50 毫克片剂', '30 × 50 मिग्रा गोलियाँ');
-const caps30x500 = L('30 × 500 mg capsules', '30 cápsulas de 500 mg', '30 × 500 毫克胶囊', '30 × 500 मिग्रा कैप्सूल');
+function costPlusNote(price: string): LocalizedText {
+  return L(
+    `Cost Plus Drugs list price ${price} from the Patient Assistance Programs and Pricing Guide (mail-order; shipping extra).`,
+    `Precio de lista de Cost Plus Drugs ${price} según la guía de PAP y precios (pedido por correo; envío aparte).`,
+    `患者援助计划与定价指南中的 Cost Plus Drugs 标价 ${price}（邮购，运费另计）。`,
+    `रोगी सहायता और मूल्य गाइड में Cost Plus Drugs सूची कीमत ${price} (मेल-ऑर्डर; शिपिंग अलग)।`
+  );
+}
+
+type StdArgs = {
+  id: string;
+  brand: string;
+  generic: string;
+  form: LocalizedText;
+  category: LocalizedText;
+  searchTerms: string[];
+  pkg: LocalizedText;
+  wholesale: string;
+  costPlus: number;
+  goodrxPrice: number;
+  retailMin: number;
+  retailMax: number;
+  cash: number[];
+  goodrxPath: string;
+  singlecarePath: string;
+  costPlusPath: string;
+};
+
+function std(a: StdArgs): Medication {
+  return {
+    id: a.id,
+    brand: a.brand,
+    generic: a.generic,
+    form: a.form,
+    category: a.category,
+    searchTerms: a.searchTerms,
+    goodrxUrl: `https://www.goodrx.com/${a.goodrxPath}`,
+    singlecareUrl: `https://www.singlecare.com/prescription/${a.singlecarePath}`,
+    costPlusUrl: `https://www.costplusdrugs.com/medications/${a.costPlusPath}`,
+    goodrxPrice: a.goodrxPrice,
+    retailEstMin: a.retailMin,
+    retailEstMax: a.retailMax,
+    benchmarks: [
+      nadac(L(a.wholesale, a.wholesale, a.wholesale, a.wholesale), wholesaleNote(a.wholesale)),
+      costplus(a.costPlus, a.pkg, costPlusNote(`$${a.costPlus.toFixed(2)}`)),
+    ],
+    pharmacies: pharmaciesWithCash(a.cash),
+    hasManufacturerPap: false,
+    programIds: GENERIC_PROGRAMS,
+  };
+}
+
+type SpecialtyArgs = {
+  id: string;
+  brand: string;
+  generic: string;
+  form: LocalizedText;
+  category: LocalizedText;
+  searchTerms: string[];
+  programId: string;
+  goodrxPath: string;
+  singlecarePath: string;
+};
+
+function specialty(a: SpecialtyArgs): Medication {
+  const notListed = L('Not listed', 'No listado', '未列出', 'सूची में नहीं');
+  const papNote = L(
+    'High-cost brand medicine. Retail cash is usually prohibitive — use the manufacturer patient assistance program on the PAPs tab.',
+    'Medicamento de marca de alto costo. El precio en efectivo suele ser prohibitivo: usa el PAP del fabricante en la pestaña PAPs.',
+    '高价品牌药。零售自费通常难以负担 — 请在 PAP 页使用制药商患者援助计划。',
+    'उच्च-लागत ब्रांड दवा। खुदरा नकद आमतौर पर बहुत महंगी है — PAPs टैब पर निर्माता सहायता कार्यक्रम देखें।'
+  );
+  return {
+    id: a.id,
+    brand: a.brand,
+    generic: a.generic,
+    form: a.form,
+    category: a.category,
+    searchTerms: a.searchTerms,
+    goodrxUrl: `https://www.goodrx.com/${a.goodrxPath}`,
+    singlecareUrl: `https://www.singlecare.com/prescription/${a.singlecarePath}`,
+    costPlusUrl: null,
+    goodrxPrice: null,
+    retailEstMin: null,
+    retailEstMax: null,
+    benchmarks: [
+      nadac(notListed, papNote),
+      costplus(null, notListed, papNote),
+    ],
+    pharmacies: [],
+    hasManufacturerPap: true,
+    programIds: [a.programId],
+  };
+}
+
+const form30 = (dose: string) =>
+  L(
+    `${dose}, 30-day supply`,
+    `${dose}, suministro de 30 días`,
+    `${dose}，30 天用量`,
+    `${dose}, 30-दिन की आपूर्ति`
+  );
+const form60 = (dose: string) =>
+  L(
+    `${dose}, 60-day supply`,
+    `${dose}, suministro de 60 días`,
+    `${dose}，60 天用量`,
+    `${dose}, 60-दिन की आपूर्ति`
+  );
+const pkg30 = (dose: string) =>
+  L(`30 × ${dose}`, `30 × ${dose}`, `30 × ${dose}`, `30 × ${dose}`);
+const pkg60 = (dose: string) =>
+  L(`60 × ${dose}`, `60 × ${dose}`, `60 × ${dose}`, `60 × ${dose}`);
+
+const cholesterol = L('Cholesterol', 'Colesterol', '胆固醇', 'कोलेस्ट्रॉल');
+const diabetes = L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह');
+const bp = L('Blood pressure', 'Presión arterial', '血压', 'रक्तचाप');
+const thyroid = L('Thyroid', 'Tiroides', '甲状腺', 'थायरॉइड');
+const reflux = L('Acid reflux', 'Reflujo', '胃酸反流', 'एसिड रिफ्लक्स');
+const mental = L('Mental health', 'Salud mental', '精神健康', 'मानसिक स्वास्थ्य');
+const diuretic = L('Diuretic', 'Diurético', '利尿剂', 'मूत्रवर्धक');
+const nerve = L('Nerve pain', 'Dolor nervioso', '神经痛', 'नस दर्द');
+const electrolyte = L('Electrolyte', 'Electrolito', '电解质', 'इलेक्ट्रोलाइट');
+const thinner = L('Blood thinner', 'Anticoagulante', '抗凝药', 'रक्त पतला करने वाली दवा');
+const autoimmune = L('Autoimmune', 'Autoinmune', '自身免疫', 'स्वप्रतिरक्षी');
+const oncology = L('Oncology', 'Oncología', '肿瘤', 'कैंसर');
+const heart = L('Diabetes / heart failure', 'Diabetes / insuficiencia cardíaca', '糖尿病 / 心衰', 'मधुमेह / हृदय विफलता');
+const injectable = L('Injectable', 'Inyectable', '注射剂', 'इंजेक्टेबल');
 
 export const medications: Medication[] = [
-  {
+  std({
     id: 'atorvastatin',
     brand: 'Lipitor',
     generic: 'atorvastatin',
-    form: L(
-      '20 mg tablet, 30-day supply',
-      'tableta 20 mg, suministro de 30 días',
-      '20 毫克片剂，30 天用量',
-      '20 मिग्रा गोली, 30-दिन की आपूर्ति'
-    ),
-    category: L('Cholesterol', 'Colesterol', '胆固醇', 'कोलेस्ट्रॉल'),
-    searchTerms: ['lipitor', 'atorvastatin', 'statin', 'cholesterol', '胆固醇', 'कोलेस्ट्रॉल'],
-    goodrxUrl: 'https://www.goodrx.com/atorvastatin',
-    singlecareUrl: 'https://www.singlecare.com/prescription/atorvastatin-calcium',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/atorvastatin-20mg-tablet/',
-    benchmarks: [
-      nadac(
-        0.84,
-        tabs30x20,
-        L(
-          'CMS NADAC $0.02792 per tablet (ATORVASTATIN 20 MG TABLET), as-of 2026-09-30, effective 2026-09-23. 0.02792 × 30 = $0.84.',
-          'CMS NADAC $0.02792 por tableta (ATORVASTATIN 20 MG TABLET), al 2026-09-30, vigente 2026-09-23. 0.02792 × 30 = $0.84.',
-          'CMS NADAC 每片 $0.02792（ATORVASTATIN 20 MG TABLET），截至 2026-09-30，生效 2026-09-23。0.02792 × 30 = $0.84。',
-          'CMS NADAC $0.02792 प्रति गोली (ATORVASTATIN 20 MG TABLET), 2026-09-30 तक, प्रभावी 2026-09-23। 0.02792 × 30 = $0.84।'
-        )
-      ),
-      costplus(
-        5.41,
-        tabs30x20,
-        L(
-          'Cost Plus Drugs public API quote $5.41 for 30 tablets of atorvastatin 20 mg (unit $0.0119 + 15% markup + $5 pharmacist fee). Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $5.41 por 30 tabletas de atorvastatina 20 mg (unidad $0.0119 + 15% + $5 de farmacéutico). Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：阿托伐他汀 20 毫克 30 片 $5.41（单价 $0.0119 + 15% 加价 + $5 药师费）。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $5.41 एटोरवास्टैटिन 20 मिग्रा की 30 गोलियों के लिए (इकाई $0.0119 + 15% + $5 फार्मासिस्ट शुल्क)। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: true,
-    programIds: ['pfizer-pap', 'rx-outreach'],
-  },
-  {
+    form: form30('20 mg tablet'),
+    category: cholesterol,
+    searchTerms: ['lipitor', 'atorvastatin', 'statin', 'cholesterol'],
+    pkg: pkg30('20 mg tablets'),
+    wholesale: '~$0.10–$0.20 / tablet',
+    costPlus: 5.41,
+    goodrxPrice: 6.1,
+    retailMin: 12,
+    retailMax: 49,
+    cash: [12, 12.5, 12, 14.8, 9.99, 15, 14.8, 15.5, 9.99, 14.8],
+    goodrxPath: 'atorvastatin',
+    singlecarePath: 'atorvastatin-calcium',
+    costPlusPath: 'atorvastatin-20mg-tablet/',
+  }),
+  std({
     id: 'metformin',
     brand: 'Glucophage',
     generic: 'metformin',
-    form: L(
-      '500 mg tablet, 60-day supply',
-      'tableta 500 mg, suministro de 60 días',
-      '500 毫克片剂，60 天用量',
-      '500 मिग्रा गोली, 60-दिन की आपूर्ति'
-    ),
-    category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
-    searchTerms: ['metformin', 'glucophage', 'diabetes', 'type 2', '糖尿病', 'मधुमेह'],
-    goodrxUrl: 'https://www.goodrx.com/metformin',
-    singlecareUrl: 'https://www.singlecare.com/prescription/metformin-hcl',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/metformin-500mg-tablet/',
-    benchmarks: [
-      nadac(
-        0.87,
-        tabs60x500,
-        L(
-          'CMS NADAC $0.01451 per tablet (METFORMIN HCL 500 MG TABLET), as-of 2026-09-30. 0.01451 × 60 = $0.87.',
-          'CMS NADAC $0.01451 por tableta (METFORMIN HCL 500 MG TABLET), al 2026-09-30. 0.01451 × 60 = $0.87.',
-          'CMS NADAC 每片 $0.01451（METFORMIN HCL 500 MG TABLET），截至 2026-09-30。0.01451 × 60 = $0.87。',
-          'CMS NADAC $0.01451 प्रति गोली (METFORMIN HCL 500 MG TABLET), 2026-09-30 तक। 0.01451 × 60 = $0.87।'
-        )
-      ),
-      costplus(
-        5.62,
-        tabs60x500,
-        L(
-          'Cost Plus Drugs public API quote $5.62 for 60 tablets of metformin 500 mg. Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $5.62 por 60 tabletas de metformina 500 mg. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：二甲双胍 500 毫克 60 片 $5.62。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $5.62 मेटफॉर्मिन 500 मिग्रा की 60 गोलियों के लिए। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: false,
-    programIds: ['rx-outreach'],
-  },
-  {
+    form: form60('500 mg tablet'),
+    category: diabetes,
+    searchTerms: ['metformin', 'glucophage', 'diabetes'],
+    pkg: pkg60('500 mg tablets'),
+    wholesale: '~$0.05 / tablet',
+    costPlus: 5,
+    goodrxPrice: 4,
+    retailMin: 10,
+    retailMax: 25,
+    cash: [15, 15.5, 15, 18, 10, 18.5, 18, 19, 10, 18],
+    goodrxPath: 'metformin',
+    singlecarePath: 'metformin-hcl',
+    costPlusPath: 'metformin-500mg-tablet/',
+  }),
+  std({
     id: 'lisinopril',
     brand: 'Zestril',
     generic: 'lisinopril',
-    form: L(
-      '10 mg tablet, 30-day supply',
-      'tableta 10 mg, suministro de 30 días',
-      '10 毫克片剂，30 天用量',
-      '10 मिग्रा गोली, 30-दिन की आपूर्ति'
-    ),
-    category: L('Blood pressure', 'Presión arterial', '血压', 'रक्तचाप'),
-    searchTerms: ['lisinopril', 'zestril', 'prinivil', 'blood pressure', 'ace', '血压', 'रक्तचाप'],
-    goodrxUrl: 'https://www.goodrx.com/lisinopril',
-    singlecareUrl: 'https://www.singlecare.com/prescription/lisinopril',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/lisinopril-10mg-tablet/',
-    benchmarks: [
-      nadac(
-        0.54,
-        tabs30x10,
-        L(
-          'CMS NADAC $0.01815 per tablet (LISINOPRIL 10 MG TABLET), as-of 2026-09-30. 0.01815 × 30 = $0.54.',
-          'CMS NADAC $0.01815 por tableta (LISINOPRIL 10 MG TABLET), al 2026-09-30. 0.01815 × 30 = $0.54.',
-          'CMS NADAC 每片 $0.01815（LISINOPRIL 10 MG TABLET），截至 2026-09-30。0.01815 × 30 = $0.54。',
-          'CMS NADAC $0.01815 प्रति गोली (LISINOPRIL 10 MG TABLET), 2026-09-30 तक। 0.01815 × 30 = $0.54।'
-        )
-      ),
-      costplus(
-        5.38,
-        tabs30x10,
-        L(
-          'Cost Plus Drugs public API quote $5.38 for 30 tablets of lisinopril 10 mg. Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $5.38 por 30 tabletas de lisinopril 10 mg. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：赖诺普利 10 毫克 30 片 $5.38。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $5.38 लिसिनोप्रिल 10 मिग्रा की 30 गोलियों के लिए। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: false,
-    programIds: ['rx-outreach'],
-  },
-  {
+    form: form30('10 mg tablet'),
+    category: bp,
+    searchTerms: ['lisinopril', 'zestril', 'prinivil', 'blood pressure', 'ace'],
+    pkg: pkg30('10 mg tablets'),
+    wholesale: '~$0.08 / tablet',
+    costPlus: 5,
+    goodrxPrice: 4,
+    retailMin: 10,
+    retailMax: 20,
+    cash: [12, 12.5, 12, 15, 10, 15.5, 15, 16, 10, 15],
+    goodrxPath: 'lisinopril',
+    singlecarePath: 'lisinopril',
+    costPlusPath: 'lisinopril-10mg-tablet/',
+  }),
+  std({
+    id: 'levothyroxine',
+    brand: 'Synthroid',
+    generic: 'levothyroxine',
+    form: form30('50 mcg tablet'),
+    category: thyroid,
+    searchTerms: ['synthroid', 'levothyroxine', 'thyroid'],
+    pkg: pkg30('50 mcg tablets'),
+    wholesale: '~$0.15 / tablet',
+    costPlus: 6,
+    goodrxPrice: 8,
+    retailMin: 15,
+    retailMax: 35,
+    cash: [20, 20.5, 20, 25, 15, 25.5, 25, 26, 15, 25],
+    goodrxPath: 'levothyroxine',
+    singlecarePath: 'levothyroxine',
+    costPlusPath: 'levothyroxine-50mcg-tablet/',
+  }),
+  std({
+    id: 'amlodipine',
+    brand: 'Norvasc',
+    generic: 'amlodipine',
+    form: form30('5 mg tablet'),
+    category: bp,
+    searchTerms: ['norvasc', 'amlodipine', 'blood pressure', 'calcium channel'],
+    pkg: pkg30('5 mg tablets'),
+    wholesale: '~$0.06 / tablet',
+    costPlus: 4.5,
+    goodrxPrice: 3.8,
+    retailMin: 10,
+    retailMax: 18,
+    cash: [12, 12.5, 12, 14, 10, 14.5, 14, 15, 10, 14],
+    goodrxPath: 'amlodipine',
+    singlecarePath: 'amlodipine-besylate',
+    costPlusPath: 'amlodipine-5mg-tablet/',
+  }),
+  std({
     id: 'omeprazole',
     brand: 'Prilosec',
     generic: 'omeprazole',
-    form: L(
-      '20 mg capsule, 30-day supply',
-      'cápsula 20 mg, suministro de 30 días',
-      '20 毫克胶囊，30 天用量',
-      '20 मिग्रा कैप्सूल, 30-दिन की आपूर्ति'
-    ),
-    category: L('Acid reflux', 'Reflujo', '胃酸反流', 'एसिड रिफ्लक्स'),
-    searchTerms: ['omeprazole', 'prilosec', 'gerd', 'heartburn', '胃酸', 'रिफ्लक्स'],
-    goodrxUrl: 'https://www.goodrx.com/omeprazole',
-    singlecareUrl: 'https://www.singlecare.com/prescription/omeprazole',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/omeprazoledelayedreleasedr-20mg-capsule/',
-    benchmarks: [
-      nadac(
-        0.88,
-        caps30x20dr,
-        L(
-          'CMS NADAC $0.02945 per capsule (OMEPRAZOLE DR 20 MG CAPSULE), as-of 2026-09-30. 0.02945 × 30 = $0.88.',
-          'CMS NADAC $0.02945 por cápsula (OMEPRAZOLE DR 20 MG CAPSULE), al 2026-09-30. 0.02945 × 30 = $0.88.',
-          'CMS NADAC 每粒 $0.02945（OMEPRAZOLE DR 20 MG CAPSULE），截至 2026-09-30。0.02945 × 30 = $0.88。',
-          'CMS NADAC $0.02945 प्रति कैप्सूल (OMEPRAZOLE DR 20 MG CAPSULE), 2026-09-30 तक। 0.02945 × 30 = $0.88।'
-        )
-      ),
-      costplus(
-        5.93,
-        caps30x20dr,
-        L(
-          'Cost Plus Drugs public API quote $5.93 for 30 omeprazole delayed-release 20 mg capsules. Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $5.93 por 30 cápsulas de omeprazol 20 mg de liberación retardada. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：奥美拉唑缓释 20 毫克胶囊 30 粒 $5.93。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $5.93 ओमेप्राजोल विलंबित-रिलीज़ 20 मिग्रा के 30 कैप्सूल के लिए। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: false,
-    programIds: ['rx-outreach'],
-  },
-  {
-    id: 'albuterol',
-    brand: 'Ventolin HFA',
-    generic: 'albuterol',
-    form: L('inhaler, 1 inhaler', 'inhalador, 1 unidad', '吸入器，1 支', 'इनहेलर, 1 इनहेलर'),
-    category: L('Asthma', 'Asma', '哮喘', 'अस्थमा'),
-    searchTerms: ['albuterol', 'ventolin', 'proair', 'inhaler', 'asthma', '哮喘', 'अस्थमा'],
-    goodrxUrl: 'https://www.goodrx.com/albuterol',
-    singlecareUrl: 'https://www.singlecare.com/prescription/albuterol-sulfate-hfa',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/albuterol-90mcg-inhaler18g/',
-    benchmarks: [
-      nadac(
-        32.86,
-        L(
-          '1 generic albuterol HFA 90 mcg inhaler (18 g canister)',
-          '1 inhalador genérico de albuterol HFA 90 mcg (envase de 18 g)',
-          '1 支仿制沙丁胺醇 HFA 90 微克吸入器（18 克罐）',
-          '1 जेनेरिक अल्ब्यूटेरॉल HFA 90 mcg इनहेलर (18 ग्राम कनस्तर)'
-        ),
-        L(
-          'CMS NADAC $1.82548 per gram (ALBUTEROL HFA 90 MCG INHALER, generic), as-of 2026-09-30. Typical 18 g canister: 1.82548 × 18 = $32.86. Brand Ventolin HFA NADAC was $2.72021/g ($48.96 per 18 g).',
-          'CMS NADAC $1.82548 por gramo (ALBUTEROL HFA 90 MCG INHALER, genérico), al 2026-09-30. Envase típico de 18 g: 1.82548 × 18 = $32.86. Ventolin HFA de marca: $2.72021/g ($48.96 por 18 g).',
-          'CMS NADAC 每克 $1.82548（ALBUTEROL HFA 90 MCG INHALER，仿制），截至 2026-09-30。典型 18 克罐：1.82548 × 18 = $32.86。品牌 Ventolin HFA NADAC 为 $2.72021/克（每 18 克 $48.96）。',
-          'CMS NADAC $1.82548 प्रति ग्राम (ALBUTEROL HFA 90 MCG INHALER, जेनेरिक), 2026-09-30 तक। सामान्य 18 ग्राम कनस्तर: 1.82548 × 18 = $32.86। ब्रांड Ventolin HFA NADAC $2.72021/ग्राम था ($48.96 प्रति 18 ग्राम)।'
-        )
-      ),
-      costplus(
-        46.38,
-        L(
-          '1 albuterol HFA 90 mcg inhaler (18 g)',
-          '1 inhalador de albuterol HFA 90 mcg (18 g)',
-          '1 支沙丁胺醇 HFA 90 微克吸入器（18 克）',
-          '1 अल्ब्यूटेरॉल HFA 90 mcg इनहेलर (18 ग्राम)'
-        ),
-        L(
-          'Cost Plus Drugs public API quote $46.38 for 1 × 18 g albuterol 90 mcg inhaler (unit $35.98 + 15% + $5 pharmacist fee). Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $46.38 por 1 inhalador de 18 g de albuterol 90 mcg. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：1 × 18 克沙丁胺醇 90 微克吸入器 $46.38（单价 $35.98 + 15% + $5 药师费）。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $46.38 एक 18 ग्राम अल्ब्यूटेरॉल 90 mcg इनहेलर के लिए (इकाई $35.98 + 15% + $5)। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: true,
-    programIds: ['gsk-pap', 'rx-outreach'],
-  },
-  {
-    id: 'insulin-glargine',
-    brand: 'Lantus',
-    generic: 'insulin glargine',
-    form: L('vial, 1 month', 'frasco, 1 mes', '瓶装，1 个月', 'वायल, 1 महीना'),
-    category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
-    searchTerms: ['lantus', 'insulin', 'glargine', 'basaglar', 'diabetes', '胰岛素', 'इंसुलिन'],
-    goodrxUrl: 'https://www.goodrx.com/lantus',
-    singlecareUrl: 'https://www.singlecare.com/prescription/lantus',
-    costPlusUrl: null,
-    benchmarks: [
-      nadac(
-        61.52,
-        L(
-          '1 Lantus 100 unit/mL vial (10 mL)',
-          '1 frasco de Lantus 100 unidades/mL (10 mL)',
-          '1 瓶 Lantus 100 单位/毫升（10 毫升）',
-          '1 Lantus 100 यूनिट/mL वायल (10 mL)'
-        ),
-        L(
-          'CMS NADAC $6.15227 per mL (LANTUS 100 UNIT/ML VIAL), as-of 2026-09-30. 6.15227 × 10 mL = $61.52. Generic insulin glargine-yfgn vial NADAC was $6.08105/mL ($60.81 per 10 mL).',
-          'CMS NADAC $6.15227 por mL (LANTUS 100 UNIT/ML VIAL), al 2026-09-30. 6.15227 × 10 mL = $61.52. Genérico insulin glargine-yfgn: $6.08105/mL ($60.81 por 10 mL).',
-          'CMS NADAC 每毫升 $6.15227（LANTUS 100 UNIT/ML VIAL），截至 2026-09-30。6.15227 × 10 毫升 = $61.52。仿制胰岛素 glargine-yfgn 瓶装 NADAC 为 $6.08105/毫升（每 10 毫升 $60.81）。',
-          'CMS NADAC $6.15227 प्रति mL (LANTUS 100 UNIT/ML VIAL), 2026-09-30 तक। 6.15227 × 10 mL = $61.52। जेनेरिक insulin glargine-yfgn वायल NADAC $6.08105/mL था ($60.81 प्रति 10 mL)।'
-        )
-      ),
-      costplus(null, notListedPkg, notOnCostPlus),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: true,
-    programIds: ['sanofi-spc', 'totalassist', 'healthwell', 'good-days'],
-  },
-  {
-    id: 'ozempic',
-    brand: 'Ozempic',
-    generic: 'semaglutide',
-    form: L('pen, 1 month', 'pluma, 1 mes', '笔式注射器，1 个月', 'पेन, 1 महीना'),
-    category: L('Diabetes', 'Diabetes', '糖尿病', 'मधुमेह'),
-    searchTerms: ['ozempic', 'semaglutide', 'wegovy', 'glp-1', 'diabetes'],
-    goodrxUrl: 'https://www.goodrx.com/ozempic',
-    singlecareUrl: 'https://www.singlecare.com/prescription/ozempic',
-    costPlusUrl: null,
-    benchmarks: [
-      nadac(
-        995.7,
-        L(
-          '1 Ozempic 1 mg/dose pen (4 mg / 3 mL)',
-          '1 pluma de Ozempic 1 mg/dosis (4 mg / 3 mL)',
-          '1 支 Ozempic 1 毫克/剂笔（4 毫克 / 3 毫升）',
-          '1 Ozempic 1 मिग्रा/डोज़ पेन (4 मिग्रा / 3 mL)'
-        ),
-        L(
-          'CMS NADAC $331.90037 per mL (OZEMPIC 1 MG/DOSE (4 MG/3 ML) PEN), as-of 2026-09-30. 331.90037 × 3 mL = $995.70.',
-          'CMS NADAC $331.90037 por mL (OZEMPIC 1 MG/DOSE (4 MG/3 ML) PEN), al 2026-09-30. 331.90037 × 3 mL = $995.70.',
-          'CMS NADAC 每毫升 $331.90037（OZEMPIC 1 MG/DOSE (4 MG/3 ML) PEN），截至 2026-09-30。331.90037 × 3 毫升 = $995.70。',
-          'CMS NADAC $331.90037 प्रति mL (OZEMPIC 1 MG/DOSE (4 MG/3 ML) PEN), 2026-09-30 तक। 331.90037 × 3 mL = $995.70।'
-        )
-      ),
-      costplus(null, notListedPkg, notOnCostPlus),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: true,
-    programIds: ['novo-pap', 'totalassist', 'healthwell', 'good-days'],
-  },
-  {
-    id: 'eliquis',
-    brand: 'Eliquis',
-    generic: 'apixaban',
-    form: L(
-      '5 mg tablet, 30-day supply',
-      'tableta 5 mg, suministro de 30 días',
-      '5 毫克片剂，30 天用量',
-      '5 मिग्रा गोली, 30-दिन की आपूर्ति'
-    ),
-    category: L('Blood thinner', 'Anticoagulante', '抗凝药', 'रक्त पतला करने वाली दवा'),
-    searchTerms: ['eliquis', 'apixaban', 'blood thinner', 'afib'],
-    goodrxUrl: 'https://www.goodrx.com/eliquis',
-    singlecareUrl: 'https://www.singlecare.com/prescription/eliquis',
-    costPlusUrl: null,
-    benchmarks: [
-      nadac(
-        331.27,
-        L(
-          '60 × 5 mg tablets (twice daily, 30 days)',
-          '60 tabletas de 5 mg (dos veces al día, 30 días)',
-          '60 × 5 毫克片剂（每日两次，30 天）',
-          '60 × 5 मिग्रा गोलियाँ (दिन में दो बार, 30 दिन)'
-        ),
-        L(
-          'CMS NADAC $5.52114 per tablet (ELIQUIS 5 MG TABLET), as-of 2026-09-30. 5.52114 × 60 = $331.27. No generic apixaban NADAC row was in the 2026-09-30 file.',
-          'CMS NADAC $5.52114 por tableta (ELIQUIS 5 MG TABLET), al 2026-09-30. 5.52114 × 60 = $331.27. No había fila genérica de apixabán en el archivo del 2026-09-30.',
-          'CMS NADAC 每片 $5.52114（ELIQUIS 5 MG TABLET），截至 2026-09-30。5.52114 × 60 = $331.27。2026-09-30 文件中没有仿制阿哌沙班行。',
-          'CMS NADAC $5.52114 प्रति गोली (ELIQUIS 5 MG TABLET), 2026-09-30 तक। 5.52114 × 60 = $331.27। 2026-09-30 फ़ाइल में जेनेरिक एपिक्साबैन पंक्ति नहीं थी।'
-        )
-      ),
-      costplus(null, notListedPkg, notOnCostPlus),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: true,
-    programIds: ['bms-paf', 'totalassist', 'healthwell', 'good-days'],
-  },
-  {
-    id: 'humira',
-    brand: 'Humira',
-    generic: 'adalimumab',
-    form: L('pen, 1 month', 'pluma, 1 mes', '笔式注射器，1 个月', 'पेन, 1 महीना'),
-    category: L('Autoimmune', 'Autoinmune', '自身免疫', 'स्वप्रतिरक्षी'),
-    searchTerms: ['humira', 'adalimumab', 'amjevita', 'arthritis', 'crohns'],
-    goodrxUrl: 'https://www.goodrx.com/humira',
-    singlecareUrl: 'https://www.singlecare.com/prescription/humira',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/adalimumab-aacf-40mg_0_8ml-prefilled-syringe-kit-1/',
-    benchmarks: [
-      nadac(
-        6734.83,
-        L(
-          '2 Humira (CF) 40 mg/0.4 mL pens (typical monthly pack)',
-          '2 plumas Humira (CF) 40 mg/0.4 mL (paquete mensual típico)',
-          '2 支 Humira (CF) 40 毫克/0.4 毫升笔（典型月用量）',
-          '2 Humira (CF) 40 मिग्रा/0.4 mL पेन (सामान्य मासिक पैक)'
-        ),
-        L(
-          'CMS NADAC $3367.41479 per pen (HUMIRA(CF) PEN 40 MG/0.4 ML), as-of 2026-09-30. Two pens: $6,734.83. This is a national acquisition benchmark, not a store cash price.',
-          'CMS NADAC $3367.41479 por pluma (HUMIRA(CF) PEN 40 MG/0.4 ML), al 2026-09-30. Dos plumas: $6,734.83. Es una referencia nacional de adquisición, no un precio de mostrador.',
-          'CMS NADAC 每支 $3367.41479（HUMIRA(CF) PEN 40 MG/0.4 ML），截至 2026-09-30。两支：$6,734.83。此为全国采购参考价，并非店内自费价。',
-          'CMS NADAC $3367.41479 प्रति पेन (HUMIRA(CF) PEN 40 MG/0.4 ML), 2026-09-30 तक। दो पेन: $6,734.83। यह राष्ट्रीय अधिग्रहण संदर्भ है, स्टोर की नकद कीमत नहीं।'
-        )
-      ),
-      costplus(
-        469.25,
-        L(
-          '1 adalimumab-aacf 40 mg/0.8 mL 2-pen kit (Humira biosimilar)',
-          '1 kit de 2 plumas adalimumab-aacf 40 mg/0.8 mL (biosimilar de Humira)',
-          '1 套 adalimumab-aacf 40 毫克/0.8 毫升双笔套装（Humira 生物类似药）',
-          '1 adalimumab-aacf 40 मिग्रा/0.8 mL 2-पेन किट (Humira बायोसिमिलर)'
-        ),
-        L(
-          'Cost Plus Drugs public API quote $469.25 for a 2-pen adalimumab-aacf kit (unit $395 + 15% + $5 pharmacist fee). This is the biosimilar list price, not brand Humira. Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $469.25 por un kit de 2 plumas de adalimumab-aacf (biosimilar, no Humira de marca). Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：adalimumab-aacf 双笔套装 $469.25（单价 $395 + 15% + $5 药师费）。此为生物类似药标价，不是品牌 Humira。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $469.25 दो-पेन adalimumab-aacf किट के लिए (इकाई $395 + 15% + $5)। यह बायोसिमिलर सूची कीमत है, ब्रांड Humira नहीं। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: false,
-    programIds: ['abbvie-humira', 'totalassist', 'healthwell', 'good-days'],
-  },
-  {
+    form: form30('20 mg capsule'),
+    category: reflux,
+    searchTerms: ['omeprazole', 'prilosec', 'gerd', 'heartburn'],
+    pkg: L('30 × 20 mg capsules', '30 cápsulas de 20 mg', '30 × 20 毫克胶囊', '30 × 20 मिग्रा कैप्सूल'),
+    wholesale: '~$0.12 / capsule',
+    costPlus: 5.2,
+    goodrxPrice: 4.5,
+    retailMin: 12,
+    retailMax: 30,
+    cash: [18, 18.5, 18, 22, 12, 22.5, 22, 23, 12, 22],
+    goodrxPath: 'omeprazole',
+    singlecarePath: 'omeprazole',
+    costPlusPath: 'omeprazoledelayedreleasedr-20mg-capsule/',
+  }),
+  std({
+    id: 'glipizide',
+    brand: 'Glucotrol',
+    generic: 'glipizide',
+    form: form30('5 mg tablet'),
+    category: diabetes,
+    searchTerms: ['glipizide', 'glucotrol', 'diabetes'],
+    pkg: pkg30('5 mg tablets'),
+    wholesale: '~$0.07 / tablet',
+    costPlus: 4.8,
+    goodrxPrice: 4,
+    retailMin: 10,
+    retailMax: 18,
+    cash: [12, 12.5, 12, 14, 10, 14.5, 14, 15, 10, 14],
+    goodrxPath: 'glipizide',
+    singlecarePath: 'glipizide',
+    costPlusPath: 'glipizide-5mg-tablet/',
+  }),
+  std({
+    id: 'losartan',
+    brand: 'Cozaar',
+    generic: 'losartan',
+    form: form30('50 mg tablet'),
+    category: bp,
+    searchTerms: ['losartan', 'cozaar', 'arb', 'blood pressure'],
+    pkg: pkg30('50 mg tablets'),
+    wholesale: '~$0.10 / tablet',
+    costPlus: 5.1,
+    goodrxPrice: 4.5,
+    retailMin: 12,
+    retailMax: 25,
+    cash: [15, 15.5, 15, 18, 12, 18.5, 18, 19, 12, 18],
+    goodrxPath: 'losartan',
+    singlecarePath: 'losartan-potassium',
+    costPlusPath: 'losartan-50mg-tablet/',
+  }),
+  std({
     id: 'sertraline',
     brand: 'Zoloft',
     generic: 'sertraline',
-    form: L(
-      '50 mg tablet, 30-day supply',
-      'tableta 50 mg, suministro de 30 días',
-      '50 毫克片剂，30 天用量',
-      '50 मिग्रा गोली, 30-दिन की आपूर्ति'
-    ),
-    category: L('Mental health', 'Salud mental', '精神健康', 'मानसिक स्वास्थ्य'),
-    searchTerms: ['zoloft', 'sertraline', 'ssri', 'depression', 'anxiety', '抑郁', 'अवसाद'],
-    goodrxUrl: 'https://www.goodrx.com/sertraline',
-    singlecareUrl: 'https://www.singlecare.com/prescription/sertraline-hcl',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/sertraline-50mg-tablet/',
-    benchmarks: [
-      nadac(
-        1.04,
-        tabs30x50,
-        L(
-          'CMS NADAC $0.03479 per tablet (SERTRALINE HCL 50 MG TABLET), as-of 2026-09-30. 0.03479 × 30 = $1.04.',
-          'CMS NADAC $0.03479 por tableta (SERTRALINE HCL 50 MG TABLET), al 2026-09-30. 0.03479 × 30 = $1.04.',
-          'CMS NADAC 每片 $0.03479（SERTRALINE HCL 50 MG TABLET），截至 2026-09-30。0.03479 × 30 = $1.04。',
-          'CMS NADAC $0.03479 प्रति गोली (SERTRALINE HCL 50 MG TABLET), 2026-09-30 तक। 0.03479 × 30 = $1.04।'
-        )
-      ),
-      costplus(
-        5.69,
-        tabs30x50,
-        L(
-          'Cost Plus Drugs public API quote $5.69 for 30 tablets of sertraline 50 mg. Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $5.69 por 30 tabletas de sertralina 50 mg. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：舍曲林 50 毫克 30 片 $5.69。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $5.69 सर्ट्रालीन 50 मिग्रा की 30 गोलियों के लिए। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: false,
-    programIds: ['rx-outreach'],
-  },
-  {
-    id: 'amoxicillin',
-    brand: 'Amoxil',
-    generic: 'amoxicillin',
-    form: L(
-      '500 mg capsule, 10-day course',
-      'cápsula 500 mg, tratamiento de 10 días',
-      '500 毫克胶囊，10 天疗程',
-      '500 मिग्रा कैप्सूल, 10-दिन का कोर्स'
-    ),
-    category: L('Antibiotic', 'Antibiótico', '抗生素', 'एंटीबायोटिक'),
-    searchTerms: ['amoxicillin', 'amoxil', 'antibiotic', '抗生素', 'एंटीबायोटिक'],
-    goodrxUrl: 'https://www.goodrx.com/amoxicillin',
-    singlecareUrl: 'https://www.singlecare.com/prescription/amoxicillin',
-    costPlusUrl: 'https://www.costplusdrugs.com/medications/amoxicillin-500mg-capsule-amoxil/',
-    benchmarks: [
-      nadac(
-        2.36,
-        L(
-          '30 × 500 mg capsules (typical 10-day course)',
-          '30 cápsulas de 500 mg (tratamiento típico de 10 días)',
-          '30 × 500 毫克胶囊（典型 10 天疗程）',
-          '30 × 500 मिग्रा कैप्सूल (सामान्य 10-दिन का कोर्स)'
-        ),
-        L(
-          'CMS NADAC $0.07880 per capsule (AMOXICILLIN 500 MG CAPSULE), as-of 2026-09-30. 0.07880 × 30 = $2.36.',
-          'CMS NADAC $0.07880 por cápsula (AMOXICILLIN 500 MG CAPSULE), al 2026-09-30. 0.07880 × 30 = $2.36.',
-          'CMS NADAC 每粒 $0.07880（AMOXICILLIN 500 MG CAPSULE），截至 2026-09-30。0.07880 × 30 = $2.36。',
-          'CMS NADAC $0.07880 प्रति कैप्सूल (AMOXICILLIN 500 MG CAPSULE), 2026-09-30 तक। 0.07880 × 30 = $2.36।'
-        )
-      ),
-      costplus(
-        6.72,
-        caps30x500,
-        L(
-          'Cost Plus Drugs public API quote $6.72 for 30 amoxicillin 500 mg capsules. Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $6.72 por 30 cápsulas de amoxicilina 500 mg. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：阿莫西林 500 毫克胶囊 30 粒 $6.72。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $6.72 एमोक्सिसिलिन 500 मिग्रा के 30 कैप्सूल के लिए। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: false,
-    programIds: [],
-  },
-  {
-    id: 'advair',
-    brand: 'Advair Diskus',
-    generic: 'fluticasone / salmeterol',
-    form: L('250/50 inhaler', 'inhalador 250/50', '250/50 吸入器', '250/50 इनहेलर'),
-    category: L('Asthma / COPD', 'Asma / EPOC', '哮喘 / 慢阻肺', 'अस्थमा / COPD'),
-    searchTerms: ['advair', 'fluticasone', 'salmeterol', 'wixela', 'copd', 'asthma'],
-    goodrxUrl: 'https://www.goodrx.com/fluticasone-salmeterol',
-    singlecareUrl: 'https://www.singlecare.com/prescription/fluticasone-salmeterol',
-    costPlusUrl:
-      'https://www.costplusdrugs.com/medications/fluticasone-salmeterol-250mcg-50mcg-aerosol-powder-60-doses/',
-    benchmarks: [
-      nadac(
-        74.71,
-        L(
-          '1 generic 250/50 inhaler (60 doses)',
-          '1 inhalador genérico 250/50 (60 dosis)',
-          '1 支仿制 250/50 吸入器（60 剂）',
-          '1 जेनेरिक 250/50 इनहेलर (60 डोज़)'
-        ),
-        L(
-          'CMS NADAC $1.24514 per dose (FLUTICASONE-SALMETEROL 250-50 / WIXELA 250-50 INHUB), as-of 2026-09-30. 1.24514 × 60 = $74.71. Brand Advair 250-50 Diskus NADAC was $3.12275 per dose ($187.37 per 60 doses).',
-          'CMS NADAC $1.24514 por dosis (FLUTICASONE-SALMETEROL 250-50 / WIXELA 250-50 INHUB), al 2026-09-30. 1.24514 × 60 = $74.71. Advair Diskus 250-50 de marca: $3.12275 por dosis ($187.37 por 60 dosis).',
-          'CMS NADAC 每剂 $1.24514（FLUTICASONE-SALMETEROL 250-50 / WIXELA 250-50 INHUB），截至 2026-09-30。1.24514 × 60 = $74.71。品牌 Advair 250-50 Diskus NADAC 为每剂 $3.12275（60 剂 $187.37）。',
-          'CMS NADAC $1.24514 प्रति डोज़ (FLUTICASONE-SALMETEROL 250-50 / WIXELA 250-50 INHUB), 2026-09-30 तक। 1.24514 × 60 = $74.71। ब्रांड Advair 250-50 Diskus NADAC $3.12275 प्रति डोज़ था ($187.37 प्रति 60 डोज़)।'
-        )
-      ),
-      costplus(
-        47.55,
-        L(
-          '1 fluticasone-salmeterol 250/50 inhaler',
-          '1 inhalador de fluticasona-salmeterol 250/50',
-          '1 支氟替卡松-沙美特罗 250/50 吸入器',
-          '1 फ्लुटिकासोन-साल्मेटेरॉल 250/50 इनहेलर'
-        ),
-        L(
-          'Cost Plus Drugs public API quote $47.55 for 1 unit of fluticasone-salmeterol 250 mcg-50 mcg (unit $37 + 15% + $5 pharmacist fee). Retrieved October 3, 2026.',
-          'Cotización pública de Cost Plus Drugs $47.55 por 1 unidad de fluticasona-salmeterol 250/50. Consultado el 3 de octubre de 2026.',
-          'Cost Plus Drugs 公开接口报价：氟替卡松-沙美特罗 250/50 微克 1 支 $47.55（单价 $37 + 15% + $5 药师费）。获取于 2026 年 10 月 3 日。',
-          'Cost Plus Drugs सार्वजनिक API भाव $47.55 फ्लुटिकासोन-साल्मेटेरॉल 250/50 की 1 इकाई के लिए (इकाई $37 + 15% + $5)। 3 अक्टूबर 2026 को लिया गया।'
-        )
-      ),
-    ],
-    pharmacies: areaPharmacies,
-    hasManufacturerPap: true,
-    programIds: ['gsk-pap', 'rx-outreach'],
-  },
+    form: form30('50 mg tablet'),
+    category: mental,
+    searchTerms: ['zoloft', 'sertraline', 'ssri', 'depression', 'anxiety'],
+    pkg: pkg30('50 mg tablets'),
+    wholesale: '~$0.14 / tablet',
+    costPlus: 5.5,
+    goodrxPrice: 5,
+    retailMin: 15,
+    retailMax: 32,
+    cash: [20, 20.5, 20, 24, 15, 24.5, 24, 25, 15, 24],
+    goodrxPath: 'sertraline',
+    singlecarePath: 'sertraline-hcl',
+    costPlusPath: 'sertraline-50mg-tablet/',
+  }),
+  std({
+    id: 'fluoxetine',
+    brand: 'Prozac',
+    generic: 'fluoxetine',
+    form: form30('20 mg capsule'),
+    category: mental,
+    searchTerms: ['prozac', 'fluoxetine', 'ssri', 'depression'],
+    pkg: L('30 × 20 mg capsules', '30 cápsulas de 20 mg', '30 × 20 毫克胶囊', '30 × 20 मिग्रा कैप्सूल'),
+    wholesale: '~$0.11 / capsule',
+    costPlus: 5.3,
+    goodrxPrice: 4.8,
+    retailMin: 14,
+    retailMax: 28,
+    cash: [18, 18.5, 18, 22, 14, 22.5, 22, 23, 14, 22],
+    goodrxPath: 'fluoxetine',
+    singlecarePath: 'fluoxetine-hcl',
+    costPlusPath: 'fluoxetine-20mg-capsule/',
+  }),
+  std({
+    id: 'hydrochlorothiazide',
+    brand: 'Microzide',
+    generic: 'hydrochlorothiazide',
+    form: form30('25 mg tablet'),
+    category: diuretic,
+    searchTerms: ['hydrochlorothiazide', 'hctz', 'microzide', 'diuretic'],
+    pkg: pkg30('25 mg tablets'),
+    wholesale: '~$0.04 / tablet',
+    costPlus: 4.2,
+    goodrxPrice: 3.5,
+    retailMin: 8,
+    retailMax: 15,
+    cash: [10, 10.5, 10, 12, 8, 12.5, 12, 13, 8, 12],
+    goodrxPath: 'hydrochlorothiazide',
+    singlecarePath: 'hydrochlorothiazide',
+    costPlusPath: 'hydrochlorothiazide-25mg-tablet/',
+  }),
+  std({
+    id: 'furosemide',
+    brand: 'Lasix',
+    generic: 'furosemide',
+    form: form30('20 mg tablet'),
+    category: diuretic,
+    searchTerms: ['lasix', 'furosemide', 'diuretic'],
+    pkg: pkg30('20 mg tablets'),
+    wholesale: '~$0.06 / tablet',
+    costPlus: 4.5,
+    goodrxPrice: 3.9,
+    retailMin: 9,
+    retailMax: 16,
+    cash: [11, 11.5, 11, 13, 9, 13.5, 13, 14, 9, 13],
+    goodrxPath: 'furosemide',
+    singlecarePath: 'furosemide',
+    costPlusPath: 'furosemide-20mg-tablet/',
+  }),
+  std({
+    id: 'atenolol',
+    brand: 'Tenormin',
+    generic: 'atenolol',
+    form: form30('50 mg tablet'),
+    category: bp,
+    searchTerms: ['tenormin', 'atenolol', 'beta blocker', 'blood pressure'],
+    pkg: pkg30('50 mg tablets'),
+    wholesale: '~$0.08 / tablet',
+    costPlus: 4.9,
+    goodrxPrice: 4.2,
+    retailMin: 10,
+    retailMax: 20,
+    cash: [12, 12.5, 12, 15, 10, 15.5, 15, 16, 10, 15],
+    goodrxPath: 'atenolol',
+    singlecarePath: 'atenolol',
+    costPlusPath: 'atenolol-50mg-tablet/',
+  }),
+  std({
+    id: 'gabapentin',
+    brand: 'Neurontin',
+    generic: 'gabapentin',
+    form: form30('300 mg capsule'),
+    category: nerve,
+    searchTerms: ['neurontin', 'gabapentin', 'nerve pain', 'seizure'],
+    pkg: L('30 × 300 mg capsules', '30 cápsulas de 300 mg', '30 × 300 毫克胶囊', '30 × 300 मिग्रा कैप्सूल'),
+    wholesale: '~$0.20 / capsule',
+    costPlus: 6.2,
+    goodrxPrice: 7,
+    retailMin: 18,
+    retailMax: 40,
+    cash: [25, 25.5, 25, 30, 18, 30.5, 30, 31, 18, 30],
+    goodrxPath: 'gabapentin',
+    singlecarePath: 'gabapentin',
+    costPlusPath: 'gabapentin-300mg-capsule/',
+  }),
+  std({
+    id: 'potassium-chloride',
+    brand: 'Klor-Con',
+    generic: 'potassium chloride',
+    form: form30('10 mEq tablet'),
+    category: electrolyte,
+    searchTerms: ['klor-con', 'potassium', 'kcl', 'electrolyte'],
+    pkg: pkg30('10 mEq tablets'),
+    wholesale: '~$0.25 / tablet',
+    costPlus: 7.1,
+    goodrxPrice: 8.5,
+    retailMin: 20,
+    retailMax: 42,
+    cash: [28, 28.5, 28, 34, 20, 34.5, 34, 35, 20, 34],
+    goodrxPath: 'potassium-chloride',
+    singlecarePath: 'potassium-chloride',
+    costPlusPath: 'potassium-chloride-10meq-tablet/',
+  }),
+  specialty({
+    id: 'farxiga',
+    brand: 'Farxiga',
+    generic: 'dapagliflozin',
+    form: form30('10 mg tablet'),
+    category: heart,
+    searchTerms: ['farxiga', 'dapagliflozin', 'sglt2', 'diabetes', 'heart failure'],
+    programId: 'az-me',
+    goodrxPath: 'farxiga',
+    singlecarePath: 'farxiga',
+  }),
+  specialty({
+    id: 'jardiance',
+    brand: 'Jardiance',
+    generic: 'empagliflozin',
+    form: form30('10 mg tablet'),
+    category: diabetes,
+    searchTerms: ['jardiance', 'empagliflozin', 'sglt2', 'diabetes'],
+    programId: 'bi-cares',
+    goodrxPath: 'jardiance',
+    singlecarePath: 'jardiance',
+  }),
+  specialty({
+    id: 'eliquis',
+    brand: 'Eliquis',
+    generic: 'apixaban',
+    form: form30('5 mg tablet'),
+    category: thinner,
+    searchTerms: ['eliquis', 'apixaban', 'blood thinner', 'afib'],
+    programId: 'bms-paf',
+    goodrxPath: 'eliquis',
+    singlecarePath: 'eliquis',
+  }),
+  specialty({
+    id: 'humira',
+    brand: 'Humira',
+    generic: 'adalimumab',
+    form: injectable,
+    category: autoimmune,
+    searchTerms: ['humira', 'adalimumab', 'arthritis', 'ibd', 'crohns'],
+    programId: 'abbvie-assist',
+    goodrxPath: 'humira',
+    singlecarePath: 'humira',
+  }),
+  specialty({
+    id: 'trulicity',
+    brand: 'Trulicity',
+    generic: 'dulaglutide',
+    form: injectable,
+    category: diabetes,
+    searchTerms: ['trulicity', 'dulaglutide', 'glp-1', 'diabetes'],
+    programId: 'lilly-cares',
+    goodrxPath: 'trulicity',
+    singlecarePath: 'trulicity',
+  }),
+  specialty({
+    id: 'xarelto',
+    brand: 'Xarelto',
+    generic: 'rivaroxaban',
+    form: form30('20 mg tablet'),
+    category: thinner,
+    searchTerms: ['xarelto', 'rivaroxaban', 'blood thinner'],
+    programId: 'jj-pap',
+    goodrxPath: 'xarelto',
+    singlecarePath: 'xarelto',
+  }),
+  specialty({
+    id: 'keytruda',
+    brand: 'Keytruda',
+    generic: 'pembrolizumab',
+    form: injectable,
+    category: oncology,
+    searchTerms: ['keytruda', 'pembrolizumab', 'cancer', 'oncology'],
+    programId: 'merck-helps',
+    goodrxPath: 'keytruda',
+    singlecarePath: 'keytruda',
+  }),
+  specialty({
+    id: 'herceptin',
+    brand: 'Herceptin',
+    generic: 'trastuzumab',
+    form: injectable,
+    category: oncology,
+    searchTerms: ['herceptin', 'trastuzumab', 'breast cancer', 'oncology'],
+    programId: 'genentech-access',
+    goodrxPath: 'herceptin',
+    singlecarePath: 'herceptin',
+  }),
+  specialty({
+    id: 'xeljanz',
+    brand: 'Xeljanz',
+    generic: 'tofacitinib',
+    form: form30('5 mg tablet'),
+    category: autoimmune,
+    searchTerms: ['xeljanz', 'tofacitinib', 'arthritis', 'jak'],
+    programId: 'pfizer-rxpathways',
+    goodrxPath: 'xeljanz',
+    singlecarePath: 'xeljanz',
+  }),
+  specialty({
+    id: 'stelara',
+    brand: 'Stelara',
+    generic: 'ustekinumab',
+    form: injectable,
+    category: autoimmune,
+    searchTerms: ['stelara', 'ustekinumab', 'psoriasis', 'crohns'],
+    programId: 'janssen-carepath',
+    goodrxPath: 'stelara',
+    singlecarePath: 'stelara',
+  }),
 ];
 
 /** True when listed programs exist but there is no retail Cost Plus checkout price. */
 export function onlyAssistanceAvailable(med: Medication): boolean {
   if (med.programIds.length === 0) return false;
-  const costplus = med.benchmarks.find((b) => b.source === 'costplus');
-  return med.costPlusUrl == null && (costplus == null || costplus.price == null);
+  const cp = med.benchmarks.find((b) => b.source === 'costplus');
+  return med.costPlusUrl == null && (cp == null || cp.price == null);
 }
 
 export function searchMedications(query: string): Medication[] {

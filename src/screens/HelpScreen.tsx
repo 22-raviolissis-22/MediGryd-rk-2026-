@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { AppChrome, BodyText, DisplayTitle, WhiteCard, WhitePill } from '../components/AppChrome';
+import {
+  ActionStack,
+  AppChrome,
+  BodyText,
+  DisplayTitle,
+  WhiteCard,
+  WhitePill,
+} from '../components/AppChrome';
 import { Text } from '../components/AppText';
 import { openUrl } from '../components/ui';
 import { useApp } from '../context';
@@ -23,7 +30,7 @@ export function HelpScreen() {
       </WhiteCard>
 
       {helplines.map((line) => (
-        <View key={line.id}>
+        <ActionStack key={line.id}>
           <WhiteCard>
             <Text style={[styles.title, typeface(language, 'display')]}>{c[line.titleKey]}</Text>
             <Text style={[styles.number, typeface(language, 'display')]}>{line.display}</Text>
@@ -42,7 +49,7 @@ export function HelpScreen() {
             label={fill(c.helpCall, { number: line.display })}
             onPress={() => openUrl(telUrl(line.tel))}
           />
-        </View>
+        </ActionStack>
       ))}
 
       <PlanNumberCard />
@@ -50,7 +57,7 @@ export function HelpScreen() {
       <DisplayTitle>{c.helpPharmTitle}</DisplayTitle>
       <BodyText>{c.helpPharmIntro}</BodyText>
       {areaPharmacies.map((p) => (
-        <View key={p.district + p.address}>
+        <ActionStack key={p.id}>
           <WhiteCard>
             <Text style={[styles.title, typeface(language, 'display')]}>{p.name}</Text>
             <Text style={[styles.district, typeface(language, 'bodyBold')]}>{p.district}</Text>
@@ -60,7 +67,7 @@ export function HelpScreen() {
             </Text>
           </WhiteCard>
           <WhitePill label={c.helpPharmOpen} onPress={() => openUrl(p.locatorUrl)} />
-        </View>
+        </ActionStack>
       ))}
     </AppChrome>
   );
@@ -90,7 +97,7 @@ function PlanNumberCard() {
   };
 
   return (
-    <View>
+    <ActionStack>
       <WhiteCard>
         <Text style={[styles.title, typeface(language, 'display')]}>{c.helpPlanTitle}</Text>
         <Text style={[styles.meta, typeface(language, 'body')]}>{c.helpPlanIntro}</Text>
@@ -140,7 +147,7 @@ function PlanNumberCard() {
           </View>
         </>
       )}
-    </View>
+    </ActionStack>
   );
 }
 

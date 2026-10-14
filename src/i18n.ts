@@ -86,12 +86,28 @@ const en = {
   insuredBanner: 'These are cash benchmarks — still check your insurance copay.',
   papHint:
     'Patient assistance programs (PAPs) and nonprofits can provide free or low-cost medicine if you qualify.',
+  papWhatTitle: 'What is a Patient Assistance Program?',
+  papWhatBody:
+    'A Patient Assistance Program (PAP) is offered by a pharmaceutical manufacturer or a nonprofit so uninsured or underinsured patients can get brand-name and high-cost specialty medicines free or at a much lower cost.',
+  papManufacturerDirect:
+    'Manufacturer direct: the company often ships the medicine to your home or your prescribing doctor’s clinic.',
+  papEligibility:
+    'Eligibility is usually based on income (typically 200%–500% of the federal poverty level), U.S. residency or citizenship, and insurance status — often you must be uninsured or lack coverage for that medicine.',
+  papApplication:
+    'You and your healthcare provider fill out an application that verifies diagnosis and financial need.',
+  papEligibilityNote:
+    'Figures here are general estimates from the Patient Assistance Programs and Pricing Guide. Confirm current rules on the official program site or NeedyMeds before you apply.',
   noPrograms: 'No listed programs for this medication.',
   priceDisclaimer:
-    'In-store cash prices vary and should be confirmed at the pharmacy. Cost Plus is a mail-order checkout price (shipping extra). GoodRx coupon amounts are set on GoodRx by pharmacy and ZIP — we do not invent a coupon dollar figure. NADAC is not a price you can buy at. None of these figures is a specific store’s cash charge.',
+    'Local cash prices, Cost Plus, and GoodRx amounts come from the Patient Assistance Programs and Pricing Guide for CA-17 and CA-19. Confirm at the pharmacy or on Cost Plus / GoodRx before you pay. NADAC is a wholesale reference, not a checkout price.',
   nearbyPharmacies: 'Pharmacies in CA-17 and CA-19',
   nearbyHint:
-    'Addresses from official store locators. Call ahead — they do not list these benchmark prices as their cash charge.',
+    'Each store shows the guide’s cash price for this medicine, plus the official locator. Call ahead — chain prices change.',
+  cashAtStore: 'Cash price at this store',
+  retailEst: 'Typical retail cash range: ${min}–${max}',
+  goodRxListed: 'Guide coupon price: ${price}',
+  modeledCashNote:
+    'These per-store cash figures are from the pricing guide for these 10 addresses. Confirm before you fill.',
   openLocator: 'Open store locator',
   notListed: 'Not listed',
   retrievedOn: 'Data retrieved October 3, 2026',
@@ -276,12 +292,28 @@ const es: typeof en = {
   insuredBanner: 'Estas son referencias en efectivo — revisa también tu copago.',
   papHint:
     'Los programas de asistencia al paciente (PAP) y las organizaciones sin fines de lucro pueden ofrecer medicina gratis o de bajo costo si calificas.',
+  papWhatTitle: '¿Qué es un Programa de Asistencia al Paciente?',
+  papWhatBody:
+    'Un Programa de Asistencia al Paciente (PAP) lo ofrece un fabricante o una organización sin fines de lucro para que pacientes sin seguro o con cobertura insuficiente obtengan medicamentos de marca y de alto costo gratis o mucho más baratos.',
+  papManufacturerDirect:
+    'Envío directo del fabricante: la compañía suele enviar el medicamento a tu casa o a la clínica de tu médico.',
+  papEligibility:
+    'La elegibilidad suele basarse en ingresos (típicamente 200%–500% del nivel federal de pobreza), residencia o ciudadanía en EE. UU. y el seguro — a menudo debes estar sin seguro o sin cobertura para ese medicamento.',
+  papApplication:
+    'Tú y tu profesional de salud completan una solicitud que verifica el diagnóstico y la necesidad económica.',
+  papEligibilityNote:
+    'Las cifras son estimaciones generales de la guía de PAP y precios. Confirma las reglas vigentes en el sitio oficial o NeedyMeds antes de solicitar.',
   noPrograms: 'No hay programas listados para este medicamento.',
   priceDisclaimer:
-    'Los precios en efectivo en la farmacia varían y se deben confirmar en el mostrador. Cost Plus es un precio de pedido por correo (envío aparte). El cupón de GoodRx muestra el monto en su sitio según farmacia y ZIP — no inventamos esa cifra. NADAC no es un precio de compra. Ninguna cifra es el cobro en efectivo de una tienda específica.',
+    'Los precios en efectivo locales, Cost Plus y GoodRx salen de la guía de PAP y precios para CA-17 y CA-19. Confírmalos en la farmacia o en Cost Plus / GoodRx antes de pagar. NADAC es una referencia mayorista, no un precio de caja.',
   nearbyPharmacies: 'Farmacias en CA-17 y CA-19',
   nearbyHint:
-    'Direcciones de localizadores oficiales. Llama antes: estas farmacias no publican estos precios de referencia como su cobro en efectivo.',
+    'Cada tienda muestra el precio en efectivo de la guía para este medicamento, más el localizador oficial. Llama antes: los precios de las cadenas cambian.',
+  cashAtStore: 'Precio en efectivo en esta tienda',
+  retailEst: 'Rango típico en efectivo: ${min}–${max}',
+  goodRxListed: 'Precio de cupón de la guía: ${price}',
+  modeledCashNote:
+    'Estos precios por tienda salen de la guía para estas 10 direcciones. Confirma antes de surtir.',
   openLocator: 'Abrir localizador',
   notListed: 'No listado',
   retrievedOn: 'Datos consultados el 3 de octubre de 2026',
@@ -464,11 +496,23 @@ const zh: typeof en = {
   resultsFor: '价格与援助项目：',
   insuredBanner: '以下为自费参考价 — 请仍核对您的保险共付额。',
   papHint: '患者援助计划（PAP）和非营利组织可在您符合条件时提供免费或低价药品。',
+  papWhatTitle: '什么是患者援助计划？',
+  papWhatBody:
+    '患者援助计划（PAP）由制药商或非营利组织提供，帮助无保险或保障不足的患者免费或以大幅降低的费用获得品牌药和高价专科药。',
+  papManufacturerDirect: '制药商直送：公司通常将药品寄到你家或处方医生的诊所。',
+  papEligibility:
+    '资格通常取决于收入（一般为联邦贫困线的 200%–500%）、美国居住或公民身份，以及保险状况——通常须无保险或对该药没有足够保障。',
+  papApplication: '你和医疗服务提供者填写申请表，核实诊断和经济需要。',
+  papEligibilityNote: '此处数字来自患者援助计划与定价指南的一般估计。申请前请在官方网站或 NeedyMeds 核对现行规则。',
   noPrograms: '此药品暂无列出的援助项目。',
   priceDisclaimer:
-    '店内自费价格因药房而异，请到店确认。Cost Plus 为邮购结账价（运费另计）。GoodRx 优惠券金额在其网站按药房和邮编显示 — 我们不编造该数字。NADAC 不是可购买的价格。以上均不是某家门店的自费售价。',
+    '本地自费价、Cost Plus 和 GoodRx 金额来自面向 CA-17 与 CA-19 的患者援助计划与定价指南。付款前请到药房或在 Cost Plus / GoodRx 上确认。NADAC 是批发参考价，不是结账价。',
   nearbyPharmacies: 'CA-17 与 CA-19 的药房',
-  nearbyHint: '地址来自官方门店查询。请提前致电 — 门店不会将这些参考价作为自费售价公布。',
+  nearbyHint: '每家门店显示指南中该药的自费价，以及官方查询链接。请提前致电——连锁店价格会变动。',
+  cashAtStore: '本店自费价',
+  retailEst: '典型零售自费区间：${min}–${max}',
+  goodRxListed: '指南优惠券价格：${price}',
+  modeledCashNote: '各店自费价来自这 10 个地址的定价指南。取药前请确认。',
   openLocator: '打开门店查询',
   notListed: '未列出',
   retrievedOn: '数据获取于 2026 年 10 月 3 日',
@@ -641,12 +685,28 @@ const hi: typeof en = {
   insuredBanner: 'ये नकद संदर्भ कीमतें हैं — फिर भी अपना बीमा सह-भुगतान जाँचें।',
   papHint:
     'रोगी सहायता कार्यक्रम (PAP) और गैर-लाभ संगठन पात्र होने पर मुफ्त या सस्ती दवा दे सकते हैं।',
+  papWhatTitle: 'रोगी सहायता कार्यक्रम क्या है?',
+  papWhatBody:
+    'रोगी सहायता कार्यक्रम (PAP) दवा निर्माता या गैर-लाभ संगठन चलाते हैं ताकि बिना बीमा या अपर्याप्त बीमा वाले रोगी ब्रांड और ऊँची कीमत की स्पेशलिटी दवा मुफ्त या बहुत सस्ती पा सकें।',
+  papManufacturerDirect:
+    'निर्माता सीधा भेजता है: कंपनी अक्सर दवा आपके घर या डॉक्टर के क्लिनिक पर भेजती है।',
+  papEligibility:
+    'पात्रता आमतौर पर आय (संघीय गरीबी रेखा का 200%–500%), अमेरिका निवास/नागरिकता, और बीमा स्थिति पर आधारित होती है — अक्सर बिना बीमा या उस दवा का कवरेज न होना चाहिए।',
+  papApplication:
+    'आप और आपका स्वास्थ्य प्रदाता निदान और आर्थिक जरूरत सत्यापित करने वाला आवेदन भरते हैं।',
+  papEligibilityNote:
+    'यहाँ के आंकड़े रोगी सहायता और मूल्य गाइड के सामान्य अनुमान हैं। आवेदन से पहले आधिकारिक साइट या NeedyMeds पर नियम जाँचें।',
   noPrograms: 'इस दवा के लिए कोई सूचीबद्ध कार्यक्रम नहीं है।',
   priceDisclaimer:
-    'स्टोर की नकद कीमतें अलग-अलग होती हैं और फार्मेसी पर पुष्टि करनी चाहिए। Cost Plus मेल-ऑर्डर चेकआउट कीमत है (शिपिंग अलग)। GoodRx कूपन राशि उनकी साइट पर फार्मेसी और ZIP के अनुसार दिखती है — हम वह आंकड़ा नहीं बनाते। NADAC वह कीमत नहीं है जिस पर आप खरीद सकते हैं। इनमें से कोई भी किसी खास स्टोर का नकद शुल्क नहीं है।',
+    'स्थानीय नकद कीमतें, Cost Plus और GoodRx राशियाँ CA-17 और CA-19 की रोगी सहायता और मूल्य गाइड से हैं। भुगतान से पहले फार्मेसी या Cost Plus / GoodRx पर पुष्टि करें। NADAC थोक संदर्भ है, चेकआउट कीमत नहीं।',
   nearbyPharmacies: 'CA-17 और CA-19 की फार्मेसी',
   nearbyHint:
-    'पते आधिकारिक स्टोर लोकेटर से हैं। पहले कॉल करें — ये स्टोर इन संदर्भ कीमतों को अपनी नकद कीमत के रूप में नहीं दिखाते।',
+    'हर स्टोर इस दवा की गाइड नकद कीमत और आधिकारिक लोकेटर दिखाता है। पहले कॉल करें — चेन कीमतें बदलती हैं।',
+  cashAtStore: 'इस स्टोर की नकद कीमत',
+  retailEst: 'सामान्य खुदरा नकद सीमा: ${min}–${max}',
+  goodRxListed: 'गाइड कूपन कीमत: ${price}',
+  modeledCashNote:
+    'प्रति-स्टोर नकद आंकड़े इन 10 पतों की मूल्य गाइड से हैं। भरने से पहले पुष्टि करें।',
   openLocator: 'स्टोर लोकेटर खोलें',
   notListed: 'सूची में नहीं',
   retrievedOn: 'डेटा 3 अक्टूबर 2026 को लिया गया',

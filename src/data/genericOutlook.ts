@@ -27,19 +27,6 @@ export type GenericOutlook = {
 const VERIFIED = GENERIC_OUTLOOK_VERIFIED_AS_OF;
 
 const outlookById: Record<string, GenericOutlook> = {
-  ozempic: {
-    medicationId: 'ozempic',
-    kind: 'prediction',
-    // Orange Book exclusivity.txt NDA 209637: I-961 expires Jan 28, 2028.
-    // Earlier device patents are Delist_Flag=Y or already expired (e.g. 8,536,122
-    // Mar 20, 2026). Later non-delisted patents remain (8,129,343 Dec 5, 2031;
-    // 10,335,462 Jun 21, 2033). No ANDA for semaglutide in products.txt.
-    expiryDate: '2028-01-28',
-    expiryLabel: 'Orange Book exclusivity I-961, NDA 209637',
-    source: 'FDA Orange Book EOBZIP_2026_08 exclusivity.txt (NDA 209637)',
-    verifiedAsOf: VERIFIED,
-    biosimilarExplainer: false,
-  },
   eliquis: {
     medicationId: 'eliquis',
     kind: 'prediction',
@@ -54,16 +41,6 @@ const outlookById: Record<string, GenericOutlook> = {
     verifiedAsOf: VERIFIED,
     biosimilarExplainer: false,
   },
-  'insulin-glargine': {
-    medicationId: 'insulin-glargine',
-    kind: 'alreadyHasAlternative',
-    expiryDate: null,
-    expiryLabel: null,
-    source:
-      'FDA Purple Book: Semglee insulin glargine-yfgn BLA 761201 (interchangeable, approved Jul 28, 2021); Rezvoglar insulin glargine-aglr BLA 761215 (Dec 17, 2021); Langlara insulin glargine-aldy BLA 761412 (Apr 29, 2026)',
-    verifiedAsOf: VERIFIED,
-    biosimilarExplainer: true,
-  },
   humira: {
     medicationId: 'humira',
     kind: 'alreadyHasAlternative',
@@ -73,16 +50,6 @@ const outlookById: Record<string, GenericOutlook> = {
       'FDA Purple Book: multiple 351(k) adalimumab biosimilars referencing Humira BLA 125057 (e.g. Amjevita BLA 761024; Hadlima BLA 761059 interchangeable; Idacio adalimumab-aacf BLA 761255)',
     verifiedAsOf: VERIFIED,
     biosimilarExplainer: true,
-  },
-  advair: {
-    medicationId: 'advair',
-    kind: 'alreadyHasAlternative',
-    expiryDate: null,
-    expiryLabel: null,
-    source:
-      'FDA ANDA approval letter 208891 (Wixela Inhub therapeutically equivalent to Advair Diskus); Orange Book products.txt ANDA 208891 TE=AB vs NDA 021077',
-    verifiedAsOf: VERIFIED,
-    biosimilarExplainer: false,
   },
 };
 

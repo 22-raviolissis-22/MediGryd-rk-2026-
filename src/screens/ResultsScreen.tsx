@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../components/AppText';
 import {
+  ActionStack,
   AppChrome,
   BodyText,
   ChipButton,
@@ -130,17 +131,19 @@ export function ResultsScreen() {
 
           {med && !pickingRx ? (
         <>
-          <WhiteCard>
-            <BodyText>{c.resultsFor}</BodyText>
-            <DisplayTitle>{med.brand}</DisplayTitle>
-            <BodyText>
-              {med.generic} · {loc(med.form, language)}
-            </BodyText>
-            <View style={styles.saveRow}>
-              <SaveToggle med={med} />
-            </View>
+          <ActionStack>
+            <WhiteCard>
+              <BodyText>{c.resultsFor}</BodyText>
+              <DisplayTitle>{med.brand}</DisplayTitle>
+              <BodyText>
+                {med.generic} · {loc(med.form, language)}
+              </BodyText>
+              <View style={styles.saveRow}>
+                <SaveToggle med={med} />
+              </View>
+            </WhiteCard>
             <WhitePill label={c.changeMedicine} onPress={() => setPickingRx(true)} />
-          </WhiteCard>
+          </ActionStack>
           {insurance === 'yes' ? (
             <WhiteCard>
               <BodyText>{c.insuredBanner}</BodyText>
@@ -180,7 +183,7 @@ export function ResultsScreen() {
           {med.benchmarks
             .filter((b) => b.source === 'costplus')
             .map((b) => (
-              <View key="costplus-buy">
+              <ActionStack key="costplus-buy">
                 <WhiteCard>
                   <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.costPlusList}</Text>
                   <Text style={[styles.price, typeface(language, 'display')]}>
@@ -205,13 +208,26 @@ export function ResultsScreen() {
                 {med.costPlusUrl ? (
                   <WhitePill label={c.buyCostPlus} onPress={() => openUrl(med.costPlusUrl!)} />
                 ) : null}
-              </View>
+              </ActionStack>
             ))}
 
-          <View>
+          <ActionStack>
             <WhiteCard>
               <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.goodRxCoupon}</Text>
               <Text style={[styles.pharm, typeface(language, 'display')]}>{med.generic}</Text>
+              {med.goodrxPrice != null ? (
+                <Text style={[styles.price, typeface(language, 'display')]}>
+                  {fill(c.goodRxListed, { price: med.goodrxPrice.toFixed(2) })}
+                </Text>
+              ) : null}
+              {med.retailEstMin != null && med.retailEstMax != null ? (
+                <Text style={[styles.meta, typeface(language, 'body')]}>
+                  {fill(c.retailEst, {
+                    min: med.retailEstMin.toFixed(2),
+                    max: med.retailEstMax.toFixed(2),
+                  })}
+                </Text>
+              ) : null}
               <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxHint}</Text>
               <Text style={[styles.note, typeface(language, 'body')]}>{c.goodRxPromoNote}</Text>
               {med.singlecareUrl ? (
@@ -228,15 +244,15 @@ export function ResultsScreen() {
                 />
               ) : null}
             </View>
-          </View>
+          </ActionStack>
 
           <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
           {med.benchmarks
             .filter((b) => b.source === 'nadac')
             .map((b) => {
-              const live = nadacPriceFor(nadacFeed, med.id);
+              const live = b.price != null ? nadacPriceFor(nadacFeed, med.id) : null;
               const scaled =
-                qtyChanged && nadacRow && qty != null
+                qtyChanged && nadacRow && qty != null && live != null
                   ? Math.round(nadacRow.nadacPerUnit * qty * 100) / 100
                   : null;
               const price = scaled ?? live ?? b.price;
@@ -244,7 +260,7 @@ export function ResultsScreen() {
               <WhiteCard key="nadac-ref">
                 <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.nadacNotBuyable}</Text>
                 <Text style={[styles.price, typeface(language, 'display')]}>
-                  {price == null ? c.notListed : `$${price.toFixed(2)}`}
+                  {price == null ? loc(b.package, language) : `$${price.toFixed(2)}`}
                 </Text>
                 <Text style={[styles.meta, typeface(language, 'body')]}>
                   {scaled != null ? qtyLabel : loc(b.package, language)}
@@ -266,21 +282,38 @@ export function ResultsScreen() {
 
           <GenericOutlookCard medicationId={med.id} />
 
-          <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
-          <BodyText>{c.nearbyHint}</BodyText>
-          {med.pharmacies.map((p) => (
-            <View key={p.district + p.address}>
+          {med.pharmacies.length > 0 ? (
+            <>
+              <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
+              <BodyText>{c.nearbyHint}</BodyText>
               <WhiteCard>
-                <Text style={[styles.pharm, typeface(language, 'display')]}>{p.name}</Text>
-                <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{p.district}</Text>
-                <Text style={[styles.meta, typeface(language, 'body')]}>{p.address}</Text>
-                <Text style={[styles.meta, typeface(language, 'body')]}>
-                  {pharmacyHours(language, p.hoursId)}
-                </Text>
+                <Text style={[styles.note, typeface(language, 'body')]}>{c.modeledCashNote}</Text>
               </WhiteCard>
-              <WhitePill label={c.openLocator} onPress={() => openUrl(p.locatorUrl)} />
-            </View>
-          ))}
+              {med.pharmacies.map((p) => (
+                <ActionStack key={p.id}>
+                  <WhiteCard>
+                    <Text style={[styles.pharm, typeface(language, 'display')]}>{p.name}</Text>
+                    <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{p.district}</Text>
+                    <Text style={[styles.meta, typeface(language, 'body')]}>{p.address}</Text>
+                    <Text style={[styles.meta, typeface(language, 'body')]}>
+                      {pharmacyHours(language, p.hoursId)}
+                    </Text>
+                    {p.cashPrice != null ? (
+                      <>
+                        <Text style={[styles.section, typeface(language, 'bodyBold')]}>
+                          {c.cashAtStore}
+                        </Text>
+                        <Text style={[styles.price, typeface(language, 'display')]}>
+                          ${p.cashPrice.toFixed(2)}
+                        </Text>
+                      </>
+                    ) : null}
+                  </WhiteCard>
+                  <WhitePill label={c.openLocator} onPress={() => openUrl(p.locatorUrl)} />
+                </ActionStack>
+              ))}
+            </>
+          ) : null}
         </>
           ) : null}
         </>
@@ -296,6 +329,14 @@ export function ResultsScreen() {
             accessibilityLabel={c.papSearchPlaceholder}
           />
           <BodyText>{c.papPickHint}</BodyText>
+          <WhiteCard>
+            <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.papWhatTitle}</Text>
+            <BodyText>{c.papWhatBody}</BodyText>
+            <Text style={[styles.note, typeface(language, 'body')]}>{c.papManufacturerDirect}</Text>
+            <Text style={[styles.note, typeface(language, 'body')]}>{c.papEligibility}</Text>
+            <Text style={[styles.note, typeface(language, 'body')]}>{c.papApplication}</Text>
+            <Text style={[styles.renewal, typeface(language, 'bodyBold')]}>{c.papEligibilityNote}</Text>
+          </WhiteCard>
           {pickingPap || !med ? (
             <>
               {papQuery.trim() && papList.length === 0 ? (
@@ -311,13 +352,15 @@ export function ResultsScreen() {
           ) : null}
           {med && !pickingPap ? (
             <>
-              <WhiteCard>
-                <DisplayTitle>{med.brand}</DisplayTitle>
-                <BodyText>
-                  {med.generic} · {loc(med.form, language)}
-                </BodyText>
+              <ActionStack>
+                <WhiteCard>
+                  <DisplayTitle>{med.brand}</DisplayTitle>
+                  <BodyText>
+                    {med.generic} · {loc(med.form, language)}
+                  </BodyText>
+                </WhiteCard>
                 <WhitePill label={c.changeMedicine} onPress={() => setPickingPap(true)} />
-              </WhiteCard>
+              </ActionStack>
               {onlyAssistanceAvailable(med) ? (
                 <WhiteCard>
                   <BodyText>{c.papOnlyExplain}</BodyText>
@@ -492,7 +535,7 @@ function ProgramCard({
   const c = t(language);
   const p = row.program;
   return (
-    <View>
+    <ActionStack>
       <WhiteCard>
         <Text style={[styles.kind, typeface(language, 'bodyBold')]}>
           {p.closedToNew
@@ -526,7 +569,7 @@ function ProgramCard({
         </Text>
       </WhiteCard>
       <WhitePill label={c.papLearnMore} onPress={() => openUrl(p.applicationUrl)} />
-    </View>
+    </ActionStack>
   );
 }
 

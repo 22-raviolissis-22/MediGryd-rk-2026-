@@ -200,6 +200,11 @@ export function WhiteCard({ children }: { children: ReactNode }) {
   return <View style={styles.whiteCard}>{children}</View>;
 }
 
+/** Keeps action pills visually separate from the card above them. */
+export function ActionStack({ children }: { children: ReactNode }) {
+  return <View style={styles.actionStack}>{children}</View>;
+}
+
 export function Question({ children }: { children: ReactNode }) {
   const { language } = useApp();
   return <Text style={[styles.question, typeface(language, 'body')]}>{children}</Text>;
@@ -459,6 +464,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     alignSelf: 'stretch',
     ...shadow,
+  },
+  actionStack: {
+    alignSelf: 'stretch',
+    gap: 16,
+    marginTop: 4,
   },
   question: {
     fontSize: 20,
