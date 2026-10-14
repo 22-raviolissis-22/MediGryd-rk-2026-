@@ -55,10 +55,6 @@ export default function App() {
     Nunito_700Bold,
   });
 
-  if (!fontsLoaded) {
-    return <View style={{ flex: 1, backgroundColor: '#A9E4F8' }} />;
-  }
-
   return (
     <AppProvider>
       <PhoneShell>
@@ -66,7 +62,11 @@ export default function App() {
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <Router />
+          {fontsLoaded ? (
+            <Router />
+          ) : (
+            <View style={{ flex: 1, backgroundColor: '#A9E4F8' }} />
+          )}
         </KeyboardAvoidingView>
         <StatusBar style="dark" />
       </PhoneShell>

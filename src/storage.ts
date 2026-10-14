@@ -1,5 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { Language } from './types';
+import type {
+  HouseholdSize,
+  IncomeBracket,
+  InsuranceStatus,
+  Language,
+  ScreenId,
+} from './types';
 
 export type TextSize = 'normal' | 'large';
 
@@ -66,3 +72,88 @@ export const saveTextSize = (size: TextSize) => write(KEYS.textSize, size);
 export const saveSavedMedications = (ids: string[]) => write(KEYS.saved, JSON.stringify(ids));
 export const savePlanPhone = (phone: string) => write(KEYS.planPhone, phone);
 export const saveLanguage = (lang: Language) => write(KEYS.language, lang);
+
+const SESSION_KEY = '@calrx/web-session';
+
+const SCREENS: ScreenId[] = [
+  'language',
+  'insurance',
+  'insuredNotice',
+  'household',
+  'income',
+  'eligibility',
+  'search',
+  'results',
+  'help',
+  'saved',
+];
+
+export type WebSession = {
+  screen: ScreenId;
+  history: ScreenId[];
+  insurance: InsuranceStatus;
+  household: HouseholdSize | null;
+  income: IncomeBracket | null;
+  medicationId: string | null;
+  resultsTab: 'rx' | 'pap';
+  searchQuery: string;
+  language: Language;
+};
+
+function canUseSession() {
+  return typeof sessionStorage !== 'undefined';
+}
+
+export function loadWebSession(): WebSession | null {
+  if (!canUseSession()) return null;
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<WebSession>;
+    if (!parsed.screen || !SCREENS.includes(parsed.screen)) return null;
+    const history = Array.isArray(parsed.history)
+      ? parsed.history.filter((s): s is ScreenId => SCREENS.includes(s))
+      : [];
+    return {
+      screen: parsed.screen,
+      history,
+      insurance: parsed.insurance === 'yes' || parsed.insurance === 'no' ? parsed.insurance : null,
+      household:
+        parsed.household === 1 ||
+        parsed.household === 2 ||
+        parsed.household === 3 ||
+        parsed.household === 4 ||
+        parsed.household === 5
+          ? parsed.household
+          : null,
+      income: parsed.income === 'A' || parsed.income === 'B' || parsed.income === 'C' ? parsed.income : null,
+      medicationId: typeof parsed.medicationId === 'string' ? parsed.medicationId : null,
+      resultsTab: parsed.resultsTab === 'pap' ? 'pap' : 'rx',
+      searchQuery: typeof parsed.searchQuery === 'string' ? parsed.searchQuery : '',
+      language:
+        parsed.language === 'es' || parsed.language === 'zh' || parsed.language === 'hi'
+          ? parsed.language
+          : 'en',
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function saveWebSession(session: WebSession) {
+  if (!canUseSession()) return;
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
+
+export function clearWebSession() {
+  if (!canUseSession()) return;
+  try {
+    sessionStorage.removeItem(SESSION_KEY);
+  } catch {
+    /* ignore */
+  }
+}

@@ -60,10 +60,11 @@ export function ResultsScreen() {
     if (searchSource.current === 'pap') return;
     const hit = routeSearch(searchQuery);
     if (hit) {
-      setMedication(hit);
-      setResultsTab(hit.kind === 'pap' ? 'pap' : 'rx');
+      if (medication?.id !== hit.id) setMedication(hit);
+      const nextTab = hit.kind === 'pap' ? 'pap' : 'rx';
+      if (resultsTab !== nextTab) setResultsTab(nextTab);
       if (hit.kind === 'pap') {
-        setPapQuery(searchQuery);
+        setPapQuery((q) => (q === searchQuery ? q : searchQuery));
         setPickingPap(false);
         setPickingRx(true);
       } else {
@@ -78,20 +79,21 @@ export function ResultsScreen() {
       searchInCatalog(papMedications, q).length > 0 &&
       searchInCatalog(regularMedications, q).length === 0
     ) {
-      setResultsTab('pap');
-      setPapQuery(q);
+      if (resultsTab !== 'pap') setResultsTab('pap');
+      setPapQuery((cur) => (cur === q ? cur : q));
       setPickingPap(true);
     }
-  }, [searchQuery, setMedication, setResultsTab]);
+  }, [searchQuery, medication?.id, resultsTab, setMedication, setResultsTab]);
 
   useEffect(() => {
     if (searchSource.current === 'rx') return;
     const hit = routeSearch(papQuery);
     if (hit) {
-      setMedication(hit);
-      setResultsTab(hit.kind === 'pap' ? 'pap' : 'rx');
+      if (medication?.id !== hit.id) setMedication(hit);
+      const nextTab = hit.kind === 'pap' ? 'pap' : 'rx';
+      if (resultsTab !== nextTab) setResultsTab(nextTab);
       if (hit.kind === 'regular') {
-        setSearchQuery(papQuery);
+        if (searchQuery !== papQuery) setSearchQuery(papQuery);
         setPickingRx(false);
         setPickingPap(true);
       } else {
@@ -106,11 +108,11 @@ export function ResultsScreen() {
       searchInCatalog(regularMedications, q).length > 0 &&
       searchInCatalog(papMedications, q).length === 0
     ) {
-      setResultsTab('rx');
-      setSearchQuery(q);
+      if (resultsTab !== 'rx') setResultsTab('rx');
+      if (searchQuery !== q) setSearchQuery(q);
       setPickingRx(true);
     }
-  }, [papQuery, setMedication, setResultsTab, setSearchQuery]);
+  }, [papQuery, searchQuery, medication?.id, resultsTab, setMedication, setResultsTab, setSearchQuery]);
 
   const pickRx = (next: Medication) => {
     openMedication(next);

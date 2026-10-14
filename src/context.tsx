@@ -8,13 +8,17 @@ import type {
   ScreenId,
 } from './types';
 import { bundledNadacFeed, resolveNadacFeed, type NadacFeed } from './prices/nadacFeed';
+import { medications } from './data/medications';
 import {
   DEFAULT_PREFS,
+  clearWebSession,
   loadPrefs,
+  loadWebSession,
   saveLanguage,
   savePlanPhone,
   saveSavedMedications,
   saveTextSize,
+  saveWebSession,
   type TextSize,
 } from './storage';
 
@@ -54,16 +58,24 @@ export const LARGE_TEXT_SCALE = 1.3;
 
 const AppContext = createContext<AppState | null>(null);
 
+function medById(id: string | null): Medication | null {
+  if (!id) return null;
+  return medications.find((m) => m.id === id) ?? null;
+}
+
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
-  const [screen, setScreen] = useState<ScreenId>('language');
-  const [history, setHistory] = useState<ScreenId[]>([]);
-  const [insurance, setInsurance] = useState<InsuranceStatus>(null);
-  const [household, setHousehold] = useState<HouseholdSize | null>(null);
-  const [income, setIncome] = useState<IncomeBracket | null>(null);
-  const [medication, setMedication] = useState<Medication | null>(null);
-  const [resultsTab, setResultsTab] = useState<'rx' | 'pap'>('rx');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [restored] = useState(() => loadWebSession());
+  const [language, setLanguage] = useState<Language>(restored?.language ?? 'en');
+  const [screen, setScreen] = useState<ScreenId>(restored?.screen ?? 'language');
+  const [history, setHistory] = useState<ScreenId[]>(restored?.history ?? []);
+  const [insurance, setInsurance] = useState<InsuranceStatus>(restored?.insurance ?? null);
+  const [household, setHousehold] = useState<HouseholdSize | null>(restored?.household ?? null);
+  const [income, setIncome] = useState<IncomeBracket | null>(restored?.income ?? null);
+  const [medication, setMedication] = useState<Medication | null>(() =>
+    medById(restored?.medicationId ?? null)
+  );
+  const [resultsTab, setResultsTab] = useState<'rx' | 'pap'>(restored?.resultsTab ?? 'rx');
+  const [searchQuery, setSearchQuery] = useState(restored?.searchQuery ?? '');
   const [nadacFeed, setNadacFeed] = useState<NadacFeed>(bundledNadacFeed);
   const [textSize, setTextSizeState] = useState<TextSize>(DEFAULT_PREFS.textSize);
   const [savedMedicationIds, setSavedIds] = useState<string[]>(DEFAULT_PREFS.savedMedicationIds);
@@ -89,6 +101,30 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    saveWebSession({
+      screen,
+      history,
+      insurance,
+      household,
+      income,
+      medicationId: medication?.id ?? null,
+      resultsTab,
+      searchQuery,
+      language,
+    });
+  }, [
+    screen,
+    history,
+    insurance,
+    household,
+    income,
+    medication,
+    resultsTab,
+    searchQuery,
+    language,
+  ]);
 
   const value = useMemo<AppState>(
     () => ({
@@ -149,6 +185,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         savePlanPhone(phone);
       },
       reset: () => {
+        clearWebSession();
         setScreen('language');
         setHistory([]);
         setInsurance(null);
