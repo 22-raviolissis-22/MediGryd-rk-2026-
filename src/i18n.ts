@@ -235,16 +235,6 @@ const en = {
   saveA11y: 'Save {drug} to My medicines',
   unsaveA11y: 'Remove {drug} from My medicines',
   removeSaved: 'Remove',
-  qtyTitle: 'Quantity',
-  qtyHint: 'Choose how many tablets or capsules. Only the fair-price reference changes with quantity.',
-  qtyUnsupported:
-    'Quantity choices apply to tablets and capsules only. This medicine is shown for its standard package.',
-  qtyTablets: '{qty} tablets',
-  qtyCapsules: '{qty} capsules',
-  nadacQtyMath:
-    'CMS NADAC ${unit} per unit × {qty} = ${total}. Same per-unit benchmark from the {date} file, multiplied by your quantity — still not a price you can buy at.',
-  costPlusQtyNote:
-    'This Cost Plus quote is for {base}. We do not have a Cost Plus quote for {qty} — open Cost Plus to see that quantity.',
 };
 
 const es: typeof en = {
@@ -452,16 +442,6 @@ const es: typeof en = {
   saveA11y: 'Guardar {drug} en Mis medicinas',
   unsaveA11y: 'Quitar {drug} de Mis medicinas',
   removeSaved: 'Quitar',
-  qtyTitle: 'Cantidad',
-  qtyHint: 'Elige cuántas tabletas o cápsulas. Solo la referencia de precio justo cambia con la cantidad.',
-  qtyUnsupported:
-    'Las opciones de cantidad solo aplican a tabletas y cápsulas. Esta medicina se muestra con su paquete estándar.',
-  qtyTablets: '{qty} tabletas',
-  qtyCapsules: '{qty} cápsulas',
-  nadacQtyMath:
-    'CMS NADAC ${unit} por unidad × {qty} = ${total}. El mismo valor por unidad del archivo del {date}, multiplicado por tu cantidad — sigue sin ser un precio al que puedas comprar.',
-  costPlusQtyNote:
-    'Esta cotización de Cost Plus es para {base}. No tenemos cotización de Cost Plus para {qty} — abre Cost Plus para ver esa cantidad.',
 };
 
 const zh: typeof en = {
@@ -648,15 +628,6 @@ const zh: typeof en = {
   saveA11y: '将 {drug} 保存到我的药品',
   unsaveA11y: '从我的药品中移除 {drug}',
   removeSaved: '移除',
-  qtyTitle: '数量',
-  qtyHint: '选择片剂或胶囊的数量。只有公平价格参考会随数量变化。',
-  qtyUnsupported: '数量选项仅适用于片剂和胶囊。此药按标准包装显示。',
-  qtyTablets: '{qty} 片',
-  qtyCapsules: '{qty} 粒胶囊',
-  nadacQtyMath:
-    'CMS NADAC 每单位 ${unit} × {qty} = ${total}。使用 {date} 文件中相同的单位基准乘以您选择的数量 — 仍不是您可以购买的价格。',
-  costPlusQtyNote:
-    '此 Cost Plus 报价对应 {base}。我们没有 {qty} 的 Cost Plus 报价 — 请打开 Cost Plus 查看该数量。',
 };
 
 const hi: typeof en = {
@@ -860,16 +831,6 @@ const hi: typeof en = {
   saveA11y: '{drug} को मेरी दवाओं में सहेजें',
   unsaveA11y: '{drug} को मेरी दवाओं से हटाएँ',
   removeSaved: 'हटाएँ',
-  qtyTitle: 'मात्रा',
-  qtyHint: 'कितनी गोलियाँ या कैप्सूल चाहिए, चुनें। मात्रा से केवल उचित-कीमत संदर्भ बदलता है।',
-  qtyUnsupported:
-    'मात्रा के विकल्प केवल गोलियों और कैप्सूल पर लागू होते हैं। यह दवा उसके मानक पैकेज के लिए दिखाई गई है।',
-  qtyTablets: '{qty} गोलियाँ',
-  qtyCapsules: '{qty} कैप्सूल',
-  nadacQtyMath:
-    'CMS NADAC ${unit} प्रति इकाई × {qty} = ${total}। {date} फ़ाइल का वही प्रति-इकाई बेंचमार्क, आपकी मात्रा से गुणा — फिर भी यह खरीदने की कीमत नहीं है।',
-  costPlusQtyNote:
-    'यह Cost Plus भाव {base} के लिए है। हमारे पास {qty} का Cost Plus भाव नहीं है — वह मात्रा देखने के लिए Cost Plus खोलें।',
 };
 
 export const copy = { en, es, zh, hi };

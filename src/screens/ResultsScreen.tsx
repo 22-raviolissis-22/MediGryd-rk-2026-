@@ -5,7 +5,6 @@ import {
   ActionStack,
   AppChrome,
   BodyText,
-  ChipButton,
   DisplayTitle,
   SearchBox,
   WhiteCard,
@@ -28,7 +27,7 @@ import {
   outlookForMedication,
 } from '../data/genericOutlook';
 import { fillScript, papListingsAreStale, rankPrograms, type RankedProgram } from '../data/papMatcher';
-import { countableUnit, nadacPriceFor, nadacRowFor } from '../prices/nadacFeed';
+import { nadacPriceFor } from '../prices/nadacFeed';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize, Medication } from '../types';
 
@@ -131,21 +130,12 @@ export function ResultsScreen() {
     : c.papIncomeSkipped;
   const insuredBit = insurance === 'yes' ? c.papYouInsured : c.papYouUninsured;
 
-  const nadacRow = med ? nadacRowFor(nadacFeed, med.id) : null;
-  const unit = countableUnit(nadacRow);
-  const baseQty = nadacRow?.quantity ?? null;
-  const [pickedQty, setPickedQty] = useState<number | null>(null);
-  useEffect(() => setPickedQty(null), [med?.id]);
-  const qty = unit ? (pickedQty ?? baseQty) : baseQty;
-  const qtyChanged = unit != null && qty != null && qty !== baseQty;
-  const qtyLabel =
-    qty == null ? '' : fill(unit === 'capsule' ? c.qtyCapsules : c.qtyTablets, { qty: String(qty) });
-
   return (
     <AppChrome showSearch={false}>
       <View style={styles.tabs}>
         <Pressable
           onPress={() => {
+            searchSource.current = 'rx';
             setResultsTab('rx');
             if (!medication || medication.kind !== 'regular') setPickingRx(true);
           }}
@@ -237,30 +227,6 @@ export function ResultsScreen() {
             <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
           </WhiteCard>
 
-          <WhiteCard>
-            <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.qtyTitle}</Text>
-            {unit ? (
-              <>
-                <View style={styles.qtyRow}>
-                  {QUANTITIES.map((n) => (
-                    <ChipButton
-                      key={n}
-                      label={String(n)}
-                      selected={qty === n}
-                      onPress={() => setPickedQty(n)}
-                      accessibilityLabel={fill(unit === 'capsule' ? c.qtyCapsules : c.qtyTablets, {
-                        qty: String(n),
-                      })}
-                    />
-                  ))}
-                </View>
-                <Text style={[styles.note, typeface(language, 'body')]}>{c.qtyHint}</Text>
-              </>
-            ) : (
-              <Text style={[styles.note, typeface(language, 'body')]}>{c.qtyUnsupported}</Text>
-            )}
-          </WhiteCard>
-
           <DisplayTitle>{c.lowestToday}</DisplayTitle>
 
           {med.benchmarks
@@ -282,11 +248,6 @@ export function ResultsScreen() {
                   <Text style={[styles.note, typeface(language, 'body')]}>
                     {loc(b.note, language)}
                   </Text>
-                  {qtyChanged && b.price != null ? (
-                    <Text style={[styles.renewal, typeface(language, 'bodyBold')]}>
-                      {fill(c.costPlusQtyNote, { base: loc(b.package, language), qty: qtyLabel })}
-                    </Text>
-                  ) : null}
                 </WhiteCard>
                 {med.costPlusUrl ? (
                   <WhitePill label={c.buyCostPlus} onPress={() => openUrl(med.costPlusUrl!)} />
@@ -301,11 +262,7 @@ export function ResultsScreen() {
             .filter((b) => b.source === 'nadac')
             .map((b) => {
               const live = b.price != null ? nadacPriceFor(nadacFeed, med.id) : null;
-              const scaled =
-                qtyChanged && nadacRow && qty != null && live != null
-                  ? Math.round(nadacRow.nadacPerUnit * qty * 100) / 100
-                  : null;
-              const price = scaled ?? live ?? b.price;
+              const price = live ?? b.price;
               return (
               <WhiteCard key="nadac-ref">
                 <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.nadacNotBuyable}</Text>
@@ -313,18 +270,11 @@ export function ResultsScreen() {
                   {price == null ? loc(b.package, language) : `$${price.toFixed(2)}`}
                 </Text>
                 <Text style={[styles.meta, typeface(language, 'body')]}>
-                  {scaled != null ? qtyLabel : loc(b.package, language)}
+                  {loc(b.package, language)}
                 </Text>
                 <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
                 <Text style={[styles.note, typeface(language, 'body')]}>
-                  {scaled != null && nadacRow && qty != null
-                    ? fill(c.nadacQtyMath, {
-                        unit: String(nadacRow.nadacPerUnit),
-                        qty: String(qty),
-                        total: scaled.toFixed(2),
-                        date: formatIsoDate(nadacRow.asOfDate, language),
-                      })
-                    : loc(b.note, language)}
+                  {loc(b.note, language)}
                 </Text>
               </WhiteCard>
               );
@@ -682,11 +632,8 @@ function ProgramCard({
   );
 }
 
-const QUANTITIES = [30, 60, 90, 120] as const;
-
 const styles = StyleSheet.create({
   saveRow: { alignItems: 'center', marginTop: 10 },
-  qtyRow: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginTop: 6 },
   couponRow: { flexDirection: 'row', gap: 10, alignSelf: 'stretch' },
   tabs: { flexDirection: 'row', gap: 8 },
   tab: {
