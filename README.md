@@ -22,8 +22,11 @@ Keep the phone on the same Wi‑Fi network as your computer. Portrait iPhone lay
 
 ```bash
 npm install
-npx expo start --web --port 43123
+npm run export-web
+npm run preview
 ```
+
+That serves a static web build at http://127.0.0.1:43123 (IPv4). `npx expo start --web` still works for Expo Go / live reload.
 
 On web the UI is framed as a vertical iPhone (390×844).
 
