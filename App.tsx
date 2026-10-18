@@ -48,7 +48,7 @@ function Router() {
 }
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
+  useFonts({
     Fredoka_700Bold,
     Nunito_400Regular,
     Nunito_600SemiBold,
@@ -59,11 +59,7 @@ export default function App() {
     <AppProvider>
       <PhoneShell>
         <View style={{ flex: 1 }}>
-          {fontsLoaded ? (
-            <Router />
-          ) : (
-            <View style={{ flex: 1, backgroundColor: '#A9E4F8' }} />
-          )}
+          <Router />
         </View>
         <StatusBar style="dark" />
       </PhoneShell>

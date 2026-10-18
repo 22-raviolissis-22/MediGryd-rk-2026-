@@ -77,10 +77,14 @@ async function writeCache(feed: NadacFeed) {
 }
 
 async function fetchRemote(): Promise<NadacFeed | null> {
+  const hosted =
+    typeof process !== 'undefined' ? process.env?.EXPO_PUBLIC_NADAC_FEED_URL : undefined;
+  if (!hosted) return null;
+
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 8000);
   try {
-    const res = await fetch(NADAC_FEED_URL, { signal: ctrl.signal });
+    const res = await fetch(hosted, { signal: ctrl.signal });
     if (!res.ok) return null;
     const parsed = await res.json();
     return isFeed(parsed) ? parsed : null;

@@ -1,20 +1,10 @@
-import { useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Path, Pattern, Rect, Stop } from 'react-native-svg';
 
 export function GridBackground() {
-  const [size, setSize] = useState({ width: 390, height: 844 });
-
-  const onLayout = (e: LayoutChangeEvent) => {
-    const { width, height } = e.nativeEvent.layout;
-    if (width && height && (width !== size.width || height !== size.height)) {
-      setSize({ width, height });
-    }
-  };
-
   return (
-    <View style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]} onLayout={onLayout}>
-      <Svg width={size.width} height={size.height}>
+    <View style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}>
+      <Svg width="100%" height="100%" preserveAspectRatio="none">
         <Defs>
           <LinearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor="#C9F2FC" />
@@ -30,8 +20,8 @@ export function GridBackground() {
             />
           </Pattern>
         </Defs>
-        <Rect x="0" y="0" width={size.width} height={size.height} fill="url(#sky)" />
-        <Rect x="0" y="0" width={size.width} height={size.height} fill="url(#paper)" />
+        <Rect x="0" y="0" width="100%" height="100%" fill="url(#sky)" />
+        <Rect x="0" y="0" width="100%" height="100%" fill="url(#paper)" />
       </Svg>
     </View>
   );
