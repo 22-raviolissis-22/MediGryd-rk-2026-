@@ -5,7 +5,7 @@ import {
   Nunito_600SemiBold,
   Nunito_700Bold,
 } from '@expo-google-fonts/nunito';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { AppProvider, useApp } from './src/context';
 import { PhoneShell } from './src/components/ui';
 import { LanguageScreen } from './src/screens/LanguageScreen';
@@ -58,16 +58,13 @@ export default function App() {
   return (
     <AppProvider>
       <PhoneShell>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        >
+        <View style={{ flex: 1 }}>
           {fontsLoaded ? (
             <Router />
           ) : (
             <View style={{ flex: 1, backgroundColor: '#A9E4F8' }} />
           )}
-        </KeyboardAvoidingView>
+        </View>
         <StatusBar style="dark" />
       </PhoneShell>
     </AppProvider>

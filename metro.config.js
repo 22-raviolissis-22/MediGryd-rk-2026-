@@ -1,19 +1,10 @@
 const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path');
 
 const config = getDefaultConfig(__dirname);
+const projectRoot = path.resolve(__dirname);
 
-const extraIgnores = [
-  /\/\.git\/.*/,
-  /\/\.expo\/.*/,
-  /\/dist\/.*/,
-];
-
-const previous = config.resolver.blockList;
-config.resolver.blockList = previous
-  ? [previous, ...extraIgnores].flat()
-  : extraIgnores;
-
-config.watchFolders = [__dirname];
+config.watchFolders = [projectRoot];
 if (config.watcher) {
   config.watcher.healthCheck = { enabled: false };
 }

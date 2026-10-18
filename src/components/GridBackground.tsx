@@ -13,7 +13,7 @@ export function GridBackground() {
   };
 
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none" onLayout={onLayout}>
+    <View style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]} onLayout={onLayout}>
       <Svg width={size.width} height={size.height}>
         <Defs>
           <LinearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
