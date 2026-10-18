@@ -26,7 +26,7 @@ import {
   genericOutlookIsStale,
   outlookForMedication,
 } from '../data/genericOutlook';
-import { fillScript, papListingsAreStale, rankPrograms, type RankedProgram } from '../data/papMatcher';
+import { papListingsAreStale, rankPrograms, type RankedProgram } from '../data/papMatcher';
 import { nadacPriceFor } from '../prices/nadacFeed';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize, Medication } from '../types';
@@ -561,7 +561,6 @@ function PapTab({
                 key={row.program.id}
                 row={row}
                 language={language}
-                scriptVars={scriptVars}
                 userLine={userLine}
               />
             ))
@@ -572,7 +571,6 @@ function PapTab({
               key={row.program.id}
               row={row}
               language={language}
-              scriptVars={scriptVars}
               userLine={userLine}
             />
           ))}
@@ -585,12 +583,10 @@ function PapTab({
 function ProgramCard({
   row,
   language,
-  scriptVars,
   userLine,
 }: {
   row: RankedProgram;
   language: import('../types').Language;
-  scriptVars: { size: string; income: string; insured: string; drug: string };
   userLine: string;
 }) {
   const c = t(language);
@@ -621,10 +617,6 @@ function ProgramCard({
         <Text style={[styles.meta, typeface(language, 'body')]}>{loc(p.sendWhere, language)}</Text>
         <Text style={[styles.section, typeface(language, 'bodyBold')]}>{c.papCall}</Text>
         <Text style={[styles.phone, typeface(language, 'display')]}>{p.phone}</Text>
-        <Text style={[styles.section, typeface(language, 'bodyBold')]}>{c.papScript}</Text>
-        <Text style={[styles.script, typeface(language, 'body')]}>
-          {fillScript(loc(p.callScript, language), scriptVars)}
-        </Text>
         <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>
           {fill(c.papVerifiedAsOf, { date: formatIsoDate(p.verifiedAsOf, language) })}
         </Text>
@@ -708,11 +700,4 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   phone: { fontSize: 18, color: ink, textAlign: 'center', marginTop: 4 },
-  script: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: '#333',
-    textAlign: 'left',
-    marginTop: 6,
-  },
 });

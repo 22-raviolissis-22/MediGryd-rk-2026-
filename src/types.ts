@@ -74,7 +74,6 @@ export type PapProgram = {
   verifiedAsOf: string;
   sendWhere: LocalizedText;
   documents: LocalizedText[];
-  callScript: LocalizedText;
   cutoff: LocalizedText;
   verifiedNote: LocalizedText;
 };

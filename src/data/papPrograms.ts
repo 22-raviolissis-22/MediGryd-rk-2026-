@@ -53,7 +53,6 @@ function pap(opts: {
   phone: string;
   sendWhere: PapProgram['sendWhere'];
   cutoff: PapProgram['cutoff'];
-  callScript: PapProgram['callScript'];
 }): PapProgram {
   return {
     kind: 'pap',
@@ -104,12 +103,6 @@ export const papPrograms: PapProgram[] = [
       '收入低于联邦贫困线 300%。无保险或保障不足。需美国居住身份和有效处方。',
       'आय 300% FPL से कम। बिना या अपर्याप्त बीमा। अमेरिका निवास और वैध पर्चा आवश्यक।'
     ),
-    callScript: L(
-      'Hello, I am calling AZ&Me at 1-800-292-6363 about Farxiga. My household has {size} people and my income is about {income}. I {insured}. Please start an application or tell me how my doctor completes the portal form.',
-      'Hola, llamo a AZ&Me al 1-800-292-6363 por Farxiga. Somos {size} en el hogar y mis ingresos son unos {income}. {insured}. Inicien una solicitud o díganme cómo completa el médico el formulario.',
-      '您好，我打给 AZ&Me 1-800-292-6363，咨询 Farxiga。家中 {size} 人，收入大约 {income}。我{insured}。请开始申请，或告知医生如何填写门户表格。',
-      'नमस्ते, मैं AZ&Me 1-800-292-6363 पर Farxiga के लिए कॉल कर रहा/रही हूँ। घर में {size} लोग, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें या बताएँ डॉक्टर फॉर्म कैसे भरें।'
-    ),
   }),
   pap({
     id: 'bi-cares',
@@ -143,12 +136,6 @@ export const papPrograms: PapProgram[] = [
       'Ingresos por lo general 300–400% del FPL. Residente de EE. UU. Sin seguro.',
       '收入通常为联邦贫困线的 300–400%。美国居民。无保险。',
       'आय आमतौर पर 300–400% FPL। अमेरिका निवासी। बिना बीमा।'
-    ),
-    callScript: L(
-      'Hello, I am calling Boehringer Ingelheim Cares at 1-800-556-8317 about Jardiance. Household {size}, income about {income}. I {insured}. Please start a BI Cares application.',
-      'Hola, llamo a Boehringer Ingelheim Cares al 1-800-556-8317 por Jardiance. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud de BI Cares.',
-      '您好，我打给 Boehringer Ingelheim Cares 1-800-556-8317，咨询 Jardiance。家庭 {size} 人，收入大约 {income}。我{insured}。请开始 BI Cares 申请。',
-      'नमस्ते, मैं Boehringer Ingelheim Cares 1-800-556-8317 पर Jardiance के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया BI Cares आवेदन शुरू करें।'
     ),
   }),
   pap({
@@ -184,12 +171,6 @@ export const papPrograms: PapProgram[] = [
       '适用收入限制（无公开贫困线百分比）。无保险，或符合基金会支出规则的 Medicare D 部分。',
       'आय दिशानिर्देश लागू (सार्वजनिक FPL % नहीं)। बिना बीमा, या फाउंडेशन खर्च नियमों के साथ Medicare भाग D।'
     ),
-    callScript: L(
-      'Hello, I am calling the Bristol Myers Squibb Patient Assistance Foundation at 1-800-736-0003 about Eliquis. Household {size}, income about {income}. I {insured}. Please start an application.',
-      'Hola, llamo a la Fundación de Asistencia de Bristol Myers Squibb al 1-800-736-0003 por Eliquis. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud.',
-      '您好，我打给 Bristol Myers Squibb 患者援助基金会 1-800-736-0003，咨询 Eliquis。家庭 {size} 人，收入大约 {income}。我{insured}。请开始申请。',
-      'नमस्ते, मैं Bristol Myers Squibb Patient Assistance Foundation 1-800-736-0003 पर Eliquis के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें।'
-    ),
   }),
   pap({
     id: 'abbvie-assist',
@@ -223,12 +204,6 @@ export const papPrograms: PapProgram[] = [
       'Ingresos bajo el 600% del FPL. Sin seguro o con cobertura insuficiente.',
       '收入低于联邦贫困线 600%。无保险或保障不足。',
       'आय 600% FPL से कम। बिना या अपर्याप्त बीमा।'
-    ),
-    callScript: L(
-      'Hello, I am calling myAbbVie Assist at 1-800-222-6885 about Humira. Household {size}, income about {income}. I {insured}. Please tell me how to apply.',
-      'Hola, llamo a myAbbVie Assist al 1-800-222-6885 por Humira. Hogar {size}, ingresos unos {income}. {insured}. Díganme cómo solicitar.',
-      '您好，我打给 myAbbVie Assist 1-800-222-6885，咨询 Humira。家庭 {size} 人，收入大约 {income}。我{insured}。请告知如何申请。',
-      'नमस्ते, मैं myAbbVie Assist 1-800-222-6885 पर Humira के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया बताएँ कैसे आवेदन करें।'
     ),
   }),
   pap({
@@ -264,12 +239,6 @@ export const papPrograms: PapProgram[] = [
       '收入不超过联邦贫困线 400%。美国居民。通常无保险。',
       'आय 400% FPL तक। अमेरिका निवासी। आमतौर पर बिना बीमा।'
     ),
-    callScript: L(
-      'Hello, I am calling Lilly Cares at 1-800-545-6962 about Trulicity. Household {size}, income about {income}. I {insured}. Please start an application.',
-      'Hola, llamo a Lilly Cares al 1-800-545-6962 por Trulicity. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud.',
-      '您好，我打给 Lilly Cares 1-800-545-6962，咨询 Trulicity。家庭 {size} 人，收入大约 {income}。我{insured}。请开始申请。',
-      'नमस्ते, मैं Lilly Cares 1-800-545-6962 पर Trulicity के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें।'
-    ),
   }),
   pap({
     id: 'jj-pap',
@@ -303,12 +272,6 @@ export const papPrograms: PapProgram[] = [
       'Ingresos hasta el 500% del FPL. Sin cobertura suficiente para Xarelto.',
       '收入不超过联邦贫困线 500%。对 Xarelto 保障不足。',
       'आय 500% FPL तक। Xarelto के लिए पर्याप्त कवरेज नहीं।'
-    ),
-    callScript: L(
-      'Hello, I am calling Johnson & Johnson Patient Assistance at 1-800-652-6682 about Xarelto. Household {size}, income about {income}. I {insured}. Please start an application.',
-      'Hola, llamo a la asistencia de Johnson & Johnson al 1-800-652-6682 por Xarelto. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud.',
-      '您好，我打给强生患者援助 1-800-652-6682，咨询 Xarelto。家庭 {size} 人，收入大约 {income}。我{insured}。请开始申请。',
-      'नमस्ते, मैं Johnson & Johnson Patient Assistance 1-800-652-6682 पर Xarelto के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें।'
     ),
   }),
   pap({
@@ -344,12 +307,6 @@ export const papPrograms: PapProgram[] = [
       '收入不超过联邦贫困线 400%。无保险或保障不足。',
       'आय 400% FPL तक। बिना या अपर्याप्त बीमा।'
     ),
-    callScript: L(
-      'Hello, I am calling Merck Helps at 1-800-727-5400 about Keytruda. Household {size}, income about {income}. I {insured}. Please start an application.',
-      'Hola, llamo a Merck Helps al 1-800-727-5400 por Keytruda. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud.',
-      '您好，我打给 Merck Helps 1-800-727-5400，咨询 Keytruda。家庭 {size} 人，收入大约 {income}。我{insured}。请开始申请。',
-      'नमस्ते, मैं Merck Helps 1-800-727-5400 पर Keytruda के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें।'
-    ),
   }),
   pap({
     id: 'genentech-access',
@@ -383,12 +340,6 @@ export const papPrograms: PapProgram[] = [
       'Ingresos hasta el 500% del FPL. Brecha de seguro o sin seguro.',
       '收入不超过联邦贫困线 500%。保险缺口或无保险。',
       'आय 500% FPL तक। बीमा अंतर या बिना बीमा।'
-    ),
-    callScript: L(
-      'Hello, I am calling Genentech Access Solutions at 1-866-422-2377 about Herceptin. Household {size}, income about {income}. I {insured}. Please start an application.',
-      'Hola, llamo a Genentech Access Solutions al 1-866-422-2377 por Herceptin. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud.',
-      '您好，我打给 Genentech Access Solutions 1-866-422-2377，咨询 Herceptin。家庭 {size} 人，收入大约 {income}。我{insured}。请开始申请。',
-      'नमस्ते, मैं Genentech Access Solutions 1-866-422-2377 पर Herceptin के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें।'
     ),
   }),
   pap({
@@ -424,12 +375,6 @@ export const papPrograms: PapProgram[] = [
       '收入不超过联邦贫困线 400%。无保险或 Medicare 缺口。',
       'आय 400% FPL तक। बिना बीमा या Medicare गैप।'
     ),
-    callScript: L(
-      'Hello, I am calling Pfizer RxPathways at 1-844-989-7284 about Xeljanz. Household {size}, income about {income}. I {insured}. Please start a PAP Connect application.',
-      'Hola, llamo a Pfizer RxPathways al 1-844-989-7284 por Xeljanz. Hogar {size}, ingresos unos {income}. {insured}. Inicien PAP Connect.',
-      '您好，我打给 Pfizer RxPathways 1-844-989-7284，咨询 Xeljanz。家庭 {size} 人，收入大约 {income}。我{insured}。请开始 PAP Connect 申请。',
-      'नमस्ते, मैं Pfizer RxPathways 1-844-989-7284 पर Xeljanz के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया PAP Connect आवेदन शुरू करें।'
-    ),
   }),
   pap({
     id: 'janssen-carepath',
@@ -463,12 +408,6 @@ export const papPrograms: PapProgram[] = [
       'Se aplican límites de ingresos. Seguro comercial o apoyo sin seguro — confirma en CarePath.',
       '适用收入限制。商业保险或无保险支持 — 请在 CarePath 确认。',
       'आय दिशानिर्देश लागू। व्यावसायिक बीमा या बिना बीमा सहायता — CarePath पर पुष्टि करें।'
-    ),
-    callScript: L(
-      'Hello, I am calling Janssen CarePath at 1-877-227-3728 about Stelara. Household {size}, income about {income}. I {insured}. Please start an application.',
-      'Hola, llamo a Janssen CarePath al 1-877-227-3728 por Stelara. Hogar {size}, ingresos unos {income}. {insured}. Inicien una solicitud.',
-      '您好，我打给 Janssen CarePath 1-877-227-3728，咨询 Stelara。家庭 {size} 人，收入大约 {income}。我{insured}。请开始申请。',
-      'नमस्ते, मैं Janssen CarePath 1-877-227-3728 पर Stelara के लिए कॉल कर रहा/रही हूँ। घर {size}, आय लगभग {income}। मैं {insured}। कृपया आवेदन शुरू करें।'
     ),
   }),
   {
@@ -515,12 +454,6 @@ export const papPrograms: PapProgram[] = [
         'भुगतान विधि (वे बीमा को बिल नहीं करते)'
       ),
     ],
-    callScript: L(
-      'Hello, I am calling Rx Outreach at 1-888-796-1234. I need {drug}. Please check that you carry it and tell me how my doctor should send the prescription. Household {size}; I {insured}.',
-      'Hola, llamo a Rx Outreach al 1-888-796-1234. Necesito {drug}. Confirmen si lo tienen y cómo debe enviar la receta mi médico. Hogar {size}; {insured}.',
-      '您好，我打给 Rx Outreach 1-888-796-1234。我需要 {drug}。请确认是否有货，并告知医生应如何传送处方。家庭 {size} 人；我{insured}。',
-      'नमस्ते, मैं Rx Outreach 1-888-796-1234 पर कॉल कर रहा/रही हूँ। मुझे {drug} चाहिए। पुष्टि करें कि आपके पास है और डॉक्टर पर्चा कैसे भेजें। घर {size}; मैं {insured}।'
-    ),
     cutoff: L(
       'No income or insurance cutoff. Not free manufacturer medicine — a nonprofit cash price if the drug is on their list.',
       'Sin tope de ingresos ni de seguro. No es medicina gratis del fabricante.',

@@ -126,17 +126,6 @@ export function rankPrograms(opts: {
   return rows;
 }
 
-export function fillScript(
-  tpl: string,
-  vars: { size: string; income: string; insured: string; drug: string }
-) {
-  return tpl
-    .replaceAll('{size}', vars.size)
-    .replaceAll('{income}', vars.income)
-    .replaceAll('{insured}', vars.insured)
-    .replaceAll('{drug}', vars.drug);
-}
-
 /** True when the newest listing date among these programs is more than 6 months before `now`. */
 export function papListingsAreStale(
   programs: { verifiedAsOf: string }[],
