@@ -531,7 +531,6 @@ function PapTab({
       ) : null}
       <WhiteCard>
         <BodyText>{c.papHint}</BodyText>
-        <Text style={[styles.note, typeface(language, 'body')]}>{c.papDisclaimer}</Text>
         <Text style={[styles.renewal, typeface(language, 'bodyBold')]}>{c.papRenewal}</Text>
       </WhiteCard>
       <WhiteCard>
@@ -551,6 +550,9 @@ function PapTab({
       {ranked.length > 0 ? (
         <>
           <DisplayTitle>{c.papLikelyTitle}</DisplayTitle>
+          <WhiteCard>
+            <Text style={[styles.renewal, typeface(language, 'bodyBold')]}>{c.papDisclaimer}</Text>
+          </WhiteCard>
           {likely.length === 0 ? (
             <WhiteCard>
               <BodyText>{c.papEmptyLikely}</BodyText>

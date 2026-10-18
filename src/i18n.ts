@@ -150,9 +150,9 @@ const en = {
   papLikelyTitle: 'Programs you likely qualify for',
   papOtherTitle: 'Other programs worth checking',
   papDisclaimer:
-    '“Likely qualifies” is a screening hint, not a decision. Every program makes its own determination — confirm eligibility with them before you rely on free or discounted medicine.',
+    'NOTE! WE CANNOT GUARANTEE THAT YOU ARE ELIGIBLE FOR THIS. THERE ARE OTHER EXISTING QUALIFICATIONS, SO YOU SHOULD CHECK THE WEBSITE JUST TO BE SURE.',
   papRenewal:
-    'PAP enrollments typically expire every 12 months. If you get free medicine, set a reminder to reapply before your term ends — renewal is not automatic.',
+    'NOTE! PAP ENROLLMENTS TYPICALLY EXPIRE ROUTINELY. YOU SHOULD DOUBLE-CHECK THAT THIS INFORMATION IS STILL CORRECT.',
   papNoManufacturer:
     'We did not find a verified manufacturer patient assistance program that currently enrolls new patients for this medicine. Generic versions often have no brand PAP. Do not assume a program exists.',
   papNoProgramsAtAll:
@@ -356,9 +356,9 @@ const es: typeof en = {
   papLikelyTitle: 'Programas para los que es probable que califiques',
   papOtherTitle: 'Otros programas que conviene revisar',
   papDisclaimer:
-    '“Es probable que califiques” es una pista de filtro, no una decisión. Cada programa decide por su cuenta: confirma la elegibilidad con ellos antes de contar con medicina gratis o con descuento.',
+    '¡NOTA! NO PODEMOS GARANTIZAR QUE CALIFIQUES PARA ESTO. HAY OTROS REQUISITOS, ASÍ QUE REVISA EL SITIO WEB PARA CONFIRMARLO.',
   papRenewal:
-    'Las inscripciones a PAP suelen vencer cada 12 meses. Si recibes medicina gratis, pon un recordatorio para volver a solicitar antes de que termine el período: la renovación no es automática.',
+    '¡NOTA! LAS INSCRIPCIONES A PAP SUELEN VENCER DE FORMA RUTINARIA. DEBES COMPROBAR QUE ESTA INFORMACIÓN SIGA SIENDO CORRECTA.',
   papNoManufacturer:
     'No encontramos un programa de asistencia del fabricante verificado que ahora acepte pacientes nuevos para este medicamento. Las versiones genéricas a menudo no tienen PAP de marca. No asumas que existe un programa.',
   papNoProgramsAtAll:
@@ -547,9 +547,9 @@ const zh: typeof en = {
   papLikelyTitle: '你可能符合的项目',
   papOtherTitle: '其他值得了解的项目',
   papDisclaimer:
-    '“可能符合”只是筛选提示，不是决定。每个项目自行审核资格——在依赖免费或优惠药品之前，请向项目方确认。',
+    '注意！我们无法保证你符合此项目资格。还有其他条件，请到官网核实。',
   papRenewal:
-    '患者援助计划的登记通常每 12 个月到期。如果获得免费药品，请设置提醒在期限结束前重新申请——续期不会自动完成。',
+    '注意！患者援助计划的登记通常会定期到期。请再次核实这些信息是否仍然正确。',
   papNoManufacturer:
     '我们未找到目前接收该药品新患者的、已核实的制药商援助计划。仿制药往往没有原研 PAP。请不要假定存在这样的项目。',
   papNoProgramsAtAll:
@@ -744,9 +744,9 @@ const hi: typeof en = {
   papLikelyTitle: 'कार्यक्रम जिनके लिए आप संभवतः पात्र हैं',
   papOtherTitle: 'अन्य कार्यक्रम जिन्हें जाँचना चाहिए',
   papDisclaimer:
-    '“संभवतः पात्र” केवल स्क्रीनिंग संकेत है, निर्णय नहीं। हर कार्यक्रम खुद पात्रता तय करता है — मुफ्त या छूट वाली दवा पर भरोसा करने से पहले उनसे पुष्टि करें।',
+    'नोट! हम यह गारंटी नहीं दे सकते कि आप इसके लिए पात्र हैं। अन्य योग्यताएँ भी हैं, इसलिए सुनिश्चित करने के लिए वेबसाइट जाँचें।',
   papRenewal:
-    'PAP नामांकन आमतौर पर हर 12 महीने में समाप्त होता है। यदि मुफ्त दवा मिलती है, अवधि खत्म होने से पहले फिर आवेदन करने का रिमाइंडर सेट करें — नवीकरण अपने आप नहीं होता।',
+    'नोट! PAP नामांकन आमतौर पर नियमित रूप से समाप्त होते हैं। इस जानकारी की सत्यता दोबारा जाँच लें।',
   papNoManufacturer:
     'इस दवा के लिए कोई सत्यापित निर्माता रोगी सहायता कार्यक्रम नहीं मिला जो अभी नए रोगियों को नामांकित करता हो। जेनेरिक संस्करणों का अक्सर ब्रांड PAP नहीं होता। यह न मानें कि कार्यक्रम मौजूद है।',
   papNoProgramsAtAll:
