@@ -71,6 +71,8 @@ Cost Plus, GoodRx, and local cash figures follow the October 13, 2026 pricing gu
 - **Source:** Public Cost Plus Drugs pricing API (`https://us-central1-costplusdrugs-publicapi.cloudfunctions.net/main`) and catalog (`https://api.costplusdrugs.com/pricelist/cpd`). Product pages live on [costplusdrugs.com](https://www.costplusdrugs.com/).
 - **What we used:** `requested_quote` for the matching strength and quantity. Cost Plus’s published formula is **acquisition cost + 15% markup + pharmacist fee** (quotes include that fee; shipping is extra). Results lead with this as a **buy-now** mail-order price and link the matching product page on [costplusdrugs.com](https://www.costplusdrugs.com/).
 - **Not listed:** The 10 high-cost brand medicines (Farxiga, Jardiance, Eliquis, Humira, Trulicity, Xarelto, Keytruda, Herceptin, Xeljanz, Stelara) are not Cost Plus catalog items in the guide — those cards say “Not listed” and point to PAPs.
+- **Amoxicillin:** not in the October 13 guide. Its Cost Plus figure is the October 3, 2026 public-API quote ($6.72 for 30 × 500 mg capsules) and is labeled with that date. Its fair-price figure is the NADAC snapshot row (AMOXICILLIN 500 MG CAPSULE, $0.0788 per capsule). No assistance program in the app covers it.
+- **Quantity picker:** shown when a medicine has a per-unit NADAC row (atorvastatin, metformin, lisinopril, omeprazole, sertraline, amoxicillin, Eliquis). Only the NADAC figure scales with quantity; each Cost Plus quote is shown for the one quantity it was quoted for, with a note when another quantity is selected.
 
 ### GoodRx coupons
 

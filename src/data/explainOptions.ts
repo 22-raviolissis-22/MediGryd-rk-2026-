@@ -1,6 +1,7 @@
 import { fill, loc, t } from '../i18n';
 import type { Language, Medication } from '../types';
 import type { MatcherConclusion } from './papMatcher';
+import { quantityLabel, type QuantityPricing } from './quantityPricing';
 
 export type ExplainResult = {
   sentences: [string, string, string];
@@ -17,45 +18,56 @@ export function strengthFromForm(med: Medication): string {
 }
 
 /**
- * Builds the three-sentence summary from data already on the results screen.
- * Every number comes straight from `med`; nothing is estimated or scaled.
+ * Builds the three-sentence summary from the same figures the price cards display
+ * for the selected quantity. Nothing is estimated beyond what those cards show.
  */
 export function explainOptions(opts: {
   med: Medication;
   language: Language;
   conclusion: MatcherConclusion;
-  /** NADAC total for the package shown, when the screen has one. */
-  nadacTotal: number | null;
+  pricing: QuantityPricing;
 }): ExplainResult {
-  const { med, language, conclusion, nadacTotal } = opts;
+  const { med, language, conclusion, pricing } = opts;
   const c = t(language);
   const drug = med.generic;
   const strength = strengthFromForm(med);
-  const nadac = med.benchmarks.find((b) => b.source === 'nadac');
-  const costPlus = med.benchmarks.find((b) => b.source === 'costplus');
+  const qtyLabel = quantityLabel(pricing, language);
+  const nadacBenchmark = med.benchmarks.find((b) => b.source === 'nadac');
 
   let fair: string;
-  if (nadac && nadacTotal != null) {
+  if (pricing.nadac) {
     fair = fill(c.explainFair, {
       drug,
       strength,
-      nadacTotal: nadacTotal.toFixed(2),
-      qty: loc(nadac.package, language),
+      nadacTotal: pricing.nadac.total.toFixed(2),
+      qty: qtyLabel,
     });
-  } else if (nadac && med.kind === 'regular') {
-    fair = fill(c.explainFairPerUnit, { drug, strength, perUnit: loc(nadac.package, language) });
+  } else if (nadacBenchmark && med.kind === 'regular') {
+    fair = fill(c.explainFairPerUnit, {
+      drug,
+      strength,
+      perUnit: loc(nadacBenchmark.package, language),
+    });
   } else {
     fair = c.explainFairNone;
   }
   fair = fair.replace(/\s{2,}/g, ' ');
 
-  const cheapest =
-    costPlus && costPlus.price != null
-      ? fill(c.explainCheapest, {
-          costPlusTotal: costPlus.price.toFixed(2),
-          qty: loc(costPlus.package, language),
-        })
-      : c.explainCouponFallback;
+  let cheapest: string;
+  if (pricing.costPlus && pricing.costPlus.matchesQty) {
+    cheapest = fill(c.explainCheapest, {
+      costPlusTotal: pricing.costPlus.price.toFixed(2),
+      qty: loc(pricing.costPlus.quotedFor, language),
+    });
+  } else if (pricing.costPlus) {
+    cheapest = fill(c.explainCheapestOtherQty, {
+      costPlusTotal: pricing.costPlus.price.toFixed(2),
+      base: loc(pricing.costPlus.quotedFor, language),
+      qty: qtyLabel,
+    });
+  } else {
+    cheapest = c.explainCouponFallback;
+  }
 
   const pharmacy = med.pharmacies.find((p) => p.addressVerified);
   const pharmacyLabel = pharmacy ? `${pharmacy.name} (${pharmacy.address})` : null;

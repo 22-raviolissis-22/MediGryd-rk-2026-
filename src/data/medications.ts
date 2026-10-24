@@ -76,6 +76,7 @@ function std(a: StdArgs): Medication {
     pharmacies: pharmaciesWithCash(a.cash),
     hasManufacturerPap: false,
     programIds: GENERIC_PROGRAMS,
+    useNadacFeed: true,
   };
 }
 
@@ -89,6 +90,7 @@ type SpecialtyArgs = {
   programId: string;
   goodrxPath: string;
   singlecarePath: string;
+  useNadacFeed?: boolean;
 };
 
 function specialty(a: SpecialtyArgs): Medication {
@@ -120,6 +122,7 @@ function specialty(a: SpecialtyArgs): Medication {
     pharmacies: [],
     hasManufacturerPap: true,
     programIds: [a.programId],
+    useNadacFeed: a.useNadacFeed ?? false,
   };
 }
 
@@ -428,6 +431,64 @@ export const medications: Medication[] = [
     singlecarePath: 'potassium-chloride',
     costPlusPath: 'potassium-chloride-10meq-tablet/',
   }),
+  {
+    id: 'amoxicillin',
+    kind: 'regular',
+    brand: 'Amoxil',
+    generic: 'amoxicillin',
+    form: L(
+      '500 mg capsule, 10-day course',
+      'cápsula 500 mg, tratamiento de 10 días',
+      '500 毫克胶囊，10 天疗程',
+      '500 मिग्रा कैप्सूल, 10-दिन का कोर्स'
+    ),
+    category: L('Antibiotic', 'Antibiótico', '抗生素', 'एंटीबायोटिक'),
+    searchTerms: ['amoxicillin', 'amoxil', 'antibiotic', '抗生素', 'एंटीबायोटिक'],
+    goodrxUrl: 'https://www.goodrx.com/amoxicillin',
+    singlecareUrl: 'https://www.singlecare.com/prescription/amoxicillin',
+    costPlusUrl: 'https://www.costplusdrugs.com/medications/amoxicillin-500mg-capsule-amoxil/',
+    goodrxPrice: null,
+    retailEstMin: null,
+    retailEstMax: null,
+    useNadacFeed: true,
+    benchmarks: [
+      nadac(
+        L(
+          '30 × 500 mg capsules (typical 10-day course)',
+          '30 cápsulas de 500 mg (tratamiento típico de 10 días)',
+          '30 × 500 毫克胶囊（典型 10 天疗程）',
+          '30 × 500 मिग्रा कैप्सूल (सामान्य 10-दिन का कोर्स)'
+        ),
+        L(
+          'CMS NADAC weekly file (AMOXICILLIN 500 MG CAPSULE) via data.medicaid.gov. This is not a checkout price.',
+          'Archivo semanal CMS NADAC (AMOXICILLIN 500 MG CAPSULE) de data.medicaid.gov. No es un precio de compra.',
+          'CMS NADAC 每周文件（AMOXICILLIN 500 MG CAPSULE），来自 data.medicaid.gov。不是可结账价格。',
+          'CMS NADAC साप्ताहिक फ़ाइल (AMOXICILLIN 500 MG CAPSULE), data.medicaid.gov से। यह चेकआउट कीमत नहीं है।'
+        )
+      ),
+      {
+        ...costplus(
+          6.72,
+          L(
+            '30 × 500 mg capsules',
+            '30 × 500 mg cápsulas',
+            '30 × 500 毫克胶囊',
+            '30 × 500 मिग्रा कैप्सूल'
+          ),
+          L(
+            'Cost Plus Drugs public API quote $6.72 for 30 amoxicillin 500 mg capsules. Retrieved October 3, 2026.',
+            'Cotización pública de Cost Plus Drugs $6.72 por 30 cápsulas de amoxicilina 500 mg. Consultado el 3 de octubre de 2026.',
+            'Cost Plus Drugs 公开接口报价：阿莫西林 500 毫克胶囊 30 粒 $6.72。获取于 2026 年 10 月 3 日。',
+            'Cost Plus Drugs सार्वजनिक API भाव $6.72 एमोक्सिसिलिन 500 मिग्रा के 30 कैप्सूल के लिए। 3 अक्टूबर 2026 को लिया गया।'
+          )
+        ),
+        asOf: '2026-10-03',
+      },
+    ],
+    pharmacies: pharmaciesWithCash([]),
+    hasManufacturerPap: false,
+    programIds: [],
+  },
   specialty({
     id: 'farxiga',
     brand: 'Farxiga',
@@ -460,6 +521,7 @@ export const medications: Medication[] = [
     programId: 'bms-paf',
     goodrxPath: 'eliquis',
     singlecarePath: 'eliquis',
+    useNadacFeed: true,
   }),
   specialty({
     id: 'humira',

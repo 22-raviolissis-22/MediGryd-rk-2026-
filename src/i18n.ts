@@ -247,6 +247,13 @@ const en = {
   explainNextNoneShort: "No free assistance program covers this medicine. Your next step: tap the buy link above.",
   explainNextNoMatch: "An assistance program is listed for this medicine, but the app did not find a likely match for you. Your next step: tap the buy link above, or call {pharmacy} first to check it is in stock.",
   explainNextNoMatchShort: "An assistance program is listed for this medicine, but the app did not find a likely match for you. Your next step: tap the buy link above.",
+  qtyTitle: "Quantity",
+  qtyHint: "Choose how many tablets or capsules. Only the fair-price reference changes with quantity.",
+  qtyTablets: "{qty} tablets",
+  qtyCapsules: "{qty} capsules",
+  nadacQtyMath: "CMS NADAC ${unit} per unit × {qty} = ${total}. Same per-unit benchmark from the {date} file, multiplied by your quantity — still not a price you can buy at.",
+  costPlusQtyNote: "This Cost Plus quote is for {base}. We do not have a Cost Plus quote for {qty} — open Cost Plus to see that quantity.",
+  explainCheapestOtherQty: "Cost Plus Drugs lists ${costPlusTotal} for {base}, but the app has no Cost Plus quote for {qty}; tap the Cost Plus link to see that quantity.",
 };
 
 const es: typeof en = {
@@ -466,6 +473,13 @@ const es: typeof en = {
   explainNextNoneShort: "Ningún programa de asistencia gratuita cubre este medicamento. Su siguiente paso: toque el enlace de compra.",
   explainNextNoMatch: "Hay un programa de asistencia para este medicamento, pero la aplicación no encontró una coincidencia probable para usted. Su siguiente paso: toque el enlace de compra, o llame primero a {pharmacy} para confirmar que lo tienen.",
   explainNextNoMatchShort: "Hay un programa de asistencia para este medicamento, pero la aplicación no encontró una coincidencia probable para usted. Su siguiente paso: toque el enlace de compra.",
+  qtyTitle: "Cantidad",
+  qtyHint: "Elige cuántas tabletas o cápsulas. Solo la referencia de precio justo cambia con la cantidad.",
+  qtyTablets: "{qty} tabletas",
+  qtyCapsules: "{qty} cápsulas",
+  nadacQtyMath: "CMS NADAC ${unit} por unidad × {qty} = ${total}. El mismo valor por unidad del archivo del {date}, multiplicado por tu cantidad — sigue sin ser un precio al que puedas comprar.",
+  costPlusQtyNote: "Esta cotización de Cost Plus es para {base}. No tenemos cotización de Cost Plus para {qty} — abre Cost Plus para ver esa cantidad.",
+  explainCheapestOtherQty: "Cost Plus Drugs muestra ${costPlusTotal} por {base}, pero la aplicación no tiene una cotización de Cost Plus para {qty}; toque el enlace de Cost Plus para ver esa cantidad.",
 };
 
 const zh: typeof en = {
@@ -664,6 +678,13 @@ const zh: typeof en = {
   explainNextNoneShort: "没有免费援助计划涵盖此药。下一步：点击上方的购买链接。",
   explainNextNoMatch: "此药有列出的援助计划，但本应用没有为您找到可能符合的计划。下一步：点击上方的购买链接，或先致电 {pharmacy} 确认有货。",
   explainNextNoMatchShort: "此药有列出的援助计划，但本应用没有为您找到可能符合的计划。下一步：点击上方的购买链接。",
+  qtyTitle: "数量",
+  qtyHint: "选择片剂或胶囊的数量。只有公平价格参考会随数量变化。",
+  qtyTablets: "{qty} 片",
+  qtyCapsules: "{qty} 粒胶囊",
+  nadacQtyMath: "CMS NADAC 每单位 ${unit} × {qty} = ${total}。使用 {date} 文件中相同的单位基准乘以您选择的数量 — 仍不是您可以购买的价格。",
+  costPlusQtyNote: "此 Cost Plus 报价对应 {base}。我们没有 {qty} 的 Cost Plus 报价 — 请打开 Cost Plus 查看该数量。",
+  explainCheapestOtherQty: "Cost Plus Drugs 列出 {base} 价格为 ${costPlusTotal}，但本应用没有 {qty} 的 Cost Plus 报价；请点击 Cost Plus 链接查看该数量。",
 };
 
 const hi: typeof en = {
@@ -879,6 +900,13 @@ const hi: typeof en = {
   explainNextNoneShort: "कोई मुफ़्त सहायता कार्यक्रम इस दवा को कवर नहीं करता। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें।",
   explainNextNoMatch: "इस दवा के लिए एक सहायता कार्यक्रम सूचीबद्ध है, लेकिन ऐप को आपके लिए संभावित मेल नहीं मिला। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें, या पहले {pharmacy} को फ़ोन करके स्टॉक की पुष्टि करें।",
   explainNextNoMatchShort: "इस दवा के लिए एक सहायता कार्यक्रम सूचीबद्ध है, लेकिन ऐप को आपके लिए संभावित मेल नहीं मिला। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें।",
+  qtyTitle: "मात्रा",
+  qtyHint: "कितनी गोलियाँ या कैप्सूल चाहिए, चुनें। मात्रा से केवल उचित-कीमत संदर्भ बदलता है।",
+  qtyTablets: "{qty} गोलियाँ",
+  qtyCapsules: "{qty} कैप्सूल",
+  nadacQtyMath: "CMS NADAC ${unit} प्रति इकाई × {qty} = ${total}। {date} फ़ाइल का वही प्रति-इकाई बेंचमार्क, आपकी मात्रा से गुणा — फिर भी यह खरीदने की कीमत नहीं है।",
+  costPlusQtyNote: "यह Cost Plus भाव {base} के लिए है। हमारे पास {qty} का Cost Plus भाव नहीं है — वह मात्रा देखने के लिए Cost Plus खोलें।",
+  explainCheapestOtherQty: "Cost Plus Drugs {base} के लिए ${costPlusTotal} दिखाता है, लेकिन ऐप में {qty} के लिए Cost Plus भाव नहीं है; वह मात्रा देखने के लिए Cost Plus लिंक पर टैप करें।",
 };
 
 export const copy = { en, es, zh, hi };

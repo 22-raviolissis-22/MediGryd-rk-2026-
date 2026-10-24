@@ -5,6 +5,7 @@ import {
   ActionStack,
   AppChrome,
   BodyText,
+  ChipButton,
   DisplayTitle,
   SearchBox,
   WhiteCard,
@@ -33,7 +34,12 @@ import {
   type RankedProgram,
 } from '../data/papMatcher';
 import { explainOptions } from '../data/explainOptions';
-import { nadacPriceFor } from '../prices/nadacFeed';
+import {
+  QUANTITIES,
+  priceForQuantity,
+  quantityLabel,
+  type QuantityPricing,
+} from '../data/quantityPricing';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize, Medication } from '../types';
 
@@ -59,6 +65,9 @@ export function ResultsScreen() {
   const [pickingPap, setPickingPap] = useState(!medication || medication.kind !== 'pap');
   const searchSource = useRef<'rx' | 'pap' | null>(null);
   const med = medication;
+  const [pickedQty, setPickedQty] = useState<number | null>(null);
+  useEffect(() => setPickedQty(null), [med?.id]);
+  const pricing = med ? priceForQuantity(med, nadacFeed, pickedQty) : null;
   const rxList = useMemo(() => searchInCatalog(regularMedications, searchQuery), [searchQuery]);
   const papList = useMemo(() => searchInCatalog(papMedications, papQuery), [papQuery]);
 
@@ -235,6 +244,8 @@ export function ResultsScreen() {
             <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
           </WhiteCard>
 
+          {pricing?.showPicker ? <QuantityPicker pricing={pricing} onPick={setPickedQty} /> : null}
+
           <DisplayTitle>{c.lowestToday}</DisplayTitle>
 
           {med.benchmarks
@@ -251,11 +262,21 @@ export function ResultsScreen() {
                   </Text>
                   <Text style={[styles.note, typeface(language, 'body')]}>{c.costPlusHint}</Text>
                   <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>
-                    {costPlusAsOfLabel}
+                    {b.asOf
+                      ? fill(c.costPlusAsOf, { date: formatIsoDate(b.asOf, language) })
+                      : costPlusAsOfLabel}
                   </Text>
                   <Text style={[styles.note, typeface(language, 'body')]}>
                     {loc(b.note, language)}
                   </Text>
+                  {pricing?.costPlus && !pricing.costPlus.matchesQty ? (
+                    <Text style={[styles.renewal, typeface(language, 'bodyBold')]}>
+                      {fill(c.costPlusQtyNote, {
+                        base: loc(pricing.costPlus.quotedFor, language),
+                        qty: quantityLabel(pricing, language),
+                      })}
+                    </Text>
+                  ) : null}
                 </WhiteCard>
                 {med.costPlusUrl ? (
                   <WhitePill label={c.buyCostPlus} onPress={() => openUrl(med.costPlusUrl!)} />
@@ -265,30 +286,14 @@ export function ResultsScreen() {
 
           <CouponBlock med={med} />
 
-          <ExplainOptionsCard med={med} />
+          <ExplainOptionsCard med={med} pricing={pricing!} />
 
           <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
           {med.benchmarks
             .filter((b) => b.source === 'nadac')
-            .map((b) => {
-              const live = b.price != null ? nadacPriceFor(nadacFeed, med.id) : null;
-              const price = live ?? b.price;
-              return (
-              <WhiteCard key="nadac-ref">
-                <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.nadacNotBuyable}</Text>
-                <Text style={[styles.price, typeface(language, 'display')]}>
-                  {price == null ? loc(b.package, language) : `$${price.toFixed(2)}`}
-                </Text>
-                <Text style={[styles.meta, typeface(language, 'body')]}>
-                  {loc(b.package, language)}
-                </Text>
-                <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
-                <Text style={[styles.note, typeface(language, 'body')]}>
-                  {loc(b.note, language)}
-                </Text>
-              </WhiteCard>
-              );
-            })}
+            .map((b) => (
+              <NadacCard key="nadac-ref" med={med} pricing={pricing!} note={loc(b.note, language)} />
+            ))}
 
           <GenericOutlookCard medicationId={med.id} />
 
@@ -397,8 +402,17 @@ export function ResultsScreen() {
               <WhiteCard>
                 <BodyText>{c.papRequiredCoupons}</BodyText>
               </WhiteCard>
+              {pricing?.showPicker ? (
+                <QuantityPicker pricing={pricing} onPick={setPickedQty} />
+              ) : null}
               <CouponBlock med={med} />
-              <ExplainOptionsCard med={med} />
+              <ExplainOptionsCard med={med} pricing={pricing!} />
+              {pricing?.nadac ? (
+                <>
+                  <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
+                  <NadacCard med={med} pricing={pricing} note={null} />
+                </>
+              ) : null}
               <PapTab
                 language={language}
                 hasManufacturerPap={med.hasManufacturerPap}
@@ -431,17 +445,97 @@ export function ResultsScreen() {
   );
 }
 
-function ExplainOptionsCard({ med }: { med: Medication }) {
-  const { language, insurance, income, nadacFeed } = useApp();
+function QuantityPicker({
+  pricing,
+  onPick,
+}: {
+  pricing: QuantityPricing;
+  onPick: (qty: number) => void;
+}) {
+  const { language } = useApp();
+  const c = t(language);
+  const unitTpl = pricing.unit === 'capsule' ? c.qtyCapsules : c.qtyTablets;
+  return (
+    <WhiteCard>
+      <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.qtyTitle}</Text>
+      <View style={styles.qtyRow}>
+        {QUANTITIES.map((n) => (
+          <ChipButton
+            key={n}
+            label={String(n)}
+            selected={pricing.qty === n}
+            onPress={() => onPick(n)}
+            accessibilityLabel={fill(unitTpl, { qty: String(n) })}
+          />
+        ))}
+      </View>
+      <Text style={[styles.note, typeface(language, 'body')]}>{c.qtyHint}</Text>
+    </WhiteCard>
+  );
+}
+
+function NadacCard({
+  med,
+  pricing,
+  note,
+}: {
+  med: Medication;
+  pricing: QuantityPricing;
+  /** Extra source note shown under the figure, if any. */
+  note: string | null;
+}) {
+  const { language, nadacFeed } = useApp();
+  const c = t(language);
+  const benchmark = med.benchmarks.find((b) => b.source === 'nadac');
+  const asOfLabel = fill(c.pricesUpdatedAsOf, {
+    date: formatIsoDate(pricing.nadac?.asOfDate ?? nadacFeed.asOfDate, language),
+  });
+  return (
+    <WhiteCard>
+      <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.nadacNotBuyable}</Text>
+      {pricing.nadac ? (
+        <>
+          <Text style={[styles.price, typeface(language, 'display')]}>
+            {`$${pricing.nadac.total.toFixed(2)}`}
+          </Text>
+          <Text style={[styles.meta, typeface(language, 'body')]}>
+            {quantityLabel(pricing, language)}
+          </Text>
+        </>
+      ) : benchmark ? (
+        <>
+          <Text style={[styles.price, typeface(language, 'display')]}>
+            {loc(benchmark.package, language)}
+          </Text>
+          <Text style={[styles.meta, typeface(language, 'body')]}>
+            {loc(benchmark.package, language)}
+          </Text>
+        </>
+      ) : null}
+      <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{asOfLabel}</Text>
+      {pricing.nadac && pricing.qty != null ? (
+        <Text style={[styles.note, typeface(language, 'body')]}>
+          {fill(c.nadacQtyMath, {
+            unit: String(pricing.nadac.perUnit),
+            qty: String(pricing.qty),
+            total: pricing.nadac.total.toFixed(2),
+            date: formatIsoDate(pricing.nadac.asOfDate, language),
+          })}
+        </Text>
+      ) : null}
+      {note ? <Text style={[styles.note, typeface(language, 'body')]}>{note}</Text> : null}
+    </WhiteCard>
+  );
+}
+
+function ExplainOptionsCard({ med, pricing }: { med: Medication; pricing: QuantityPricing }) {
+  const { language, insurance, income } = useApp();
   const c = t(language);
   const [open, setOpen] = useState(false);
   useEffect(() => setOpen(false), [med.id]);
 
-  const nadac = med.benchmarks.find((b) => b.source === 'nadac');
-  const nadacTotal =
-    nadac && nadac.price != null ? (nadacPriceFor(nadacFeed, med.id) ?? nadac.price) : null;
   const conclusion = matcherConclusion({ programIds: med.programIds, insurance, income });
-  const { sentences, applyTo } = explainOptions({ med, language, conclusion, nadacTotal });
+  const { sentences, applyTo } = explainOptions({ med, language, conclusion, pricing });
 
   return (
     <ActionStack>
@@ -684,6 +778,7 @@ function ProgramCard({
 
 const styles = StyleSheet.create({
   saveRow: { alignItems: 'center', marginTop: 10 },
+  qtyRow: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginTop: 6 },
   explainBtn: {
     alignSelf: 'center',
     backgroundColor: periwinkle,

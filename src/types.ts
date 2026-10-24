@@ -32,6 +32,8 @@ export type PriceBenchmark = {
   price: number | null;
   package: LocalizedText;
   note: LocalizedText;
+  /** ISO date of this specific quote when it differs from the catalog-wide snapshot date. */
+  asOf?: string;
 };
 
 export type PharmacyOffer = {
@@ -103,4 +105,6 @@ export type Medication = {
   /** Guide estimate of typical retail cash range. */
   retailEstMin: number | null;
   retailEstMax: number | null;
+  /** True when the CMS NADAC snapshot/feed row with this medication's id should be shown. */
+  useNadacFeed?: boolean;
 };

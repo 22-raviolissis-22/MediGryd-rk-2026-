@@ -14,6 +14,7 @@
   { "id": "atenolol", "drug": "atenolol", "ndcDescription": "ATENOLOL 50 MG TABLET", "strength": "50 mg", "quantity": 30, "preferGeneric": true },
   { "id": "gabapentin", "drug": "gabapentin", "ndcDescription": "GABAPENTIN 300 MG CAPSULE", "strength": "300 mg", "quantity": 30, "preferGeneric": true },
   { "id": "potassium-chloride", "drug": "potassium chloride", "ndcDescription": "POTASSIUM CHLORIDE 10 MEQ TABLET", "strength": "10 mEq", "quantity": 30, "preferGeneric": true },
+  { "id": "amoxicillin", "drug": "amoxicillin", "ndcDescription": "AMOXICILLIN 500 MG CAPSULE", "strength": "500 mg", "quantity": 30, "preferGeneric": true },
   { "id": "eliquis", "drug": "apixaban", "ndcDescription": "ELIQUIS 5 MG TABLET", "strength": "5 mg", "quantity": 60, "preferGeneric": false },
   { "id": "humira", "drug": "adalimumab", "ndcDescription": "HUMIRA(CF) PEN 40 MG/0.4 ML", "strength": "40 mg/0.4 mL", "quantity": 2, "preferGeneric": false }
 ]
