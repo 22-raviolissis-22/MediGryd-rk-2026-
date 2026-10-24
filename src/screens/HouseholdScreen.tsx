@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { AppChrome, Question, WhiteCard, WhitePill } from '../components/AppChrome';
+import { Question, WhiteCard, WhitePill } from '../components/AppChrome';
 import { useApp } from '../context';
 import { t } from '../i18n';
 import type { HouseholdSize } from '../types';
@@ -14,7 +14,7 @@ export function HouseholdScreen() {
   };
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <Question>{c.householdQ}</Question>
       </WhiteCard>
@@ -27,7 +27,7 @@ export function HouseholdScreen() {
         <WhitePill grow label={c.person4} onPress={() => pick(4)} />
       </View>
       <WhitePill center label={c.person5} onPress={() => pick(5)} />
-    </AppChrome>
+    </>
   );
 }
 

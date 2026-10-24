@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { AppChrome, BlueBox, Question, WhiteCard } from '../components/AppChrome';
+import { BlueBox, Question, WhiteCard } from '../components/AppChrome';
 import { useApp } from '../context';
 import { t } from '../i18n';
 
@@ -8,7 +8,7 @@ export function InsuranceScreen() {
   const c = t(language);
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <Question>{c.insuranceQ}</Question>
       </WhiteCard>
@@ -28,7 +28,7 @@ export function InsuranceScreen() {
           }}
         />
       </View>
-    </AppChrome>
+    </>
   );
 }
 

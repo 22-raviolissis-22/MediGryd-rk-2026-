@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { AppChrome, Question, WhiteCard, WhitePill } from '../components/AppChrome';
+import { Question, WhiteCard, WhitePill } from '../components/AppChrome';
 import { useApp } from '../context';
 import { incomeOptions } from '../data/income';
 import { t } from '../i18n';
@@ -16,7 +16,7 @@ export function IncomeScreen() {
   };
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <Question>{c.incomeQ}</Question>
       </WhiteCard>
@@ -25,7 +25,7 @@ export function IncomeScreen() {
         <WhitePill grow label={ranges.B} onPress={() => pick('B')} />
       </View>
       <WhitePill center label={ranges.C} onPress={() => pick('C')} />
-    </AppChrome>
+    </>
   );
 }
 

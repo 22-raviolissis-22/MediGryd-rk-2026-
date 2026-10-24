@@ -1,10 +1,4 @@
-import {
-  AppChrome,
-  BodyText,
-  DisplayTitle,
-  WhiteCard,
-  WhitePill,
-} from '../components/AppChrome';
+import { BodyText, DisplayTitle, WhiteCard, WhitePill } from '../components/AppChrome';
 import { openUrl } from '../components/ui';
 import { useApp } from '../context';
 import { LINKS } from '../data/income';
@@ -21,7 +15,7 @@ export function EligibilityScreen() {
     bracket === 'A' ? c.mediCalBody : bracket === 'B' ? c.coverCaliBody : c.overBody;
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <DisplayTitle>{title}</DisplayTitle>
       </WhiteCard>
@@ -40,6 +34,6 @@ export function EligibilityScreen() {
         />
       )}
       <WhitePill display label={c.continueCompare} onPress={() => go('results')} />
-    </AppChrome>
+    </>
   );
 }

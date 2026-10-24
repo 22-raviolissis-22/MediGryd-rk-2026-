@@ -3,7 +3,6 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../components/AppText';
 import {
   ActionStack,
-  AppChrome,
   BodyText,
   DisplayTitle,
   SearchBox,
@@ -140,7 +139,7 @@ export function ResultsScreen() {
   const insuredBit = insurance === 'yes' ? c.papYouInsured : c.papYouUninsured;
 
   return (
-    <AppChrome showSearch={false}>
+    <>
       <View style={styles.tabs}>
         <Pressable
           onPress={() => {
@@ -428,7 +427,7 @@ export function ResultsScreen() {
           ) : null}
         </>
       )}
-    </AppChrome>
+    </>
   );
 }
 

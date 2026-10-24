@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
+import { AppChrome } from './components/AppChrome';
 import { AppProvider, useApp } from './context';
 import { PhoneShell } from './components/ui';
 import { LanguageScreen } from './screens/LanguageScreen';
@@ -45,9 +45,9 @@ export function AppShell() {
   return (
     <AppProvider>
       <PhoneShell>
-        <View style={{ flex: 1 }}>
+        <AppChrome>
           <Router />
-        </View>
+        </AppChrome>
         <StatusBar style="dark" />
       </PhoneShell>
     </AppProvider>

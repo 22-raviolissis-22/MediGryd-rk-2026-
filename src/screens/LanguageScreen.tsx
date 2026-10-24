@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import { AppChrome, shadow } from '../components/AppChrome';
+import { shadow } from '../components/AppChrome';
 import { Text } from '../components/AppText';
 import { useApp } from '../context';
 import { copy } from '../i18n';
@@ -20,7 +20,7 @@ export function LanguageScreen() {
   const largeOn = textSize === 'large';
 
   return (
-    <AppChrome showSearch={false}>
+    <>
       <View style={styles.headerSpacer} />
       {OPTIONS.map((opt) => {
         const onBlue = opt.tone === 'blue';
@@ -83,7 +83,7 @@ export function LanguageScreen() {
           <View style={[styles.knob, largeOn && styles.knobOn]} />
         </View>
       </Pressable>
-    </AppChrome>
+    </>
   );
 }
 

@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Text } from '../components/AppText';
-import {
-  AppChrome,
-  DisplayTitle,
-  WhiteCard,
-  WhitePill,
-} from '../components/AppChrome';
+import { DisplayTitle, WhiteCard, WhitePill } from '../components/AppChrome';
 import { useApp } from '../context';
 import { t } from '../i18n';
 import { ink, typeface } from '../theme';
@@ -15,7 +10,7 @@ export function InsuredNoticeScreen() {
   const c = t(language);
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <DisplayTitle>{c.insuredTitle}</DisplayTitle>
       </WhiteCard>
@@ -27,7 +22,7 @@ export function InsuredNoticeScreen() {
         <Text style={[styles.bullet, typeface(language, 'body')]}>{`•  ${c.insuredStep3}`}</Text>
       </WhiteCard>
       <WhitePill display label={c.continueCompare} onPress={() => go('results')} />
-    </AppChrome>
+    </>
   );
 }
 

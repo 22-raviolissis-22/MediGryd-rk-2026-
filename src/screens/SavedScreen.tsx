@@ -1,4 +1,4 @@
-import { AppChrome, BodyText, DisplayTitle, WhiteCard, WhitePill } from '../components/AppChrome';
+import { BodyText, DisplayTitle, WhiteCard, WhitePill } from '../components/AppChrome';
 import { MedicationRow } from '../components/MedicationRow';
 import { useApp } from '../context';
 import { medications } from '../data/medications';
@@ -13,7 +13,7 @@ export function SavedScreen() {
     .filter((m): m is Medication => m != null);
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <DisplayTitle>{c.savedTitle}</DisplayTitle>
         <BodyText>{saved.length === 0 ? c.savedEmpty : c.savedIntro}</BodyText>
@@ -31,6 +31,6 @@ export function SavedScreen() {
       {saved.length === 0 ? (
         <WhitePill display label={c.browseMedicines} onPress={() => go('results')} />
       ) : null}
-    </AppChrome>
+    </>
   );
 }

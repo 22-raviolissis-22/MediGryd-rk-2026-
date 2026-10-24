@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import {
   Platform,
   Pressable,
@@ -36,15 +36,7 @@ export function PlusMark() {
   );
 }
 
-export function AppChrome({
-  children,
-  showSearch = true,
-  autoFocusSearch = false,
-}: {
-  children: ReactNode;
-  showSearch?: boolean;
-  autoFocusSearch?: boolean;
-}) {
+export function AppChrome({ children }: { children: ReactNode }) {
   const {
     language,
     screen,
@@ -61,10 +53,16 @@ export function AppChrome({
   } = useApp();
   const c = t(language);
   const largeOn = textSize === 'large';
+  const showSearch = screen !== 'language' && screen !== 'results';
+  const scrollRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [screen]);
 
   const onChangeSearch = (text: string) => {
     setSearchQuery(text);
-    if (screen !== 'results' && screen !== 'search') go('results');
+    if (screen !== 'search') go('results');
   };
 
   return (
@@ -91,9 +89,8 @@ export function AppChrome({
                 value={searchQuery}
                 onChangeText={onChangeSearch}
                 onFocus={() => {
-                  if (screen !== 'results' && screen !== 'search') go('results');
+                  if (screen !== 'search') go('results');
                 }}
-                autoFocus={autoFocusSearch}
                 placeholder=""
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -170,6 +167,7 @@ export function AppChrome({
           />
         </View>
         <ScrollView
+          ref={scrollRef}
           style={{ flex: 1 }}
           contentContainerStyle={styles.body}
           keyboardShouldPersistTaps="handled"

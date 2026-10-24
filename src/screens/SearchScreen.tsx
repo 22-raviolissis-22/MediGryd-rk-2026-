@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AppChrome, BodyText, DisplayTitle, WhiteCard } from '../components/AppChrome';
+import { BodyText, DisplayTitle, WhiteCard } from '../components/AppChrome';
 import { MedicationRow } from '../components/MedicationRow';
 import { useApp } from '../context';
 import { papMedications, regularMedications, searchInCatalog } from '../data/medications';
@@ -24,7 +24,7 @@ export function SearchScreen() {
   };
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <BodyText>
           {emptySearch ? c.noMatches : searchQuery.trim() ? c.commonRx : c.searchEmpty}
@@ -46,6 +46,6 @@ export function SearchScreen() {
           ))}
         </>
       ) : null}
-    </AppChrome>
+    </>
   );
 }

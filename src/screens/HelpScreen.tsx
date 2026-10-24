@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import {
   ActionStack,
-  AppChrome,
   BodyText,
   DisplayTitle,
   WhiteCard,
@@ -22,7 +21,7 @@ export function HelpScreen() {
   const verified = formatIsoDate(HELPLINES_VERIFIED_AS_OF, language);
 
   return (
-    <AppChrome>
+    <>
       <WhiteCard>
         <DisplayTitle>{c.helpTitle}</DisplayTitle>
         <BodyText>{c.helpIntro}</BodyText>
@@ -69,7 +68,7 @@ export function HelpScreen() {
           <WhitePill label={c.helpPharmOpen} onPress={() => openUrl(p.locatorUrl)} />
         </ActionStack>
       ))}
-    </AppChrome>
+    </>
   );
 }
 
