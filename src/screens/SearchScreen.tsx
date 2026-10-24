@@ -24,7 +24,7 @@ export function SearchScreen() {
   };
 
   return (
-    <AppChrome autoFocusSearch>
+    <AppChrome>
       <WhiteCard>
         <BodyText>
           {emptySearch ? c.noMatches : searchQuery.trim() ? c.commonRx : c.searchEmpty}

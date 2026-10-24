@@ -33,7 +33,7 @@ export function formatIsoDate(iso: string, lang: Language): string {
 }
 
 const en = {
-  appName: 'APP NAME',
+  appName: 'medigryd',
   insuranceQ: 'Do you currently have health insurance?',
   yes: 'YES',
   no: 'NO',
@@ -257,7 +257,7 @@ const en = {
 };
 
 const es: typeof en = {
-  appName: 'APP NAME',
+  appName: 'medigryd',
   insuranceQ: '¿Tienes actualmente un seguro médico?',
   yes: 'SÍ',
   no: 'NO',
@@ -483,7 +483,7 @@ const es: typeof en = {
 };
 
 const zh: typeof en = {
-  appName: 'APP NAME',
+  appName: 'medigryd',
   insuranceQ: '您目前是否有医疗保险？',
   yes: '有',
   no: '没有',
@@ -688,7 +688,7 @@ const zh: typeof en = {
 };
 
 const hi: typeof en = {
-  appName: 'APP NAME',
+  appName: 'medigryd',
   insuranceQ: 'क्या आपके पास अभी स्वास्थ्य बीमा है?',
   yes: 'हाँ',
   no: 'नहीं',

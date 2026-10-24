@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CalRx Assist",
-    "slug": "calrx-assist",
+    "name": "medigryd",
+    "slug": "medigryd",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,7 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
-      "name": "CalRx Assist"
+      "name": "medigryd"
     },
     "plugins": [
       "expo-font"

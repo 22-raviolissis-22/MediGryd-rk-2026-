@@ -5,7 +5,6 @@ import {
   ActionStack,
   AppChrome,
   BodyText,
-  ChipButton,
   DisplayTitle,
   SearchBox,
   WhiteCard,
@@ -34,12 +33,7 @@ import {
   type RankedProgram,
 } from '../data/papMatcher';
 import { explainOptions } from '../data/explainOptions';
-import {
-  QUANTITIES,
-  priceForQuantity,
-  quantityLabel,
-  type QuantityPricing,
-} from '../data/quantityPricing';
+import { priceForQuantity, quantityLabel, type QuantityPricing } from '../data/quantityPricing';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize, Medication } from '../types';
 
@@ -65,9 +59,7 @@ export function ResultsScreen() {
   const [pickingPap, setPickingPap] = useState(!medication || medication.kind !== 'pap');
   const searchSource = useRef<'rx' | 'pap' | null>(null);
   const med = medication;
-  const [pickedQty, setPickedQty] = useState<number | null>(null);
-  useEffect(() => setPickedQty(null), [med?.id]);
-  const pricing = med ? priceForQuantity(med, nadacFeed, pickedQty) : null;
+  const pricing = med ? priceForQuantity(med, nadacFeed, null) : null;
   const rxList = useMemo(() => searchInCatalog(regularMedications, searchQuery), [searchQuery]);
   const papList = useMemo(() => searchInCatalog(papMedications, papQuery), [papQuery]);
 
@@ -244,8 +236,6 @@ export function ResultsScreen() {
             <Text style={[styles.retrieved, typeface(language, 'bodyBold')]}>{nadacAsOfLabel}</Text>
           </WhiteCard>
 
-          {pricing?.showPicker ? <QuantityPicker pricing={pricing} onPick={setPickedQty} /> : null}
-
           <DisplayTitle>{c.lowestToday}</DisplayTitle>
 
           {med.benchmarks
@@ -402,9 +392,6 @@ export function ResultsScreen() {
               <WhiteCard>
                 <BodyText>{c.papRequiredCoupons}</BodyText>
               </WhiteCard>
-              {pricing?.showPicker ? (
-                <QuantityPicker pricing={pricing} onPick={setPickedQty} />
-              ) : null}
               <CouponBlock med={med} />
               <ExplainOptionsCard med={med} pricing={pricing!} />
               {pricing?.nadac ? (
@@ -442,35 +429,6 @@ export function ResultsScreen() {
         </>
       )}
     </AppChrome>
-  );
-}
-
-function QuantityPicker({
-  pricing,
-  onPick,
-}: {
-  pricing: QuantityPricing;
-  onPick: (qty: number) => void;
-}) {
-  const { language } = useApp();
-  const c = t(language);
-  const unitTpl = pricing.unit === 'capsule' ? c.qtyCapsules : c.qtyTablets;
-  return (
-    <WhiteCard>
-      <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.qtyTitle}</Text>
-      <View style={styles.qtyRow}>
-        {QUANTITIES.map((n) => (
-          <ChipButton
-            key={n}
-            label={String(n)}
-            selected={pricing.qty === n}
-            onPress={() => onPick(n)}
-            accessibilityLabel={fill(unitTpl, { qty: String(n) })}
-          />
-        ))}
-      </View>
-      <Text style={[styles.note, typeface(language, 'body')]}>{c.qtyHint}</Text>
-    </WhiteCard>
   );
 }
 
@@ -778,7 +736,6 @@ function ProgramCard({
 
 const styles = StyleSheet.create({
   saveRow: { alignItems: 'center', marginTop: 10 },
-  qtyRow: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginTop: 6 },
   explainBtn: {
     alignSelf: 'center',
     backgroundColor: periwinkle,

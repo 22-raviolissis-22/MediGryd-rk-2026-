@@ -35,8 +35,8 @@ export function priceForQuantity(
     countableUnit(row) ??
     (/\bcapsule/i.test(med.form.en) ? 'capsule' : /\btablet/i.test(med.form.en) ? 'tablet' : null);
   const baseQty = (cp && cpPrice != null ? leadingCount(cp.package.en) : null) ?? row?.quantity ?? null;
-  const showPicker = unit != null && baseQty != null && row != null;
-  const qty = showPicker ? (picked ?? baseQty) : baseQty;
+  const showPicker = false;
+  const qty = baseQty;
 
   const nadac =
     row && qty != null

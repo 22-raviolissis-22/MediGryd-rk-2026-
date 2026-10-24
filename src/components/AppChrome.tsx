@@ -26,16 +26,6 @@ const shadow = Platform.select({
 
 export { shadow };
 
-export function PlusMark() {
-  return (
-    <View style={styles.plusBtn}>
-      <View style={styles.plusTop} />
-      <View style={styles.plusBottom} />
-      <Text style={styles.plus}>+</Text>
-    </View>
-  );
-}
-
 export function AppChrome({
   children,
   showSearch = true,
@@ -72,14 +62,14 @@ export function AppChrome({
       <GridBackground />
       <View style={styles.pad}>
         <View style={styles.header}>
-          <Pressable hitSlop={6} style={showSearch ? undefined : { flex: 1 }}>
+          <View style={showSearch ? undefined : { flex: 1 }}>
             <Text
               style={[styles.appName, !showSearch && styles.appNameLarge]}
               numberOfLines={1}
             >
-              APP NAME
+              {c.appName}
             </Text>
-          </Pressable>
+          </View>
           {showSearch ? (
             <View style={styles.search}>
               <View style={styles.mag}>
@@ -107,9 +97,6 @@ export function AppChrome({
               />
             </View>
           ) : null}
-          <Pressable onPress={reset} accessibilityLabel={c.startOver}>
-            <PlusMark />
-          </Pressable>
         </View>
         {screen !== 'language' ? (
           <View style={styles.langRow}>
@@ -168,6 +155,7 @@ export function AppChrome({
             accessibilityLabel={c.largeTextA11y}
             accessibilityRole="switch"
           />
+          <ChipButton label={c.startOver} selected={false} onPress={reset} />
         </View>
         <ScrollView
           style={{ flex: 1 }}
@@ -431,31 +419,6 @@ const styles = StyleSheet.create({
   },
   searchRule: { width: 2, height: 18, backgroundColor: ink, borderRadius: 1 },
   searchInput: { flex: 1, fontSize: 14, color: ink, paddingVertical: 0 },
-  plusBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  plusTop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '50%',
-    backgroundColor: '#C9EEF8',
-  },
-  plusBottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: '50%',
-    backgroundColor: '#9BB6F5',
-  },
-  plus: { fontSize: 26, fontWeight: '800', color: ink, marginTop: -2, lineHeight: 30 },
   body: { paddingTop: 14, paddingBottom: 8, gap: 12, alignItems: 'stretch' },
   whiteCard: {
     backgroundColor: '#FFFFFF',
