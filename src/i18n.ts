@@ -234,6 +234,19 @@ const en = {
   saveA11y: 'Save {drug} to My medicines',
   unsaveA11y: 'Remove {drug} from My medicines',
   removeSaved: 'Remove',
+  explainButton: "Explain my options",
+  explainApply: "Apply",
+  explainFair: "A fair price for {drug} {strength} is about ${nadacTotal} for {qty}. That is close to what pharmacies pay.",
+  explainFairPerUnit: "A fair-price reference for {drug} {strength} is {perUnit}. That is close to what pharmacies pay.",
+  explainFairNone: "The app does not list a fair-price reference for this medicine.",
+  explainCheapest: "The cheapest way to buy it today is Cost Plus Drugs, at ${costPlusTotal} for {qty}.",
+  explainCouponFallback: "The app does not list a Cost Plus price for this medicine. Your next step for price: tap the free coupon link to see today's price.",
+  explainNextFree: "You may be able to get it free through {program}. Your next step: tap Apply under {program} and complete its checklist.",
+  explainNextNonprofit: "You may be able to buy it at a lower nonprofit price through {program}. Your next step: tap Apply under {program} and complete its checklist.",
+  explainNextNone: "No free assistance program covers this medicine. Your next step: tap the buy link above, or call {pharmacy} first to check it is in stock.",
+  explainNextNoneShort: "No free assistance program covers this medicine. Your next step: tap the buy link above.",
+  explainNextNoMatch: "An assistance program is listed for this medicine, but the app did not find a likely match for you. Your next step: tap the buy link above, or call {pharmacy} first to check it is in stock.",
+  explainNextNoMatchShort: "An assistance program is listed for this medicine, but the app did not find a likely match for you. Your next step: tap the buy link above.",
 };
 
 const es: typeof en = {
@@ -440,6 +453,19 @@ const es: typeof en = {
   saveA11y: 'Guardar {drug} en Mis medicinas',
   unsaveA11y: 'Quitar {drug} de Mis medicinas',
   removeSaved: 'Quitar',
+  explainButton: "Explicar mis opciones",
+  explainApply: "Aplicar",
+  explainFair: "Un precio justo para {drug} {strength} es de aproximadamente ${nadacTotal} por {qty}. Es cercano a lo que pagan las farmacias.",
+  explainFairPerUnit: "Un precio de referencia justo para {drug} {strength} es {perUnit}. Es cercano a lo que pagan las farmacias.",
+  explainFairNone: "La aplicación no muestra un precio de referencia justo para este medicamento.",
+  explainCheapest: "La forma más económica de comprarlo hoy es Cost Plus Drugs, a ${costPlusTotal} por {qty}.",
+  explainCouponFallback: "La aplicación no muestra un precio de Cost Plus para este medicamento. Su siguiente paso para el precio: toque el enlace del cupón gratuito para ver el precio de hoy.",
+  explainNextFree: "Es posible que pueda obtenerlo gratis a través de {program}. Su siguiente paso: toque Aplicar en {program} y complete su lista de requisitos.",
+  explainNextNonprofit: "Es posible que pueda comprarlo a un precio más bajo sin fines de lucro a través de {program}. Su siguiente paso: toque Aplicar en {program} y complete su lista de requisitos.",
+  explainNextNone: "Ningún programa de asistencia gratuita cubre este medicamento. Su siguiente paso: toque el enlace de compra, o llame primero a {pharmacy} para confirmar que lo tienen.",
+  explainNextNoneShort: "Ningún programa de asistencia gratuita cubre este medicamento. Su siguiente paso: toque el enlace de compra.",
+  explainNextNoMatch: "Hay un programa de asistencia para este medicamento, pero la aplicación no encontró una coincidencia probable para usted. Su siguiente paso: toque el enlace de compra, o llame primero a {pharmacy} para confirmar que lo tienen.",
+  explainNextNoMatchShort: "Hay un programa de asistencia para este medicamento, pero la aplicación no encontró una coincidencia probable para usted. Su siguiente paso: toque el enlace de compra.",
 };
 
 const zh: typeof en = {
@@ -625,6 +651,19 @@ const zh: typeof en = {
   saveA11y: '将 {drug} 保存到我的药品',
   unsaveA11y: '从我的药品中移除 {drug}',
   removeSaved: '移除',
+  explainButton: "解释我的选择",
+  explainApply: "申请",
+  explainFair: "{drug} {strength} 的公平价格约为 ${nadacTotal}（{qty}）。这接近药房的实际进货价格。",
+  explainFairPerUnit: "{drug} {strength} 的公平参考价为 {perUnit}。这接近药房的实际进货价格。",
+  explainFairNone: "本应用未列出此药的公平参考价。",
+  explainCheapest: "今天最便宜的购买方式是 Cost Plus Drugs，{qty} 价格为 ${costPlusTotal}。",
+  explainCouponFallback: "本应用未列出此药的 Cost Plus 价格。查看价格的下一步：点击免费优惠券链接查看今天的价格。",
+  explainNextFree: "您可能可以通过 {program} 免费获得此药。下一步：点击 {program} 下方的\"申请\"，并完成其申请清单。",
+  explainNextNonprofit: "您可能可以通过 {program} 以较低的非营利价格购买此药。下一步：点击 {program} 下方的\"申请\"，并完成其申请清单。",
+  explainNextNone: "没有免费援助计划涵盖此药。下一步：点击上方的购买链接，或先致电 {pharmacy} 确认有货。",
+  explainNextNoneShort: "没有免费援助计划涵盖此药。下一步：点击上方的购买链接。",
+  explainNextNoMatch: "此药有列出的援助计划，但本应用没有为您找到可能符合的计划。下一步：点击上方的购买链接，或先致电 {pharmacy} 确认有货。",
+  explainNextNoMatchShort: "此药有列出的援助计划，但本应用没有为您找到可能符合的计划。下一步：点击上方的购买链接。",
 };
 
 const hi: typeof en = {
@@ -827,6 +866,19 @@ const hi: typeof en = {
   saveA11y: '{drug} को मेरी दवाओं में सहेजें',
   unsaveA11y: '{drug} को मेरी दवाओं से हटाएँ',
   removeSaved: 'हटाएँ',
+  explainButton: "मेरे विकल्प समझाएँ",
+  explainApply: "आवेदन करें",
+  explainFair: "{drug} {strength} की उचित कीमत {qty} के लिए लगभग ${nadacTotal} है। यह उस कीमत के करीब है जो फार्मेसियाँ चुकाती हैं।",
+  explainFairPerUnit: "{drug} {strength} की उचित संदर्भ कीमत {perUnit} है। यह उस कीमत के करीब है जो फार्मेसियाँ चुकाती हैं।",
+  explainFairNone: "ऐप इस दवा के लिए उचित संदर्भ कीमत नहीं दिखाता।",
+  explainCheapest: "आज इसे खरीदने का सबसे सस्ता तरीका Cost Plus Drugs है, {qty} के लिए ${costPlusTotal}।",
+  explainCouponFallback: "ऐप इस दवा के लिए Cost Plus कीमत नहीं दिखाता। कीमत के लिए अगला कदम: आज की कीमत देखने के लिए मुफ़्त कूपन लिंक पर टैप करें।",
+  explainNextFree: "आपको {program} के माध्यम से यह दवा मुफ़्त मिल सकती है। अगला कदम: {program} के नीचे 'आवेदन करें' पर टैप करें और उसकी सूची पूरी करें।",
+  explainNextNonprofit: "आप {program} के माध्यम से यह दवा कम गैर-लाभ कीमत पर खरीद सकते हैं। अगला कदम: {program} के नीचे 'आवेदन करें' पर टैप करें और उसकी सूची पूरी करें।",
+  explainNextNone: "कोई मुफ़्त सहायता कार्यक्रम इस दवा को कवर नहीं करता। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें, या पहले {pharmacy} को फ़ोन करके स्टॉक की पुष्टि करें।",
+  explainNextNoneShort: "कोई मुफ़्त सहायता कार्यक्रम इस दवा को कवर नहीं करता। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें।",
+  explainNextNoMatch: "इस दवा के लिए एक सहायता कार्यक्रम सूचीबद्ध है, लेकिन ऐप को आपके लिए संभावित मेल नहीं मिला। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें, या पहले {pharmacy} को फ़ोन करके स्टॉक की पुष्टि करें।",
+  explainNextNoMatchShort: "इस दवा के लिए एक सहायता कार्यक्रम सूचीबद्ध है, लेकिन ऐप को आपके लिए संभावित मेल नहीं मिला। अगला कदम: ऊपर दिए गए खरीद लिंक पर टैप करें।",
 };
 
 export const copy = { en, es, zh, hi };

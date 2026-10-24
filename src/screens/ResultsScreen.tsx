@@ -26,7 +26,13 @@ import {
   genericOutlookIsStale,
   outlookForMedication,
 } from '../data/genericOutlook';
-import { papListingsAreStale, rankPrograms, type RankedProgram } from '../data/papMatcher';
+import {
+  matcherConclusion,
+  papListingsAreStale,
+  rankPrograms,
+  type RankedProgram,
+} from '../data/papMatcher';
+import { explainOptions } from '../data/explainOptions';
 import { nadacPriceFor } from '../prices/nadacFeed';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize, Medication } from '../types';
@@ -259,6 +265,8 @@ export function ResultsScreen() {
 
           <CouponBlock med={med} />
 
+          <ExplainOptionsCard med={med} />
+
           <DisplayTitle>{c.nadacBenchmark}</DisplayTitle>
           {med.benchmarks
             .filter((b) => b.source === 'nadac')
@@ -390,6 +398,7 @@ export function ResultsScreen() {
                 <BodyText>{c.papRequiredCoupons}</BodyText>
               </WhiteCard>
               <CouponBlock med={med} />
+              <ExplainOptionsCard med={med} />
               <PapTab
                 language={language}
                 hasManufacturerPap={med.hasManufacturerPap}
@@ -419,6 +428,51 @@ export function ResultsScreen() {
         </>
       )}
     </AppChrome>
+  );
+}
+
+function ExplainOptionsCard({ med }: { med: Medication }) {
+  const { language, insurance, income, nadacFeed } = useApp();
+  const c = t(language);
+  const [open, setOpen] = useState(false);
+  useEffect(() => setOpen(false), [med.id]);
+
+  const nadac = med.benchmarks.find((b) => b.source === 'nadac');
+  const nadacTotal =
+    nadac && nadac.price != null ? (nadacPriceFor(nadacFeed, med.id) ?? nadac.price) : null;
+  const conclusion = matcherConclusion({ programIds: med.programIds, insurance, income });
+  const { sentences, applyTo } = explainOptions({ med, language, conclusion, nadacTotal });
+
+  return (
+    <ActionStack>
+      <WhiteCard>
+        <Pressable
+          onPress={() => setOpen((v) => !v)}
+          accessibilityRole="button"
+          accessibilityState={{ expanded: open }}
+          style={({ pressed }) => [styles.explainBtn, pressed && { opacity: 0.85 }]}
+        >
+          <Text style={[styles.explainBtnTxt, typeface(language, 'display')]}>
+            {`${open ? '▾' : '▸'}  ${c.explainButton}`}
+          </Text>
+        </Pressable>
+        {open
+          ? sentences.map((s, i) => (
+              <Text key={i} style={[styles.explainLine, typeface(language, 'body')]}>
+                {`${i + 1}.  ${s}`}
+              </Text>
+            ))
+          : null}
+        {open && applyTo ? (
+          <Text style={[styles.pharm, styles.explainProgram, typeface(language, 'display')]}>
+            {applyTo.name}
+          </Text>
+        ) : null}
+      </WhiteCard>
+      {open && applyTo ? (
+        <WhitePill display label={c.explainApply} onPress={() => openUrl(applyTo.url)} />
+      ) : null}
+    </ActionStack>
   );
 }
 
@@ -630,6 +684,24 @@ function ProgramCard({
 
 const styles = StyleSheet.create({
   saveRow: { alignItems: 'center', marginTop: 10 },
+  explainBtn: {
+    alignSelf: 'center',
+    backgroundColor: periwinkle,
+    borderRadius: 999,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    minHeight: 48,
+    justifyContent: 'center',
+  },
+  explainBtnTxt: { fontSize: 16, lineHeight: 22, color: '#FFFFFF', textAlign: 'center' },
+  explainLine: {
+    fontSize: 14,
+    lineHeight: 21,
+    color: ink,
+    textAlign: 'left',
+    marginTop: 10,
+  },
+  explainProgram: { marginTop: 12 },
   couponRow: { flexDirection: 'row', gap: 10, alignSelf: 'stretch' },
   tabs: { flexDirection: 'row', gap: 8 },
   tab: {

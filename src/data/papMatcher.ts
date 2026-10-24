@@ -126,6 +126,37 @@ export function rankPrograms(opts: {
   return rows;
 }
 
+export type MatcherConclusion =
+  | { kind: 'likely'; program: PapProgram }
+  | { kind: 'listedNoMatch' }
+  | { kind: 'none' };
+
+/** The matcher's conclusion only — callers never see the screener answers it was given. */
+export function matcherConclusion(opts: {
+  programIds: string[];
+  insurance: InsuranceStatus;
+  income: IncomeBracket | null;
+}): MatcherConclusion {
+  const rows = opts.programIds
+    .map((id) => papById[id])
+    .filter((p): p is PapProgram => p != null)
+    .map((program) => ({
+      program,
+      likely:
+        !program.closedToNew &&
+        insuranceFits(program.insuranceRule, opts.insurance) &&
+        incomeLikely(program, opts.income),
+    }));
+  if (rows.length === 0) return { kind: 'none' };
+  const likely = rows
+    .filter((r) => r.likely)
+    .sort((a, b) => {
+      if (a.program.kind !== b.program.kind) return a.program.kind === 'pap' ? -1 : 1;
+      return a.program.name.localeCompare(b.program.name);
+    });
+  return likely.length > 0 ? { kind: 'likely', program: likely[0].program } : { kind: 'listedNoMatch' };
+}
+
 /** True when the newest listing date among these programs is more than 6 months before `now`. */
 export function papListingsAreStale(
   programs: { verifiedAsOf: string }[],
