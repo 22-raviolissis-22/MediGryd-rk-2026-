@@ -100,14 +100,25 @@ export type WebSession = {
   language: Language;
 };
 
-function canUseSession() {
-  return typeof sessionStorage !== 'undefined';
+function webStore(): Storage | null {
+  try {
+    if (typeof localStorage !== 'undefined') return localStorage;
+  } catch {
+    /* private mode */
+  }
+  try {
+    if (typeof sessionStorage !== 'undefined') return sessionStorage;
+  } catch {
+    /* ignore */
+  }
+  return null;
 }
 
 export function loadWebSession(): WebSession | null {
-  if (!canUseSession()) return null;
+  const store = webStore();
+  if (!store) return null;
   try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
+    const raw = store.getItem(SESSION_KEY) ?? (typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(SESSION_KEY) : null);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<WebSession>;
     if (!parsed.screen || !SCREENS.includes(parsed.screen)) return null;
@@ -141,18 +152,21 @@ export function loadWebSession(): WebSession | null {
 }
 
 export function saveWebSession(session: WebSession) {
-  if (!canUseSession()) return;
+  const store = webStore();
+  if (!store) return;
   try {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    store.setItem(SESSION_KEY, JSON.stringify(session));
   } catch {
     /* ignore quota / private mode */
   }
 }
 
 export function clearWebSession() {
-  if (!canUseSession()) return;
+  const store = webStore();
+  if (!store) return;
   try {
-    sessionStorage.removeItem(SESSION_KEY);
+    store.removeItem(SESSION_KEY);
+    if (typeof sessionStorage !== 'undefined') sessionStorage.removeItem(SESSION_KEY);
   } catch {
     /* ignore */
   }

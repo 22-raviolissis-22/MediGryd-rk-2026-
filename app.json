@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "medigryd",
+    "name": "MEDIGRYD",
     "slug": "medigryd",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -28,7 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
-      "name": "medigryd"
+      "name": "MEDIGRYD"
     },
     "plugins": [
       "expo-font"

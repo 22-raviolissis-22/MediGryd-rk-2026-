@@ -26,6 +26,14 @@ const shadow = Platform.select({
 
 export { shadow };
 
+export function PlusMark() {
+  return (
+    <View style={styles.plusBtn}>
+      <Text style={styles.plus}>+</Text>
+    </View>
+  );
+}
+
 export function AppChrome({
   children,
   showSearch = true,
@@ -97,6 +105,9 @@ export function AppChrome({
               />
             </View>
           ) : null}
+          <Pressable onPress={reset} accessibilityLabel={c.startOver}>
+            <PlusMark />
+          </Pressable>
         </View>
         {screen !== 'language' ? (
           <View style={styles.langRow}>
@@ -155,7 +166,6 @@ export function AppChrome({
             accessibilityLabel={c.largeTextA11y}
             accessibilityRole="switch"
           />
-          <ChipButton label={c.startOver} selected={false} onPress={reset} />
         </View>
         <ScrollView
           style={{ flex: 1 }}
@@ -419,6 +429,17 @@ const styles = StyleSheet.create({
   },
   searchRule: { width: 2, height: 18, backgroundColor: ink, borderRadius: 1 },
   searchInput: { flex: 1, fontSize: 14, color: ink, paddingVertical: 0 },
+  plusBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: ink,
+  },
+  plus: { fontSize: 28, fontWeight: '800', color: ink, marginTop: -2, lineHeight: 30 },
   body: { paddingTop: 14, paddingBottom: 8, gap: 12, alignItems: 'stretch' },
   whiteCard: {
     backgroundColor: '#FFFFFF',
