@@ -29,6 +29,8 @@ export { shadow };
 export function PlusMark() {
   return (
     <View style={styles.plusBtn}>
+      <View style={styles.plusTop} />
+      <View style={styles.plusBottom} />
       <Text style={styles.plus}>+</Text>
     </View>
   );
@@ -433,13 +435,27 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-    borderWidth: 2,
-    borderColor: ink,
   },
-  plus: { fontSize: 28, fontWeight: '800', color: ink, marginTop: -2, lineHeight: 30 },
+  plusTop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '50%',
+    backgroundColor: '#C9EEF8',
+  },
+  plusBottom: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '50%',
+    backgroundColor: '#9BB6F5',
+  },
+  plus: { fontSize: 26, fontWeight: '800', color: ink, marginTop: -2, lineHeight: 30 },
   body: { paddingTop: 14, paddingBottom: 8, gap: 12, alignItems: 'stretch' },
   whiteCard: {
     backgroundColor: '#FFFFFF',
