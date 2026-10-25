@@ -108,8 +108,8 @@ const en = {
     'Figures here are general estimates from the Patient Assistance Programs and Pricing Guide. Confirm current rules on the official program site or NeedyMeds before you apply.',
   noPrograms: 'No listed programs for this medication.',
   priceDisclaimer:
-    'Local cash prices, Cost Plus, and GoodRx amounts come from the Patient Assistance Programs and Pricing Guide for CA-17 and CA-19. Confirm at the pharmacy or on Cost Plus / GoodRx before you pay. NADAC is a wholesale reference, not a checkout price.',
-  nearbyPharmacies: 'Pharmacies in CA-17 and CA-19',
+    'Local cash prices, Cost Plus, and GoodRx amounts come from the Patient Assistance Programs and Pricing Guide for CA-17, CA-18, and CA-19. Confirm at the pharmacy or on Cost Plus / GoodRx before you pay. NADAC is a wholesale reference, not a checkout price.',
+  nearbyPharmacies: 'Pharmacies in CA-17, CA-18, and CA-19',
   nearbyHint:
     'Each store shows the guide’s cash price for this medicine, plus the official locator. Call ahead — chain prices change.',
   cashAtStore: 'Cash price at this store',
@@ -334,8 +334,8 @@ const es: typeof en = {
     'Las cifras son estimaciones generales de la guía de PAP y precios. Confirma las reglas vigentes en el sitio oficial o NeedyMeds antes de solicitar.',
   noPrograms: 'No hay programas listados para este medicamento.',
   priceDisclaimer:
-    'Los precios en efectivo locales, Cost Plus y GoodRx salen de la guía de PAP y precios para CA-17 y CA-19. Confírmalos en la farmacia o en Cost Plus / GoodRx antes de pagar. NADAC es una referencia mayorista, no un precio de caja.',
-  nearbyPharmacies: 'Farmacias en CA-17 y CA-19',
+    'Los precios en efectivo locales, Cost Plus y GoodRx salen de la guía de PAP y precios para CA-17, CA-18 y CA-19. Confírmalos en la farmacia o en Cost Plus / GoodRx antes de pagar. NADAC es una referencia mayorista, no un precio de caja.',
+  nearbyPharmacies: 'Farmacias en CA-17, CA-18 y CA-19',
   nearbyHint:
     'Cada tienda muestra el precio en efectivo de la guía para este medicamento, más el localizador oficial. Llama antes: los precios de las cadenas cambian.',
   cashAtStore: 'Precio en efectivo en esta tienda',
@@ -553,8 +553,8 @@ const zh: typeof en = {
   papEligibilityNote: '此处数字来自患者援助计划与定价指南的一般估计。申请前请在官方网站或 NeedyMeds 核对现行规则。',
   noPrograms: '此药品暂无列出的援助项目。',
   priceDisclaimer:
-    '本地自费价、Cost Plus 和 GoodRx 金额来自面向 CA-17 与 CA-19 的患者援助计划与定价指南。付款前请到药房或在 Cost Plus / GoodRx 上确认。NADAC 是批发参考价，不是结账价。',
-  nearbyPharmacies: 'CA-17 与 CA-19 的药房',
+    '本地自费价、Cost Plus 和 GoodRx 金额来自面向 CA-17、CA-18 与 CA-19 的患者援助计划与定价指南。付款前请到药房或在 Cost Plus / GoodRx 上确认。NADAC 是批发参考价，不是结账价。',
+  nearbyPharmacies: 'CA-17、CA-18 与 CA-19 的药房',
   nearbyHint: '每家门店显示指南中该药的自费价，以及官方查询链接。请提前致电——连锁店价格会变动。',
   cashAtStore: '本店自费价',
   retailEst: '典型零售自费区间：${min}–${max}',
@@ -766,8 +766,8 @@ const hi: typeof en = {
     'यहाँ के आंकड़े रोगी सहायता और मूल्य गाइड के सामान्य अनुमान हैं। आवेदन से पहले आधिकारिक साइट या NeedyMeds पर नियम जाँचें।',
   noPrograms: 'इस दवा के लिए कोई सूचीबद्ध कार्यक्रम नहीं है।',
   priceDisclaimer:
-    'स्थानीय नकद कीमतें, Cost Plus और GoodRx राशियाँ CA-17 और CA-19 की रोगी सहायता और मूल्य गाइड से हैं। भुगतान से पहले फार्मेसी या Cost Plus / GoodRx पर पुष्टि करें। NADAC थोक संदर्भ है, चेकआउट कीमत नहीं।',
-  nearbyPharmacies: 'CA-17 और CA-19 की फार्मेसी',
+    'स्थानीय नकद कीमतें, Cost Plus और GoodRx राशियाँ CA-17, CA-18 और CA-19 की रोगी सहायता और मूल्य गाइड से हैं। भुगतान से पहले फार्मेसी या Cost Plus / GoodRx पर पुष्टि करें। NADAC थोक संदर्भ है, चेकआउट कीमत नहीं।',
+  nearbyPharmacies: 'CA-17, CA-18 और CA-19 की फार्मेसी',
   nearbyHint:
     'हर स्टोर इस दवा की गाइड नकद कीमत और आधिकारिक लोकेटर दिखाता है। पहले कॉल करें — चेन कीमतें बदलती हैं।',
   cashAtStore: 'इस स्टोर की नकद कीमत',

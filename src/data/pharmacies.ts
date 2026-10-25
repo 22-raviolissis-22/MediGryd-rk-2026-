@@ -169,7 +169,18 @@ export const areaPharmacies: PharmacyOffer[] = [
   },
 ];
 
-/** Attach per-store cash prices in the same order as `areaPharmacies`. */
+/** Attach per-store cash prices, then sort priced stores low-to-high; unpriced keep original order at the end. */
 export function pharmaciesWithCash(prices: number[]): PharmacyOffer[] {
-  return areaPharmacies.map((p, i) => ({ ...p, cashPrice: prices[i] ?? null }));
+  return areaPharmacies
+    .map((p, index) => ({ pharmacy: { ...p, cashPrice: prices[index] ?? null }, index }))
+    .sort((a, b) => {
+      const ap = a.pharmacy.cashPrice;
+      const bp = b.pharmacy.cashPrice;
+      if (ap == null && bp == null) return a.index - b.index;
+      if (ap == null) return 1;
+      if (bp == null) return -1;
+      if (ap !== bp) return ap - bp;
+      return a.index - b.index;
+    })
+    .map(({ pharmacy }) => pharmacy);
 }
