@@ -9,6 +9,7 @@ import type {
 } from './types';
 import { bundledNadacFeed, resolveNadacFeed, type NadacFeed } from './prices/nadacFeed';
 import { medications } from './data/medications';
+import type { GeoPoint } from './data/geo';
 import {
   DEFAULT_PREFS,
   clearWebSession,
@@ -37,6 +38,7 @@ type AppState = {
   textScale: number;
   savedMedicationIds: string[];
   planPhone: string;
+  locatorOrigin: GeoPoint | null;
   setLanguage: (lang: Language) => void;
   go: (screen: ScreenId) => void;
   back: () => void;
@@ -51,6 +53,7 @@ type AppState = {
   isSaved: (medId: string) => boolean;
   toggleSaved: (medId: string) => void;
   setPlanPhone: (phone: string) => void;
+  setLocatorOrigin: (point: GeoPoint | null) => void;
   reset: () => void;
 };
 
@@ -80,6 +83,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [textSize, setTextSizeState] = useState<TextSize>(DEFAULT_PREFS.textSize);
   const [savedMedicationIds, setSavedIds] = useState<string[]>(DEFAULT_PREFS.savedMedicationIds);
   const [planPhone, setPlanPhoneState] = useState(DEFAULT_PREFS.planPhone);
+  const [locatorOrigin, setLocatorOrigin] = useState<GeoPoint | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -142,6 +146,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       textScale: textSize === 'large' ? LARGE_TEXT_SCALE : 1,
       savedMedicationIds,
       planPhone,
+      locatorOrigin,
       setLanguage: (lang) => {
         setLanguage(lang);
         saveLanguage(lang);
@@ -184,6 +189,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setPlanPhoneState(phone);
         savePlanPhone(phone);
       },
+      setLocatorOrigin,
       reset: () => {
         clearWebSession();
         setScreen('language');
@@ -194,6 +200,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setMedication(null);
         setResultsTab('rx');
         setSearchQuery('');
+        setLocatorOrigin(null);
       },
     }),
     [
@@ -210,6 +217,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       textSize,
       savedMedicationIds,
       planPhone,
+      locatorOrigin,
     ]
   );
 

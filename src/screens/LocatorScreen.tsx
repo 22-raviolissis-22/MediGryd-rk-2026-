@@ -27,7 +27,7 @@ type Origin =
   | { kind: 'zip'; zip: string; point: GeoPoint };
 
 export function LocatorScreen() {
-  const { language, textScale } = useApp();
+  const { language, textScale, setLocatorOrigin } = useApp();
   const c = t(language);
   const [busy, setBusy] = useState(false);
   const [origin, setOrigin] = useState<Origin | null>(null);
@@ -47,10 +47,12 @@ export function LocatorScreen() {
     setBusy(false);
     if (result.ok) {
       setOrigin({ kind: 'device', point: result.point });
+      setLocatorOrigin(result.point);
       setStatus('idle');
       return;
     }
     setOrigin(null);
+    setLocatorOrigin(null);
     setStatus(result.reason);
   };
 
@@ -66,6 +68,7 @@ export function LocatorScreen() {
       return;
     }
     setOrigin({ kind: 'zip', zip, point });
+    setLocatorOrigin(point);
     setStatus('idle');
   };
 

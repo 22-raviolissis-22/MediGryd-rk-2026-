@@ -33,6 +33,7 @@ import {
   type RankedProgram,
 } from '../data/papMatcher';
 import { explainOptions } from '../data/explainOptions';
+import { buildMedicineSummary, fillLineText } from '../data/medicineSummary';
 import { priceForQuantity, quantityLabel, type QuantityPricing } from '../data/quantityPricing';
 import { ink, periwinkle, typeface } from '../theme';
 import type { HouseholdSize, Medication } from '../types';
@@ -287,6 +288,7 @@ export function ResultsScreen() {
             ))}
 
           <AvailabilityNoteCard medicationId={med.id} />
+          <MedicineSummaryCard med={med} pricing={pricing!} />
           <GenericOutlookCard medicationId={med.id} />
 
           {med.pharmacies.length > 0 ? (
@@ -407,6 +409,7 @@ export function ResultsScreen() {
                 </>
               ) : null}
               <AvailabilityNoteCard medicationId={med.id} />
+              <MedicineSummaryCard med={med} pricing={pricing!} />
               <PapTab
                 language={language}
                 hasManufacturerPap={med.hasManufacturerPap}
@@ -569,6 +572,94 @@ function CouponBlock({ med }: { med: Medication }) {
         ) : null}
       </View>
     </ActionStack>
+  );
+}
+
+function MedicineSummaryCard({ med, pricing }: { med: Medication; pricing: QuantityPricing }) {
+  const { language, insurance, household, income, locatorOrigin } = useApp();
+  const c = t(language);
+  const incomeLabel = income
+    ? incomeOptions(household ?? 1, language)[income]
+    : c.papIncomeSkipped;
+  const likely = rankPrograms({
+    programIds: med.programIds,
+    insurance,
+    household,
+    income,
+    language,
+    incomeLabel,
+    insuredLabel: c.papYouInsured,
+    uninsuredLabel: c.papYouUninsured,
+    userLineTpl: c.papUserSituation,
+    cutoffLineTpl: c.papCutoffVsYou,
+    unpublishedCutoff: c.papUnpublishedCutoff,
+    noLimitCutoff: c.papNoLimitCutoff,
+  }).filter((row) => row.bucket === 'likely');
+  const model = buildMedicineSummary({
+    med,
+    language,
+    pricing,
+    likelyPrograms: likely,
+    locatorOrigin,
+  });
+  if (!model) return null;
+
+  return (
+    <>
+      <DisplayTitle>{c.summaryTitle}</DisplayTitle>
+      <WhiteCard>
+        {model.lowestCost.length > 0 ? (
+          <>
+            <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c.summaryLowestCost}</Text>
+            {model.lowestCost.map((line) => (
+              <Text key={line} style={[styles.note, typeface(language, 'body')]}>
+                {line}
+              </Text>
+            ))}
+          </>
+        ) : null}
+        {model.helpPaying.length > 0 ? (
+          <>
+            <Text style={[styles.section, typeface(language, 'bodyBold')]}>{c.summaryHelpPaying}</Text>
+            {model.helpPaying.map((p) => (
+              <Text key={p.url} style={[styles.note, typeface(language, 'body')]}>
+                {p.name}
+              </Text>
+            ))}
+          </>
+        ) : null}
+        {model.generic ? (
+          <>
+            <Text style={[styles.section, typeface(language, 'bodyBold')]}>{c.summaryGenericStatus}</Text>
+            {model.generic.kind === 'flagged' ? (
+              <>
+                <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{model.generic.badge}</Text>
+                <Text style={[styles.note, typeface(language, 'body')]}>{model.generic.note}</Text>
+              </>
+            ) : (
+              <Text style={[styles.note, typeface(language, 'body')]}>{c.summaryGenericAvailable}</Text>
+            )}
+          </>
+        ) : null}
+        {model.fill.length > 0 ? (
+          <>
+            <Text style={[styles.section, typeface(language, 'bodyBold')]}>{c.summaryWhereToFill}</Text>
+            {model.fill.map((row) => (
+              <Text key={`${row.name}-${row.price}-${row.miles}`} style={[styles.note, typeface(language, 'body')]}>
+                {fillLineText(row, language)}
+              </Text>
+            ))}
+          </>
+        ) : null}
+      </WhiteCard>
+      {model.helpPaying.map((p) => (
+        <WhitePill
+          key={`apply-${p.url}`}
+          label={`${c.papOpenApply}: ${p.name}`}
+          onPress={() => openUrl(p.url)}
+        />
+      ))}
+    </>
   );
 }
 
