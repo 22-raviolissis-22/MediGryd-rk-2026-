@@ -17,6 +17,8 @@ export const areaPharmacies: PharmacyOffer[] = [
       'https://www.cvs.com/store-locator/sunnyvale-ca-pharmacies/576-e-el-camino-real-sunnyvale-ca-94087/storeid=9700',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.3624781,
+    longitude: -122.0255378,
   },
   {
     id: 'cvs-cupertino',
@@ -28,6 +30,8 @@ export const areaPharmacies: PharmacyOffer[] = [
       'https://www.cvs.com/store-locator/cupertino-ca-pharmacies/10455-s-de-anza-blvd-cupertino-ca-95014/storeid=9894',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.3164429,
+    longitude: -122.0336809,
   },
   {
     id: 'cvs-santa-clara',
@@ -39,6 +43,8 @@ export const areaPharmacies: PharmacyOffer[] = [
       'https://www.cvs.com/store-locator/santa-clara-ca-pharmacies/2004-el-camino-real-santa-clara-ca-95050/storeid=17658',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.3502894,
+    longitude: -121.9609068,
   },
   {
     id: 'wag-milpitas',
@@ -50,6 +56,8 @@ export const areaPharmacies: PharmacyOffer[] = [
       'https://www.walgreens.com/locator/walgreens-1833+n+milpitas+blvd-milpitas-ca-95035/id=5480',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.4564958,
+    longitude: -121.9116661,
   },
   {
     id: 'costco-san-jose',
@@ -60,6 +68,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     locatorUrl: 'https://www.costco.com/w/-/ca/san-jose/1004',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.3906228,
+    longitude: -121.8846974,
   },
   {
     id: 'wag-blossom-hill',
@@ -71,6 +81,8 @@ export const areaPharmacies: PharmacyOffer[] = [
       'https://www.walgreens.com/locator/walgreens-440+blossom+hill+rd-san+jose-ca-95123/id=2739',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.2500575,
+    longitude: -121.830208,
   },
   {
     id: 'wag-morgan-hill',
@@ -81,6 +93,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     locatorUrl: 'https://www.walgreens.com/storelocator/pharmacy/morgan-hill-ca',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.1301251,
+    longitude: -121.6385558,
   },
   {
     id: 'wag-gilroy',
@@ -91,6 +105,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     locatorUrl: 'https://www.walgreens.com/locator/walgreens-770+1st+st-gilroy-ca-95020/id=9516',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.0133772,
+    longitude: -121.5829864,
   },
   {
     id: 'costco-gilroy',
@@ -101,6 +117,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     locatorUrl: 'https://www.costco.com/warehouse-locations/gilroy-ca-760.html',
     addressVerified: true,
     cashPrice: null,
+    latitude: 37.0082645,
+    longitude: -121.5564882,
   },
   {
     id: 'wag-salinas',
@@ -111,6 +129,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     locatorUrl: 'https://www.walgreens.com/storelocator/pharmacy/salinas-ca',
     addressVerified: true,
     cashPrice: null,
+    latitude: 36.707127,
+    longitude: -121.653315,
   },
   {
     id: 'wag-san-carlos',
@@ -122,6 +142,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     addressVerified: true,
     cashPrice: null,
     phone: '(408) 971-3098',
+    latitude: 37.3237915,
+    longitude: -121.9134068,
   },
   {
     id: 'wag-e-santa-clara',
@@ -133,6 +155,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     addressVerified: true,
     cashPrice: null,
     phone: '(408) 287-0600',
+    latitude: 37.3433271,
+    longitude: -121.8748367,
   },
   {
     id: 'wag-mckee',
@@ -144,6 +168,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     addressVerified: true,
     cashPrice: null,
     phone: '(408) 347-1404',
+    latitude: 37.3580552,
+    longitude: -121.8617147,
   },
   {
     id: 'mega-drugs-sanjose',
@@ -155,6 +181,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     addressVerified: true,
     cashPrice: null,
     phone: '(408) 283-9518',
+    latitude: 37.3425452,
+    longitude: -121.8763259,
   },
   {
     id: 'cvs-gilroy-first',
@@ -166,6 +194,8 @@ export const areaPharmacies: PharmacyOffer[] = [
     addressVerified: true,
     cashPrice: null,
     phone: '(408) 842-0373',
+    latitude: 37.0131606,
+    longitude: -121.587279,
   },
 ];
 

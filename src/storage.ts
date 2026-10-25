@@ -86,6 +86,7 @@ const SCREENS: ScreenId[] = [
   'results',
   'help',
   'saved',
+  'locator',
 ];
 
 export type WebSession = {

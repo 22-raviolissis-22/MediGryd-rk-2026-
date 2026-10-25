@@ -16,7 +16,7 @@ import { fill, formatIsoDate, pharmacyHours, t } from '../i18n';
 import { ink, typeface } from '../theme';
 
 export function HelpScreen() {
-  const { language } = useApp();
+  const { language, go } = useApp();
   const c = t(language);
   const verified = formatIsoDate(HELPLINES_VERIFIED_AS_OF, language);
 
@@ -55,6 +55,7 @@ export function HelpScreen() {
 
       <DisplayTitle>{c.helpPharmTitle}</DisplayTitle>
       <BodyText>{c.helpPharmIntro}</BodyText>
+      <WhitePill display label={c.findNearMe} onPress={() => go('locator')} />
       {areaPharmacies.map((p) => (
         <ActionStack key={p.id}>
           <WhiteCard>

@@ -13,7 +13,10 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "org.calrx.assist"
+      "bundleIdentifier": "org.calrx.assist",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "MediGryd uses your location only to sort nearby pharmacies. Location stays on this device."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +26,11 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "package": "org.calrx.assist",
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -31,7 +38,13 @@
       "name": "MediGryd"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "MediGryd uses your location only to sort nearby pharmacies. Location stays on this device."
+        }
+      ]
     ]
   }
 }

@@ -16,7 +16,8 @@ export type ScreenId =
   | 'search'
   | 'results'
   | 'help'
-  | 'saved';
+  | 'saved'
+  | 'locator';
 
 export type District = 'CA-17' | 'CA-18' | 'CA-19';
 
@@ -49,6 +50,9 @@ export type PharmacyOffer = {
   cashPrice: number | null;
   /** Store phone, when provided. */
   phone?: string;
+  /** WGS84 coordinates looked up from the street address during development. */
+  latitude?: number | null;
+  longitude?: number | null;
 };
 
 /** Who the program is designed for, based on insurance. */

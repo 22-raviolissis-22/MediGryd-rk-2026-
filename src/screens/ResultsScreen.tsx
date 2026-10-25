@@ -50,6 +50,7 @@ export function ResultsScreen() {
     resultsTab,
     setResultsTab,
     openMedication,
+    go,
   } = useApp();
   const c = t(language);
   const tab = resultsTab;
@@ -290,6 +291,7 @@ export function ResultsScreen() {
             <>
               <DisplayTitle>{c.nearbyPharmacies}</DisplayTitle>
               <BodyText>{c.nearbyHint}</BodyText>
+              <WhitePill display label={c.findNearMe} onPress={() => go('locator')} />
               <WhiteCard>
                 <Text style={[styles.note, typeface(language, 'body')]}>{c.modeledCashNote}</Text>
               </WhiteCard>

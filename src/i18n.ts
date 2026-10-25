@@ -216,6 +216,28 @@ const en = {
   helpPharmIntro:
     'We only list pharmacy details we have verified. Open the store’s official page to see its phone number and call.',
   helpPharmOpen: 'Open store page to call',
+  findNearMe: 'Find pharmacies near me',
+  locatorTitle: 'Pharmacies near you',
+  locatorIntro:
+    'Stores are sorted nearest first. Distance is calculated on this device from your location or a ZIP code. There is no map and no live map service.',
+  locatorUseLocation: 'Use my location',
+  locatorAsking: 'Waiting for location permission…',
+  locatorNeedOrigin: 'Use your location, or type a ZIP, to see distance.',
+  locatorDenied:
+    'Location permission was denied. Type a ZIP code to sort by distance from that ZIP.',
+  locatorUnavailable:
+    'Location is not available. Type a ZIP code to sort by distance from that ZIP.',
+  locatorZipLabel: 'Or sort from a ZIP code',
+  locatorZipPlaceholder: '5-digit ZIP',
+  locatorZipSubmit: 'Sort from ZIP',
+  locatorZipUnknown:
+    'This ZIP is not in the on-device ZIP list, so distance cannot be calculated. Check the number or try another ZIP.',
+  locatorZipInvalid: 'Enter a 5-digit U.S. ZIP code.',
+  locatorDistance: '{miles} miles',
+  locatorDistanceUnknown: 'Distance unknown — this store has no saved coordinates',
+  locatorWaitingDistance: 'Distance appears after you share a location or ZIP',
+  locatorUsingLocation: 'Sorted from your current location.',
+  locatorUsingZip: 'Sorted from ZIP {zip}.',
   helpPlanTitle: 'My plan’s member number',
   helpPlanIntro:
     'Type the member services number from your insurance card. It is saved only on this phone.',
@@ -443,6 +465,28 @@ const es: typeof en = {
   helpPharmIntro:
     'Solo mostramos datos de farmacias que hemos verificado. Abre la página oficial de la tienda para ver su número y llamar.',
   helpPharmOpen: 'Abrir página de la tienda para llamar',
+  findNearMe: 'Buscar farmacias cerca de mí',
+  locatorTitle: 'Farmacias cerca de ti',
+  locatorIntro:
+    'Las tiendas se ordenan de la más cercana a la más lejana. La distancia se calcula en este dispositivo desde tu ubicación o un código postal. No hay mapa ni servicio de mapas en vivo.',
+  locatorUseLocation: 'Usar mi ubicación',
+  locatorAsking: 'Esperando permiso de ubicación…',
+  locatorNeedOrigin: 'Usa tu ubicación, o escribe un ZIP, para ver la distancia.',
+  locatorDenied:
+    'Se denegó el permiso de ubicación. Escribe un código postal ZIP para ordenar por distancia desde ese ZIP.',
+  locatorUnavailable:
+    'La ubicación no está disponible. Escribe un código postal ZIP para ordenar por distancia desde ese ZIP.',
+  locatorZipLabel: 'O ordenar desde un código ZIP',
+  locatorZipPlaceholder: 'ZIP de 5 dígitos',
+  locatorZipSubmit: 'Ordenar desde ZIP',
+  locatorZipUnknown:
+    'Este ZIP no está en la lista de ZIP de este dispositivo, así que no se puede calcular la distancia. Revisa el número o prueba otro ZIP.',
+  locatorZipInvalid: 'Escribe un código ZIP de EE. UU. de 5 dígitos.',
+  locatorDistance: '{miles} millas',
+  locatorDistanceUnknown: 'Distancia desconocida: esta tienda no tiene coordenadas guardadas',
+  locatorWaitingDistance: 'La distancia aparece cuando compartes una ubicación o un ZIP',
+  locatorUsingLocation: 'Ordenado desde tu ubicación actual.',
+  locatorUsingZip: 'Ordenado desde el ZIP {zip}.',
   helpPlanTitle: 'Número de miembros de mi plan',
   helpPlanIntro:
     'Escribe el número de servicios para miembros de tu tarjeta de seguro. Se guarda solo en este teléfono.',
@@ -650,6 +694,25 @@ const zh: typeof en = {
   helpPharmTitle: '致电附近药房',
   helpPharmIntro: '我们只列出已核实的药房信息。请打开门店官方页面查看电话号码并拨打。',
   helpPharmOpen: '打开门店页面拨打',
+  findNearMe: '查找附近药房',
+  locatorTitle: '附近的药房',
+  locatorIntro:
+    '门店按距离由近到远排列。距离在本设备上根据你的位置或邮政编码计算。没有地图，也不使用在线地图服务。',
+  locatorUseLocation: '使用我的位置',
+  locatorAsking: '正在等待位置权限…',
+  locatorNeedOrigin: '使用你的位置，或输入邮政编码，即可显示距离。',
+  locatorDenied: '位置权限被拒绝。请输入 ZIP 邮政编码，按该邮编的距离排序。',
+  locatorUnavailable: '无法获取位置。请输入 ZIP 邮政编码，按该邮编的距离排序。',
+  locatorZipLabel: '或按 ZIP 邮政编码排序',
+  locatorZipPlaceholder: '5 位 ZIP',
+  locatorZipSubmit: '按 ZIP 排序',
+  locatorZipUnknown: '该 ZIP 不在本机邮编列表中，无法计算距离。请核对号码或换一个 ZIP。',
+  locatorZipInvalid: '请输入 5 位美国 ZIP 邮政编码。',
+  locatorDistance: '{miles} 英里',
+  locatorDistanceUnknown: '距离未知 — 此门店没有保存的坐标',
+  locatorWaitingDistance: '分享位置或 ZIP 后显示距离',
+  locatorUsingLocation: '已按你当前的位置排序。',
+  locatorUsingZip: '已按 ZIP {zip} 排序。',
   helpPlanTitle: '我的保险会员电话',
   helpPlanIntro: '输入保险卡上的会员服务电话。号码只保存在这部手机上。',
   helpPlanPlaceholder: '保险卡上的电话号码',
@@ -873,6 +936,28 @@ const hi: typeof en = {
   helpPharmIntro:
     'हम केवल सत्यापित फार्मेसी जानकारी दिखाते हैं। फ़ोन नंबर देखने और कॉल करने के लिए स्टोर का आधिकारिक पेज खोलें।',
   helpPharmOpen: 'कॉल के लिए स्टोर पेज खोलें',
+  findNearMe: 'मेरे पास फ़ार्मेसी खोजें',
+  locatorTitle: 'आपके पास की फ़ार्मेसी',
+  locatorIntro:
+    'स्टोर पास से दूर के क्रम में हैं। दूरी इसी डिवाइस पर आपके स्थान या ZIP से हिसाब होती है। कोई मैप नहीं है और कोई लाइव मैप सेवा नहीं।',
+  locatorUseLocation: 'मेरा स्थान इस्तेमाल करें',
+  locatorAsking: 'स्थान की अनुमति का इंतज़ार…',
+  locatorNeedOrigin: 'दूरी देखने के लिए अपना स्थान इस्तेमाल करें, या ZIP लिखें।',
+  locatorDenied:
+    'स्थान की अनुमति अस्वीकार हुई। उस ZIP से दूरी के हिसाब से क्रम लगाने के लिए ZIP कोड लिखें।',
+  locatorUnavailable:
+    'स्थान उपलब्ध नहीं है। उस ZIP से दूरी के हिसाब से क्रम लगाने के लिए ZIP कोड लिखें।',
+  locatorZipLabel: 'या ZIP कोड से क्रम लगाएँ',
+  locatorZipPlaceholder: '5 अंकों का ZIP',
+  locatorZipSubmit: 'ZIP से क्रम लगाएँ',
+  locatorZipUnknown:
+    'यह ZIP इस डिवाइस की ZIP सूची में नहीं है, इसलिए दूरी नहीं निकाली जा सकती। नंबर जाँचें या दूसरा ZIP आज़माएँ।',
+  locatorZipInvalid: '5 अंकों वाला अमेरिकी ZIP कोड लिखें।',
+  locatorDistance: '{miles} मील',
+  locatorDistanceUnknown: 'दूरी अज्ञात — इस स्टोर के निर्देशांक सहेजे नहीं हैं',
+  locatorWaitingDistance: 'स्थान या ZIP देने के बाद दूरी दिखेगी',
+  locatorUsingLocation: 'आपके मौजूदा स्थान से क्रम लगाया गया।',
+  locatorUsingZip: 'ZIP {zip} से क्रम लगाया गया।',
   helpPlanTitle: 'मेरी योजना का सदस्य नंबर',
   helpPlanIntro: 'अपने बीमा कार्ड से सदस्य सेवा नंबर लिखें। यह केवल इसी फ़ोन पर सहेजा जाता है।',
   helpPlanPlaceholder: 'आपके कार्ड का फ़ोन नंबर',

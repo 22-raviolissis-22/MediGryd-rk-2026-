@@ -12,6 +12,7 @@ import { SearchScreen } from './screens/SearchScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { HelpScreen } from './screens/HelpScreen';
 import { SavedScreen } from './screens/SavedScreen';
+import { LocatorScreen } from './screens/LocatorScreen';
 
 function Router() {
   const { screen } = useApp();
@@ -34,6 +35,8 @@ function Router() {
       return <ResultsScreen />;
     case 'help':
       return <HelpScreen />;
+    case 'locator':
+      return <LocatorScreen />;
     case 'saved':
       return <SavedScreen />;
     default:
