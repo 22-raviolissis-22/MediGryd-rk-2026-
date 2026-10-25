@@ -18,14 +18,15 @@ export type ScreenId =
   | 'help'
   | 'saved';
 
-export type District = 'CA-17' | 'CA-19';
+export type District = 'CA-17' | 'CA-18' | 'CA-19';
 
 export type HoursId =
   | 'cvsLocator'
   | 'walgreensLocator'
   | 'costcoWarehouse'
   | 'walgreens24'
-  | 'costcoGilroy';
+  | 'costcoGilroy'
+  | 'seeStore';
 
 export type PriceBenchmark = {
   source: 'nadac' | 'costplus';
@@ -46,6 +47,8 @@ export type PharmacyOffer = {
   addressVerified: boolean;
   /** Cash price at this store for the parent medication, when known. */
   cashPrice: number | null;
+  /** Store phone, when provided. */
+  phone?: string;
 };
 
 /** Who the program is designed for, based on insurance. */

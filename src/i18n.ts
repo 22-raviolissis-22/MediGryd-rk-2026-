@@ -147,6 +147,7 @@ const en = {
   hoursWalgreens24:
     'Pharmacy open 24 hours; closes 1:30–2:00am for meal break (Walgreens locator)',
   hoursCostcoGilroy: 'Mon-Fri 9:00am-7:00pm; Sat 9:00am-6:00pm; Sun closed (Costco warehouse page)',
+  hoursSeeStore: 'Confirm pharmacy hours with the store',
   papLikelyTitle: 'Programs you likely qualify for',
   papOtherTitle: 'Other programs worth checking',
   papDisclaimer:
@@ -373,6 +374,7 @@ const es: typeof en = {
     'Farmacia abierta 24 horas; cierra 1:30–2:00 a. m. para el descanso (localizador de Walgreens)',
   hoursCostcoGilroy:
     'Lun-vie 9:00 a. m.-7:00 p. m.; sáb 9:00 a. m.-6:00 p. m.; dom cerrado (página del almacén Costco)',
+  hoursSeeStore: 'Confirma el horario de la farmacia en la tienda',
   papLikelyTitle: 'Programas para los que es probable que califiques',
   papOtherTitle: 'Otros programas que conviene revisar',
   papDisclaimer:
@@ -584,6 +586,7 @@ const zh: typeof en = {
   hoursCostcoWarehouse: '请在 Costco 仓储门店页面查看药房营业时间',
   hoursWalgreens24: '药房 24 小时营业；凌晨 1:30–2:00 休息（Walgreens 查询）',
   hoursCostcoGilroy: '周一至周五 9:00–19:00；周六 9:00–18:00；周日休息（Costco 仓储页面）',
+  hoursSeeStore: '请向该药房确认营业时间',
   papLikelyTitle: '你可能符合的项目',
   papOtherTitle: '其他值得了解的项目',
   papDisclaimer:
@@ -801,6 +804,7 @@ const hi: typeof en = {
   hoursCostcoWarehouse: 'फार्मेसी समय के लिए Costco वेयरहाउस पेज देखें',
   hoursWalgreens24: 'फार्मेसी 24 घंटे खुली; भोजन विराम के लिए 1:30–2:00 बजे बंद (Walgreens लोकेटर)',
   hoursCostcoGilroy: 'सोम-शुक्र 9:00–19:00; शनि 9:00–18:00; रवि बंद (Costco वेयरहाउस पेज)',
+  hoursSeeStore: 'फार्मेसी समय स्टोर पर जाँचें',
   papLikelyTitle: 'कार्यक्रम जिनके लिए आप संभवतः पात्र हैं',
   papOtherTitle: 'अन्य कार्यक्रम जिन्हें जाँचना चाहिए',
   papDisclaimer:
@@ -921,6 +925,7 @@ const hoursKey: Record<HoursId, keyof typeof en> = {
   costcoWarehouse: 'hoursCostcoWarehouse',
   walgreens24: 'hoursWalgreens24',
   costcoGilroy: 'hoursCostcoGilroy',
+  seeStore: 'hoursSeeStore',
 };
 
 export function pharmacyHours(lang: Language, hoursId: HoursId): string {

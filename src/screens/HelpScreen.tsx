@@ -61,6 +61,9 @@ export function HelpScreen() {
             <Text style={[styles.title, typeface(language, 'display')]}>{p.name}</Text>
             <Text style={[styles.district, typeface(language, 'bodyBold')]}>{p.district}</Text>
             <Text style={[styles.meta, typeface(language, 'body')]}>{p.address}</Text>
+            {p.phone ? (
+              <Text style={[styles.meta, typeface(language, 'body')]}>{p.phone}</Text>
+            ) : null}
             <Text style={[styles.meta, typeface(language, 'body')]}>
               {pharmacyHours(language, p.hoursId)}
             </Text>

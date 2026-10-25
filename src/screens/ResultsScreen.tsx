@@ -299,6 +299,9 @@ export function ResultsScreen() {
                     <Text style={[styles.pharm, typeface(language, 'display')]}>{p.name}</Text>
                     <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{p.district}</Text>
                     <Text style={[styles.meta, typeface(language, 'body')]}>{p.address}</Text>
+                    {p.phone ? (
+                      <Text style={[styles.meta, typeface(language, 'body')]}>{p.phone}</Text>
+                    ) : null}
                     <Text style={[styles.meta, typeface(language, 'body')]}>
                       {pharmacyHours(language, p.hoursId)}
                     </Text>
