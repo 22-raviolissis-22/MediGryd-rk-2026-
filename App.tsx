@@ -7,6 +7,7 @@ import {
 } from '@expo-google-fonts/nunito';
 import { AppProvider } from './src/context';
 import { AppShell } from './src/AppShell';
+import { ErrorBoundary } from './src/ErrorBoundary';
 
 /**
  * Keep AppProvider outside the font-load re-render so each webfont finishing
@@ -14,11 +15,13 @@ import { AppShell } from './src/AppShell';
  */
 export default function App() {
   return (
-    <AppProvider>
-      <FontHost>
-        <AppShell />
-      </FontHost>
-    </AppProvider>
+    <ErrorBoundary>
+      <AppProvider>
+        <FontHost>
+          <AppShell />
+        </FontHost>
+      </AppProvider>
+    </ErrorBoundary>
   );
 }
 
