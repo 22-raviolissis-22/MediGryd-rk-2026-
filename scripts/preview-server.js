@@ -119,5 +119,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`CalRx Assist preview http://127.0.0.1:${PORT}  root=${ROOT}`);
+  console.log(`MediGryd preview http://127.0.0.1:${PORT}  root=${ROOT}`);
 });

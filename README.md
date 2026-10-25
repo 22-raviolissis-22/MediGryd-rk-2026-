@@ -1,4 +1,4 @@
-# MEDIGRYD
+# MediGryd
 
 Expo / React Native app for California congressional districts **17** and **19**. After a Medi-Cal / Covered California screen, it shows prices and patient assistance programs from the **Patient Assistance Programs and Pricing Guide**: 15 standard generics with Cost Plus, GoodRx, and per-store cash prices at 10 local pharmacies, plus 10 high-cost brand medicines with manufacturer PAPs.
 

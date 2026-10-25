@@ -218,12 +218,12 @@ export const papPrograms: PapProgram[] = [
       'Trulicity (डुलाग्लूटाइड) इंजेक्टेबल, टाइप 2 मधुमेह के लिए।'
     ),
     summary: L(
-      'Lilly Cares may provide Trulicity at no cost. Income up to 400% FPL, U.S. resident, typically uninsured.',
-      'Lilly Cares puede proporcionar Trulicity sin costo. Ingresos hasta el 400% del FPL, residente de EE. UU., por lo general sin seguro.',
-      'Lilly Cares 可能免费提供 Trulicity。收入不超过联邦贫困线 400%，美国居民，通常无保险。',
-      'Lilly Cares Trulicity बिना लागत दे सकता है। आय 400% FPL तक, अमेरिका निवासी, आमतौर पर बिना बीमा।'
+      'Lilly Cares may provide Trulicity at no cost. Income up to 300% FPL (Group 1), U.S. resident, typically uninsured.',
+      'Lilly Cares puede proporcionar Trulicity sin costo. Ingresos hasta el 300% del FPL (Grupo 1), residente de EE. UU., por lo general sin seguro.',
+      'Lilly Cares 可能免费提供 Trulicity。收入不超过联邦贫困线 300%（第 1 组），美国居民，通常无保险。',
+      'Lilly Cares Trulicity बिना लागत दे सकता है। आय 300% FPL तक (समूह 1), अमेरिका निवासी, आमतौर पर बिना बीमा।'
     ),
-    fplMax: 400,
+    fplMax: 300,
     insuranceRule: 'uninsured',
     applicationUrl: 'https://www.lilly.com/resources/lilly-cares',
     phone: '1-800-545-6962',
@@ -234,10 +234,10 @@ export const papPrograms: PapProgram[] = [
       'Lilly Cares पोर्टल से आवेदन करें। डॉक्टर का खंड पूरा होना चाहिए। फैक्स/डाक lilly.com/resources/lilly-cares पर जाँचें।'
     ),
     cutoff: L(
-      'Income up to 400% FPL. U.S. resident. Typically uninsured.',
-      'Ingresos hasta el 400% del FPL. Residente de EE. UU. Por lo general sin seguro.',
-      '收入不超过联邦贫困线 400%。美国居民。通常无保险。',
-      'आय 400% FPL तक। अमेरिका निवासी। आमतौर पर बिना बीमा।'
+      'Income up to 300% FPL. Trulicity is a Group 1 Lilly Cares medication. U.S. resident. Typically uninsured.',
+      'Ingresos hasta el 300% del FPL. Trulicity es un medicamento Lilly Cares del Grupo 1. Residente de EE. UU. Por lo general sin seguro.',
+      '收入不超过联邦贫困线 300%。Trulicity 属于 Lilly Cares 第 1 组药品。美国居民。通常无保险。',
+      'आय 300% FPL तक। Trulicity Lilly Cares समूह 1 की दवा है। अमेरिका निवासी। आमतौर पर बिना बीमा।'
     ),
   }),
   pap({
@@ -320,12 +320,12 @@ export const papPrograms: PapProgram[] = [
       'Herceptin (ट्रैस्टुज़ुमैब) इंजेक्टेबल, ऑन्कोलॉजी / स्तन कैंसर के लिए।'
     ),
     summary: L(
-      'Genentech Access Solutions for an insurance gap or uninsured patients. Income up to 500% FPL.',
-      'Genentech Access Solutions para brechas de seguro o pacientes sin seguro. Ingresos hasta el 500% del FPL.',
-      'Genentech Access Solutions 面向保险缺口或无保险患者。收入不超过联邦贫困线 500%。',
-      'Genentech Access Solutions बीमा अंतर या बिना बीमा रोगियों के लिए। आय 500% FPL तक।'
+      'Genentech Access Solutions for an insurance gap or uninsured patients. Uninsured: household income under $150,000. Insured with coverage for the medicine: under $75,000 for 1 person, $100,000 for 2, $125,000 for 3, $150,000 for 4, plus $25,000 for each additional person. Confirm current rules on the Genentech Access Solutions site.',
+      'Genentech Access Solutions para brechas de seguro o pacientes sin seguro. Sin seguro: ingresos del hogar menores de $150,000. Con seguro que cubre el medicamento: menos de $75,000 (1 persona), $100,000 (2), $125,000 (3), $150,000 (4), más $25,000 por cada persona adicional. Confirma las reglas vigentes en el sitio de Genentech Access Solutions.',
+      'Genentech Access Solutions 面向保险缺口或无保险患者。无保险：家庭收入低于 15 万美元。有该药保险：1 人低于 7.5 万美元，2 人 10 万，3 人 12.5 万，4 人 15 万，每多一人再加 2.5 万。请在 Genentech Access Solutions 网站核对现行规则。',
+      'Genentech Access Solutions बीमा अंतर या बिना बीमा रोगियों के लिए। बिना बीमा: घरेलू आय $150,000 से कम। दवा का कवरेज हो तो: 1 व्यक्ति $75,000, 2 के लिए $100,000, 3 के लिए $125,000, 4 के लिए $150,000 से कम, प्रत्येक अतिरिक्त व्यक्ति के लिए $25,000 और। Genentech Access Solutions साइट पर वर्तमान नियम जाँचें।'
     ),
-    fplMax: 500,
+    fplMax: null,
     insuranceRule: 'any',
     applicationUrl: 'https://www.genentech-access.com/patient.html',
     phone: '1-866-422-2377',
@@ -336,10 +336,10 @@ export const papPrograms: PapProgram[] = [
       'genentech-access.com/patient से शुरू करें। आमतौर पर ऑन्कोलॉजी क्लिनिक फॉर्म जमा करती है।'
     ),
     cutoff: L(
-      'Income up to 500% FPL. Insurance gap or uninsured.',
-      'Ingresos hasta el 500% del FPL. Brecha de seguro o sin seguro.',
-      '收入不超过联邦贫困线 500%。保险缺口或无保险。',
-      'आय 500% FPL तक। बीमा अंतर या बिना बीमा।'
+      'Uninsured: under $150,000 household income. Insured with coverage for the medicine: under $75,000 (1 person), $100,000 (2), $125,000 (3), $150,000 (4), plus $25,000 per additional person. Confirm current rules.',
+      'Sin seguro: ingresos del hogar menores de $150,000. Con seguro que cubre el medicamento: menos de $75,000 (1 persona), $100,000 (2), $125,000 (3), $150,000 (4), más $25,000 por cada persona adicional. Confirma las reglas vigentes.',
+      '无保险：家庭收入低于 15 万美元。有该药保险：1 人低于 7.5 万美元，2 人 10 万，3 人 12.5 万，4 人 15 万，每多一人再加 2.5 万。请核对现行规则。',
+      'बिना बीमा: घरेलू आय $150,000 से कम। दवा का कवरेज हो तो: 1 व्यक्ति $75,000, 2 के लिए $100,000, 3 के लिए $125,000, 4 के लिए $150,000 से कम, प्रत्येक अतिरिक्त व्यक्ति के लिए $25,000 और। वर्तमान नियम जाँचें।'
     ),
   }),
   pap({
@@ -354,12 +354,12 @@ export const papPrograms: PapProgram[] = [
       'Xeljanz (टोफैसिटिनिब) 5 मिग्रा गोली, रूमेटॉइड अर्थराइटिस के लिए।'
     ),
     summary: L(
-      'Pfizer RxPathways for uninsured patients or a Medicare coverage gap. Income up to 400% FPL.',
-      'Pfizer RxPathways para pacientes sin seguro o con brecha de Medicare. Ingresos hasta el 400% del FPL.',
-      'Pfizer RxPathways 面向无保险或 Medicare 保障缺口患者。收入不超过联邦贫困线 400%。',
-      'Pfizer RxPathways बिना बीमा या Medicare कवरेज गैप के लिए। आय 400% FPL तक।'
+      'Pfizer RxPathways for uninsured patients or a Medicare coverage gap. Income up to 300% FPL.',
+      'Pfizer RxPathways para pacientes sin seguro o con brecha de Medicare. Ingresos hasta el 300% del FPL.',
+      'Pfizer RxPathways 面向无保险或 Medicare 保障缺口患者。收入不超过联邦贫困线 300%。',
+      'Pfizer RxPathways बिना बीमा या Medicare कवरेज गैप के लिए। आय 300% FPL तक।'
     ),
-    fplMax: 400,
+    fplMax: 300,
     insuranceRule: 'uninsuredOrMedicare',
     applicationUrl: 'https://www.pfizerrxpathways.com/',
     phone: '1-844-989-7284',
@@ -370,10 +370,10 @@ export const papPrograms: PapProgram[] = [
       'डॉक्टर के साथ pfizerrxpathways.com / PAP Connect पर आवेदन करें। ऑनलाइन न हो तो 1-844-989-7284 कॉल करें।'
     ),
     cutoff: L(
-      'Income up to 400% FPL. Uninsured or Medicare gap.',
-      'Ingresos hasta el 400% del FPL. Sin seguro o brecha de Medicare.',
-      '收入不超过联邦贫困线 400%。无保险或 Medicare 缺口。',
-      'आय 400% FPL तक। बिना बीमा या Medicare गैप।'
+      'Income up to 300% FPL. Uninsured or Medicare gap.',
+      'Ingresos hasta el 300% del FPL. Sin seguro o brecha de Medicare.',
+      '收入不超过联邦贫困线 300%。无保险或 Medicare 缺口。',
+      'आय 300% FPL तक। बिना बीमा या Medicare गैप।'
     ),
   }),
   pap({
