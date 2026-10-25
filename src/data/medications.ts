@@ -341,6 +341,63 @@ export const medications: Medication[] = [
     singlecarePath: 'fluoxetine-hcl',
     costPlusPath: 'fluoxetine-20mg-capsule/',
   }),
+  {
+    id: 'trintellix',
+    kind: 'regular',
+    brand: 'Trintellix',
+    generic: 'vortioxetine',
+    form: L(
+      '5 mg, 10 mg, and 20 mg tablets, once daily, 30-day supply',
+      'comprimidos de 5 mg, 10 mg y 20 mg, una vez al día, suministro de 30 días',
+      '5 毫克、10 毫克和 20 毫克片剂，每日一次，30 天用量',
+      '5 मिग्रा, 10 मिग्रा और 20 मिग्रा की गोलियाँ, दिन में एक बार, 30-दिन की आपूर्ति'
+    ),
+    category: mental,
+    searchTerms: [
+      'trintellix',
+      'vortioxetine',
+      'depression',
+      'mdd',
+      'major depressive disorder',
+      'antidepressant',
+    ],
+    goodrxUrl: 'https://www.goodrx.com/vortioxetine',
+    singlecareUrl: null,
+    costPlusUrl: null,
+    goodrxPrice: null,
+    retailEstMin: null,
+    retailEstMax: null,
+    useNadacFeed: false,
+    benchmarks: [
+      nadac(
+        L(
+          '5 mg, 10 mg, or 20 mg tablets, 30-day supply',
+          'Comprimidos de 5 mg, 10 mg o 20 mg, suministro de 30 días',
+          '5 毫克、10 毫克或 20 毫克片剂，30 天用量',
+          '5, 10 या 20 मिग्रा गोलियाँ, 30-दिन की आपूर्ति'
+        ),
+        L(
+          'No verified NADAC wholesale figure is listed in this app for Trintellix (vortioxetine).',
+          'Esta app no tiene una cifra mayorista NADAC verificada para Trintellix (vortioxetina).',
+          '本应用未列出 Trintellix（伏硫西汀）的已核实 NADAC 批发价。',
+          'इस ऐप में ट्रिंटेलिक्स (वोर्टियोक्सेटीन) के लिए सत्यापित NADAC थोक आंकड़ा सूचीबद्ध नहीं है।'
+        )
+      ),
+      costplus(
+        null,
+        L('Not listed', 'No listado', '未列出', 'सूची में नहीं'),
+        L(
+          'No verified Cost Plus Drugs list price is listed in this app for Trintellix (vortioxetine).',
+          'Esta app no tiene un precio de lista verificado de Cost Plus Drugs para Trintellix (vortioxetina).',
+          '本应用未列出 Trintellix（伏硫西汀）的已核实 Cost Plus Drugs 标价。',
+          'इस ऐप में ट्रिंटेलिक्स (वोर्टियोक्सेटीन) के लिए सत्यापित Cost Plus Drugs सूची कीमत नहीं है।'
+        )
+      ),
+    ],
+    pharmacies: pharmaciesWithCash([]),
+    hasManufacturerPap: false,
+    programIds: [],
+  },
   std({
     id: 'hydrochlorothiazide',
     brand: 'Microzide',

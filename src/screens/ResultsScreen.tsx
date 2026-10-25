@@ -25,6 +25,7 @@ import {
   genericOutlookIsStale,
   outlookForMedication,
 } from '../data/genericOutlook';
+import { availabilityNoteFor } from '../data/availabilityNotes';
 import {
   matcherConclusion,
   papListingsAreStale,
@@ -285,6 +286,7 @@ export function ResultsScreen() {
               <NadacCard key="nadac-ref" med={med} pricing={pricing!} note={loc(b.note, language)} />
             ))}
 
+          <AvailabilityNoteCard medicationId={med.id} />
           <GenericOutlookCard medicationId={med.id} />
 
           {med.pharmacies.length > 0 ? (
@@ -404,6 +406,7 @@ export function ResultsScreen() {
                   <NadacCard med={med} pricing={pricing} note={null} />
                 </>
               ) : null}
+              <AvailabilityNoteCard medicationId={med.id} />
               <PapTab
                 language={language}
                 hasManufacturerPap={med.hasManufacturerPap}
@@ -569,9 +572,23 @@ function CouponBlock({ med }: { med: Medication }) {
   );
 }
 
+function AvailabilityNoteCard({ medicationId }: { medicationId: string }) {
+  const { language } = useApp();
+  const c = t(language);
+  const note = availabilityNoteFor(medicationId);
+  if (!note) return null;
+  return (
+    <WhiteCard>
+      <Text style={[styles.kind, typeface(language, 'bodyBold')]}>{c[note.badgeKey]}</Text>
+      <Text style={[styles.note, typeface(language, 'body')]}>{c[note.noteKey]}</Text>
+    </WhiteCard>
+  );
+}
+
 function GenericOutlookCard({ medicationId }: { medicationId: string }) {
   const { language } = useApp();
   const c = t(language);
+  if (availabilityNoteFor(medicationId)) return null;
   const hit = outlookForMedication(medicationId);
   if (!hit) return null;
 

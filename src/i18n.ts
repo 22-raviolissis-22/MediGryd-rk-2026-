@@ -190,6 +190,16 @@ const en = {
   outlookVerifiedAsOf: 'Generic-competition notes verified as of {date}',
   outlookStaleBanner:
     'Patent and exclusivity listings change — check the FDA Orange Book before relying on this outlook.',
+  availBadgeNoGeneric: 'No generic available',
+  availBadgeNoBiosimilar: 'No biosimilar available',
+  availNoteTrintellix:
+    "Generic versions may become available shortly after December 17, 2026, when Trintellix's exclusivity period ends. Expected date, not guaranteed.",
+  availNoteEliquis:
+    'No generic available to buy yet. A generic is FDA-approved but has not launched; launch is expected April 1, 2028, under patent settlements.',
+  availNoteJardiance:
+    'No generic available. The earliest published estimate for a generic is February 1, 2029. Expected date, not guaranteed.',
+  availNoteKeytruda: 'No biosimilar available.',
+  availNoteTrulicity: 'No biosimilar available.',
   getHelp: 'Get help',
   myMedicines: 'My medicines',
   largeText: 'Large text',
@@ -439,6 +449,16 @@ const es: typeof en = {
   outlookVerifiedAsOf: 'Notas de competencia de genéricos verificadas al {date}',
   outlookStaleBanner:
     'Las patentes y exclusividades cambian — consulta el Orange Book de la FDA antes de confiar en este panorama.',
+  availBadgeNoGeneric: 'No hay genérico disponible',
+  availBadgeNoBiosimilar: 'No hay biosimilar disponible',
+  availNoteTrintellix:
+    'Pueden aparecer versiones genéricas poco después del 17 de diciembre de 2026, cuando termine el período de exclusividad de Trintellix. Fecha prevista, no garantizada.',
+  availNoteEliquis:
+    'Aún no hay genérico a la venta. La FDA ya aprobó un genérico, pero no se ha lanzado; el lanzamiento se espera el 1 de abril de 2028, según acuerdos de patentes.',
+  availNoteJardiance:
+    'No hay genérico disponible. La estimación publicada más temprana para un genérico es el 1 de febrero de 2029. Fecha prevista, no garantizada.',
+  availNoteKeytruda: 'No hay biosimilar disponible.',
+  availNoteTrulicity: 'No hay biosimilar disponible.',
   getHelp: 'Pedir ayuda',
   myMedicines: 'Mis medicinas',
   largeText: 'Letra grande',
@@ -670,6 +690,16 @@ const zh: typeof en = {
     '所用 Orange Book 最早日期：{date}（{label}）。其他已列专利或独占权仍可能有效。这不是承诺的仿制药上市日。',
   outlookVerifiedAsOf: '仿制药竞争说明核实于 {date}',
   outlookStaleBanner: '专利与独占权会变更 — 请在依赖此展望前查阅 FDA Orange Book。',
+  availBadgeNoGeneric: '尚无仿制药',
+  availBadgeNoBiosimilar: '尚无生物类似药',
+  availNoteTrintellix:
+    '仿制药可能在 2026 年 12 月 17 日 Trintellix 独占期结束后不久上市。为预计日期，不保证。',
+  availNoteEliquis:
+    '尚无可购买的仿制药。仿制药已获 FDA 批准但尚未上市；根据专利和解，预计上市日期为 2028 年 4 月 1 日。',
+  availNoteJardiance:
+    '尚无仿制药。已公布的最早仿制药估计日期为 2029 年 2 月 1 日。为预计日期，不保证。',
+  availNoteKeytruda: '尚无生物类似药。',
+  availNoteTrulicity: '尚无生物类似药。',
   getHelp: '获取帮助',
   myMedicines: '我的药品',
   largeText: '大字体',
@@ -910,6 +940,16 @@ const hi: typeof en = {
   outlookVerifiedAsOf: 'जेनेरिक-प्रतिस्पर्धा नोट {date} तक सत्यापित',
   outlookStaleBanner:
     'पेटेंट और एक्सक्लूसिविटी सूचियाँ बदलती हैं — इस दृष्टिकोण पर भरोसा करने से पहले FDA Orange Book देखें।',
+  availBadgeNoGeneric: 'जेनेरिक उपलब्ध नहीं है',
+  availBadgeNoBiosimilar: 'बायोसिमिलर उपलब्ध नहीं है',
+  availNoteTrintellix:
+    'ट्रिंटेलिक्स की एकाधिकार अवधि 17 दिसंबर 2026 को खत्म होने के बाद जल्द जेनेरिक संस्करण उपलब्ध हो सकते हैं। अपेक्षित तारीख, गारंटी नहीं।',
+  availNoteEliquis:
+    'अभी खरीदने के लिए जेनेरिक उपलब्ध नहीं है। FDA ने जेनेरिक को मंज़ूरी दे दी है, लेकिन लॉन्च नहीं हुआ; पेटेंट समझौतों के तहत लॉन्च 1 अप्रैल 2028 को अपेक्षित है।',
+  availNoteJardiance:
+    'जेनेरिक उपलब्ध नहीं है। जेनेरिक के लिए सबसे पहला प्रकाशित अनुमान 1 फ़रवरी 2029 है। अपेक्षित तारीख, गारंटी नहीं।',
+  availNoteKeytruda: 'बायोसिमिलर उपलब्ध नहीं है।',
+  availNoteTrulicity: 'बायोसिमिलर उपलब्ध नहीं है।',
   getHelp: 'मदद पाएँ',
   myMedicines: 'मेरी दवाएँ',
   largeText: 'बड़ा टेक्स्ट',
