@@ -152,8 +152,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         saveLanguage(lang);
       },
       go: (next) => {
-        setHistory((h) => (screen === next ? h : [...h, screen]));
-        setScreen(next);
+        setScreen((current) => {
+          if (current === next) return current;
+          setHistory((h) => [...h, current]);
+          return next;
+        });
       },
       back: () => {
         setHistory((h) => {

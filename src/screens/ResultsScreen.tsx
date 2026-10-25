@@ -70,8 +70,7 @@ export function ResultsScreen() {
     const hit = routeSearch(searchQuery);
     if (hit) {
       if (medication?.id !== hit.id) setMedication(hit);
-      const nextTab = hit.kind === 'pap' ? 'pap' : 'rx';
-      if (resultsTab !== nextTab) setResultsTab(nextTab);
+      setResultsTab(hit.kind === 'pap' ? 'pap' : 'rx');
       if (hit.kind === 'pap') {
         setPapQuery((q) => (q === searchQuery ? q : searchQuery));
         setPickingPap(false);
@@ -88,19 +87,18 @@ export function ResultsScreen() {
       searchInCatalog(papMedications, q).length > 0 &&
       searchInCatalog(regularMedications, q).length === 0
     ) {
-      if (resultsTab !== 'pap') setResultsTab('pap');
+      setResultsTab('pap');
       setPapQuery((cur) => (cur === q ? cur : q));
       setPickingPap(true);
     }
-  }, [searchQuery, medication?.id, resultsTab, setMedication, setResultsTab]);
+  }, [searchQuery, medication?.id, setMedication, setResultsTab]);
 
   useEffect(() => {
     if (searchSource.current === 'rx') return;
     const hit = routeSearch(papQuery);
     if (hit) {
       if (medication?.id !== hit.id) setMedication(hit);
-      const nextTab = hit.kind === 'pap' ? 'pap' : 'rx';
-      if (resultsTab !== nextTab) setResultsTab(nextTab);
+      setResultsTab(hit.kind === 'pap' ? 'pap' : 'rx');
       if (hit.kind === 'regular') {
         if (searchQuery !== papQuery) setSearchQuery(papQuery);
         setPickingRx(false);
@@ -117,11 +115,11 @@ export function ResultsScreen() {
       searchInCatalog(regularMedications, q).length > 0 &&
       searchInCatalog(papMedications, q).length === 0
     ) {
-      if (resultsTab !== 'rx') setResultsTab('rx');
+      setResultsTab('rx');
       if (searchQuery !== q) setSearchQuery(q);
       setPickingRx(true);
     }
-  }, [papQuery, searchQuery, medication?.id, resultsTab, setMedication, setResultsTab, setSearchQuery]);
+  }, [papQuery, searchQuery, medication?.id, setMedication, setResultsTab, setSearchQuery]);
 
   const pickRx = (next: Medication) => {
     openMedication(next);

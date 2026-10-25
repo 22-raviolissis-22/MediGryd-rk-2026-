@@ -9,7 +9,7 @@ const http = require('http');
 const path = require('path');
 
 const PORT = Number(process.env.PREVIEW_PORT || 43123);
-const ROOT = path.resolve(__dirname, '..', process.env.PREVIEW_DIR || 'web-dist');
+const ROOT = path.resolve(__dirname, '..', process.env.PREVIEW_DIR || 'dist');
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

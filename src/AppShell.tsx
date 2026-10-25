@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { AppChrome } from './components/AppChrome';
-import { AppProvider, useApp } from './context';
+import { useApp } from './context';
 import { PhoneShell } from './components/ui';
 import { LanguageScreen } from './screens/LanguageScreen';
 import { InsuranceScreen } from './screens/InsuranceScreen';
@@ -46,13 +46,11 @@ function Router() {
 
 export function AppShell() {
   return (
-    <AppProvider>
-      <PhoneShell>
-        <AppChrome>
-          <Router />
-        </AppChrome>
-        <StatusBar style="dark" />
-      </PhoneShell>
-    </AppProvider>
+    <PhoneShell>
+      <AppChrome>
+        <Router />
+      </AppChrome>
+      <StatusBar style="dark" />
+    </PhoneShell>
   );
 }
